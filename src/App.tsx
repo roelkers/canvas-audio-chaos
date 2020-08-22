@@ -1,12 +1,11 @@
 import React from 'react';
-import Canvas from './Canvas'
-import CanvasAnim from './CanvasAnim' 
+import Canvas from './components/Stage' 
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <CanvasAnim />
+        <Canvas/>
     </div>
   );
 }
