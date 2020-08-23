@@ -1,9 +1,9 @@
 import { configureStore, applyMiddleware } from '@reduxjs/toolkit'
-import nodes from '../slices/nodes'
+import canvas from '../slices/canvas'
 
 const store = configureStore({
   reducer: {
-    nodes
+    canvas
   }
 })
 
