@@ -25,22 +25,21 @@ const Wave = ({ nodeId }: {nodeId: string}) => {
         // circle.current.outerRadius = or
         // circle.current.innerRadius = or - 10 
         circle.current.scale({ x: or, y: or })
-        const children = layer.find('.triggerable')
-        console.log(children) 
-        for(let target of children) {
-          if(target.attrs.id === nodeId) {
+        const children = layer.find('.triggerable').each((target: any) => {
+          const parentGroupId = target.parent.attrs.id
+          if(parentGroupId === nodeId) {
             return
           } 
+          console.log(target)
           if (isIntersecting(circle.current, target)) {
-            console.log(target.id(), nodeId)
-            dispatch(activateNode({ id: target.id() }))
+            dispatch(activateNode({ id: parentGroupId }))
             setTimeout(() => { 
               console.log("deactive")
-              dispatch(deactivateNode({ id: target.id() }))
+              dispatch(deactivateNode({ id: parentGroupId }))
             
             }, 100)
           }
-        }
+        })
       },
       layer)
     konvaAnim.current.start()
@@ -51,8 +50,8 @@ const Wave = ({ nodeId }: {nodeId: string}) => {
     <Ring
       ref={circle}
       fill={ringFill}
-      innerRadius={1.95}
-      outerRadius={2}
+      innerRadius={1}
+      outerRadius={1.05}
       x={0}
       y={0}
     />
