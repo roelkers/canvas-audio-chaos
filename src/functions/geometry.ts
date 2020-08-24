@@ -5,9 +5,7 @@ export const euclideanDistance2D = (elemX :number , elemY: number, targetX:numbe
   Math.sqrt(Math.pow(elemX - targetX,2) + Math.pow(elemY - targetY, 2))
 
 export const isIntersecting = (ring: IRing, elem: ShapeConfig) => {
-  const { innerRadius, outerRadius, scaleX, scaleY }  = ring.attrs 
-  const sInnerRadius = scaleX* innerRadius
-  const sOuterRadius = scaleX* outerRadius 
+  const { innerRadius, outerRadius }  = ring.attrs 
   const clientRect = elem.getClientRect()
   const pointX = clientRect.x + clientRect.width / 2  
   const pointY = clientRect.y + clientRect.height / 2 
@@ -15,7 +13,7 @@ export const isIntersecting = (ring: IRing, elem: ShapeConfig) => {
   const ringY = ring.parent?._lastPos?.y ?? 0 
   const dist = euclideanDistance2D(pointX, pointY, ringX, ringY)
   return (
-    dist  > sInnerRadius  &&
-    dist  < sOuterRadius 
+    dist  > innerRadius  &&
+    dist  < outerRadius 
   )
 }

@@ -25,6 +25,15 @@ const initialState: CanvasState = {
       element:
         { id: '0', behaviour: 'Trigger', group: '0' },
     },
+    // {
+    //   id: '2', active: false,
+    //   element:
+    //     { id: '0', behaviour: 'Trigger', group: '0' },
+    // },
+    // { id: '3', active: false,
+    //   element:
+    //     { id: '0', behaviour: 'Trigger', group: '0' },
+    // },
   ],
 }
 
