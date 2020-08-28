@@ -13,7 +13,7 @@ interface CanvasElementProps {
   name: string;
 }
   
-const Element = (props: CanvasElementProps) => {
+const AudioElement = (props: CanvasElementProps) => {
   const { x, y, name, width, height, fill} = props    
   return (
     <Rect
@@ -28,4 +28,4 @@ const Element = (props: CanvasElementProps) => {
 }
 
 
-export default Element
+export default AudioElement

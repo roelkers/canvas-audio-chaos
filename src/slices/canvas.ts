@@ -1,10 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { IPaletteElement } from './palette'
 
-export interface INode {
+export interface INode extends IPaletteElement {
   id: string;
-  element: IPaletteElement;
   active: boolean;
 }
 
@@ -18,22 +17,20 @@ const initialState: CanvasState = {
   nodes: [
     {
       id: '0', active: false,
-      element:
-        { id: '0', behaviour: 'Trigger', group: '0' },
+      elementId: '0', behaviour: 'Trigger', groups: ['0'],
     },
-    { id: '1', active: false,
-      element:
-        { id: '0', behaviour: 'Trigger', group: '0' },
+    {
+      id: '1', active: false,
+      elementId: '0', behaviour: 'Trigger', groups: ['0'],
     },
-    // {
-    //   id: '2', active: false,
-    //   element:
-    //     { id: '0', behaviour: 'Trigger', group: '0' },
-    // },
-    // { id: '3', active: false,
-    //   element:
-    //     { id: '0', behaviour: 'Trigger', group: '0' },
-    // },
+    {
+      id: '2', active: false,
+      elementId: '0', behaviour: 'Trigger', groups: ['0'],
+    },
+    {
+      id: '3', active: false,
+      elementId: '0', behaviour: 'Trigger', groups: ['0'],
+    }
   ],
 }
 
@@ -44,8 +41,7 @@ const canvasSlice = createSlice({
     createNode(state, action) {
       state.nodes.push({
         id: String(state.nextId),
-        element: action.payload,
-        active: false
+        ...action.payload
       })
       state.nextId = state.nextId + 1
     },
@@ -56,13 +52,15 @@ const canvasSlice = createSlice({
 
     },
     activateNode(state, action) {
-      const node = state.nodes.find(n => n.id === action.payload.id)
+      const { targetNodeId, waveId } = action.payload
+      const node = state.nodes.find(n => n.id === targetNodeId)
       if (node) {
         node.active = true
       }
     },
     deactivateNode(state, action) {
-      const node = state.nodes.find(n => n.id === action.payload.id)
+      const { targetNodeId, waveId } = action.payload
+      const node = state.nodes.find(n => n.id === targetNodeId)
       if (node) {
         node.active = false
       }

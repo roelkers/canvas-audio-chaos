@@ -5,14 +5,14 @@ import Konva from 'konva'
 import { useDispatch, useSelector } from 'react-redux';
 import { activateNode, deactivateNode, selectNodes } from '../slices/canvas';
 
-const Wave = ({ nodeId }: {nodeId: string}) => {
+const Wave = ({ nodeId }: { nodeId: string }) => {
   const dispatch = useDispatch()
   const nodes = useSelector(selectNodes)
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
-  const initialInnerRadius = 1 
-  const ringDiameter = 5 
-  
+  const initialInnerRadius = 1
+  const ringDiameter = 5
+
   let konvaAnim: any = useRef(null)
   useEffect(() => {
     // konvaAnim.current?.stop()
@@ -24,29 +24,31 @@ const Wave = ({ nodeId }: {nodeId: string}) => {
     const maxRadius = stageWidth > stageHeight ? stageWidth : stageHeight
     const duration = 5;
     const velocity = maxRadius / duration;
+    let intersections: string[] = []
 
     konvaAnim.current = new Konva.Animation(
       (frame: any) => {
-        const scale = (frame.time/1000 * velocity) % maxRadius 
+        const scale = (frame.time / 1000 * velocity) % maxRadius
         // circle.current.outerRadius = or
         // circle.current.innerRadius = or - 10 
-        const currentInnerRadius = initialInnerRadius * scale 
+        const currentInnerRadius = initialInnerRadius * scale
         circle.current.attrs.innerRadius = currentInnerRadius
-        circle.current.attrs.outerRadius = currentInnerRadius + ringDiameter 
+        circle.current.attrs.outerRadius = currentInnerRadius + ringDiameter
+        const waveId = circle.current._id
 
         layer.find('.triggerable').each((target: any) => {
           const parentGroupId = target.parent.attrs.id
-          if(parentGroupId === nodeId) {
+          if (parentGroupId === nodeId) {
             return
-          } 
-          if (isIntersecting(circle.current, target)) {
-            dispatch(activateNode({ id: parentGroupId }))
-            console.log("is active")
-            setTimeout(() => { 
-              console.log("deactive")
-              dispatch(deactivateNode({ id: parentGroupId }))
-            
-            }, 100)
+          }
+          if (isIntersecting(circle.current, target)
+             && !intersections.includes(parentGroupId) 
+          ) {
+            intersections.push(parentGroupId)
+            dispatch(activateNode({ targetNodeId: parentGroupId }))
+          } else if (intersections.includes(parentGroupId)) {
+            intersections = intersections.filter(n => n !== parentGroupId)
+            dispatch(deactivateNode({ targetNodeId: parentGroupId }))
           }
         })
       },

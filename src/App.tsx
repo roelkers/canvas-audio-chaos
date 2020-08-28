@@ -1,11 +1,12 @@
 import React from 'react';
 import Canvas from './components/Stage' 
 import './App.css';
+import VirtualAudioGraph from 'virtual-audio-graph/dist/VirtualAudioGraph';
 
-function App() {
+function App({ virtualAudioGraph }: { virtualAudioGraph: VirtualAudioGraph}) {
   return (
     <div className="App">
-        <Canvas/>
+        <Canvas virtualAudioGraph={virtualAudioGraph}/>
     </div>
   );
 }
