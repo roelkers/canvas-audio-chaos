@@ -1,79 +1,157 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { IPaletteElement } from './palette'
+import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map } from 'ramda'
 
-export interface INode extends IPaletteElement {
+export interface INodeHistoric extends IPaletteElement {
+  id: string;
+  x: number;
+  y: number;
+}
+
+export interface INodeNonHistoric {
   id: string;
   active: boolean;
 }
 
-interface CanvasState {
+export interface INode extends INodeHistoric, INodeNonHistoric {}
+
+interface CanvasStateHistoric {
   nextId: number;
-  nodes: INode[];
+  nodes: INodeHistoric[];
 }
 
-const initialState: CanvasState = {
-  nextId: 2,
-  nodes: [
-    {
-      id: '0', active: false,
-      elementId: '0', behaviour: 'Trigger', groups: ['0'],
-    },
-    {
-      id: '1', active: false,
-      elementId: '0', behaviour: 'Trigger', groups: ['0'],
-    },
-    {
-      id: '2', active: false,
-      elementId: '0', behaviour: 'Trigger', groups: ['0'],
-    },
-    {
-      id: '3', active: false,
-      elementId: '0', behaviour: 'Trigger', groups: ['0'],
-    }
-  ],
+interface Canvas {
+  historyStep: number;
+  history: CanvasStateHistoric[],
+  nonHistory: CanvasStateNonHistoric
+}
+
+interface CanvasStateNonHistoric {
+  nodes: INodeNonHistoric[];
+}
+
+const initialState: Canvas = {
+  historyStep: 0,
+  nonHistory: {
+    nodes: [
+      {
+        id: '0', active: false,
+      },
+      {
+        id: '1', active: false,
+      },
+      // {
+      //   id: '2', active: false,
+      // },
+      // {
+      //   id: '3', active: false,
+      // }
+    ]
+  },  
+  history: [{
+    nextId: 2,
+    nodes: [
+      {
+        id: '0',
+        elementId: '0', behaviour: 'Trigger', groups: ['0'],
+        x: 0, y: 0
+      },
+      {
+        id: '1',
+        elementId: '0', behaviour: 'Trigger', groups: ['0'],
+        x: 0, y: 200
+      },
+      // {
+      //   id: '2',
+      //   elementId: '0', behaviour: 'Trigger', groups: ['0'],
+      //   x: 200, y: 0
+      // },
+      // {
+      //   id: '3',
+      //   elementId: '0', behaviour: 'Trigger', groups: ['0'],
+      //   x: 200, y: 200
+      // }
+    ],
+  }]
 }
 
 const canvasSlice = createSlice({
-  name: 'canvas',
-  initialState,
-  reducers: {
-    createNode(state, action) {
-      state.nodes.push({
-        id: String(state.nextId),
-        ...action.payload
-      })
-      state.nextId = state.nextId + 1
-    },
-    updateNode(state, action) {
+    name: 'canvas',
+    initialState,
+    reducers: {
+      createNode(state, action) {
+        const history = state.history.slice(0, state.historyStep + 1)
+        const prev = history[state.historyStep -1]
+        const nextState = {
+          ...prev,
+          nodes: [
+            ...prev.nodes,
+            {
+              id: String(prev.nextId),
+              ...action.payload
+            } 
+          ],
+          nextId: prev.nextId +1
+        }
+        state.history.push(nextState)
+        state.historyStep += 1
+      },
+      dragNode(state, action) {
+        const { x, y, targetNodeId } = action.payload
+        // const history = state.history.slice(0, state.historyStep + 1)
+        const prev = state.history[state.historyStep]
+        const node = prev.nodes.find(n => n.id === targetNodeId)
+        const modifyNode = (node : INodeHistoric) => node.id === targetNodeId ? { ... node, x, y } : node
+        const nextState = {
+          ...prev,
+          nodes: map(modifyNode, prev.nodes), 
+          nextId: prev.nextId +1
+        }
+        state.history.push(nextState)
+        state.historyStep += 1
+      },
+      updateNode(state, action) {
 
-    },
-    deleteNode(state, action) {
+      },
+      deleteNode(state, action) {
 
-    },
-    activateNode(state, action) {
-      const { targetNodeId, waveId } = action.payload
-      const node = state.nodes.find(n => n.id === targetNodeId)
-      if (node) {
-        node.active = true
-      }
-    },
-    deactivateNode(state, action) {
-      const { targetNodeId, waveId } = action.payload
-      const node = state.nodes.find(n => n.id === targetNodeId)
-      if (node) {
-        node.active = false
+      },
+      activateNode(state, action) {
+        const { targetNodeId } = action.payload
+        const node = state.nonHistory.nodes.find(n => n.id === targetNodeId)
+        if (node) {
+          node.active = true
+        }
+      },
+      deactivateNode(state, action) {
+        const { targetNodeId } = action.payload
+        const node = state.nonHistory.nodes.find(n => n.id === targetNodeId)
+        if (node) {
+          node.active = false
+        }
       }
     }
-  }
-})
+  })
 
-export const selectNodes = (state: RootState) => state.canvas.nodes
+const sortById = sortBy(compose(toLower, prop('id')))
+
+export const selectHistoricNodes = (state: RootState) => <CanvasStateHistoric[]> compose(
+  sortById,
+  propOr([],'nodes'),
+  nth(state.canvas.historyStep))
+  (state.canvas.history)
+
+export const selectNonHistoricNodes = (state: RootState) => sortById(state.canvas.nonHistory.nodes)
+export const selectNodes = createSelector(
+  [selectHistoricNodes, selectNonHistoricNodes],
+  (historicNodes, nonHistoricNodes) =>  <INode[]><unknown>zipWith(merge, historicNodes, nonHistoricNodes) 
+)
 
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, deleteNode, activateNode, deactivateNode } = actions
+export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

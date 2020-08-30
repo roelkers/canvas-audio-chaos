@@ -11,7 +11,7 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
   const initialInnerRadius = 1
-  const ringDiameter = 5
+  const ringDiameter = 5 
 
   let konvaAnim: any = useRef(null)
   useEffect(() => {

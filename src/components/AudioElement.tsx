@@ -12,7 +12,6 @@ const Element = (props: AudioElementProps) => {
   const { currentTime } = virtualAudioGraph
   useEffect(() => {
     if(active) {
-      console.log(active)
     virtualAudioGraph.update({
       0: gain('output', { gain: 0.5 }),
       1: oscillator(0, { frequency: 554.365, stopTime: currentTime + 0.1 }),

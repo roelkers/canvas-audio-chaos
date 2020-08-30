@@ -27,7 +27,7 @@ const Palette = ({ stage : ref } : { stage : any }) => {
         x={containerX}
         y={containerY} 
       />
-      {
+      {/* {
        elements.map(( elem, index) => {
           const elemX = index * 55 + containerX +5; 
 
@@ -37,7 +37,7 @@ const Palette = ({ stage : ref } : { stage : any }) => {
               y={containerY + 5} 
            />)
         })
-      }
+      } */}
     </Group>
   )
 }

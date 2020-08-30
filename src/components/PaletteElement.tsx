@@ -13,8 +13,6 @@ const Element = ({ element, x, y } : { element: IPaletteElement, x: number, y: n
       name='palette'
       width={50}
       height={50}
-      x={x}
-      y={y}
       fill={'#0f0f0f'}
     />
   );
