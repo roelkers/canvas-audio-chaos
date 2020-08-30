@@ -1,11 +1,13 @@
 import { configureStore, applyMiddleware } from '@reduxjs/toolkit'
 import canvas from '../slices/canvas'
 import palette from '../slices/palette'
+import action from '../slices/action-buttons'
 
 const store = configureStore({
   reducer: {
     canvas,
-    palette
+    palette,
+    action
   }
 })
 

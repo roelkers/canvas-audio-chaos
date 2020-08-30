@@ -99,16 +99,29 @@ const canvasSlice = createSlice({
       },
       dragNode(state, action) {
         const { x, y, targetNodeId } = action.payload
-        // const history = state.history.slice(0, state.historyStep + 1)
-        const prev = state.history[state.historyStep]
-        const node = prev.nodes.find(n => n.id === targetNodeId)
-        const modifyNode = (node : INodeHistoric) => node.id === targetNodeId ? { ... node, x, y } : node
+        const history = state.history.slice(0, state.historyStep+1)
+        const prev = history[state.historyStep]
+        const moveNode = (node : INodeHistoric) => node.id === targetNodeId ? { ... node, x, y } : node
         const nextState = {
           ...prev,
-          nodes: map(modifyNode, prev.nodes), 
+          nodes: map(moveNode, prev.nodes), 
           nextId: prev.nextId +1
         }
-        state.history.push(nextState)
+        history.push(nextState)
+        state.history = history
+        state.historyStep += 1
+        console.log(state.historyStep)
+      },
+      undo(state,action) {
+        if(state.historyStep === 0) {
+          return
+        }
+        state.historyStep -= 1
+      },
+      redo(state, action) {
+        if(state.historyStep === state.history.length - 1) {
+          return
+        }
         state.historyStep += 1
       },
       updateNode(state, action) {
@@ -151,7 +164,7 @@ export const selectNodes = createSelector(
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode } = actions
+export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode, undo, redo } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

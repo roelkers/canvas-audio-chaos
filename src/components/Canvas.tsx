@@ -20,6 +20,7 @@ const Canvas = ({ virtualAudioGraph }: { virtualAudioGraph: VirtualAudioGraph}) 
           {
             nodes.map(node =>
               <Node
+                key={node.id}
                 node={node}
                 virtualAudioGraph={virtualAudioGraph}
               />
@@ -34,7 +35,7 @@ const Canvas = ({ virtualAudioGraph }: { virtualAudioGraph: VirtualAudioGraph}) 
   );
 }
 
-export default Canvas
+export default Canvas 
 
 
 

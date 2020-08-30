@@ -1,13 +1,20 @@
 import React from 'react';
-import Canvas from './components/Stage' 
-import './App.css';
+import Canvas from './components/Canvas'
+import { styled } from '@material-ui/core/styles' 
+import ActionButtons from './components/ActionButtons'
 import VirtualAudioGraph from 'virtual-audio-graph/dist/VirtualAudioGraph';
+import { Box } from '@material-ui/core';
+
+const Container = styled(Box)({
+
+})
 
 function App({ virtualAudioGraph }: { virtualAudioGraph: VirtualAudioGraph}) {
   return (
-    <div className="App">
-        <Canvas virtualAudioGraph={virtualAudioGraph}/>
-    </div>
+    <Container>
+      <ActionButtons />
+      <Canvas virtualAudioGraph={virtualAudioGraph}/>
+    </Container>
   );
 }
 

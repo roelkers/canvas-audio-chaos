@@ -12,8 +12,7 @@ interface CanvasElementProps {
 }
   
 const CanvasElement = (props: CanvasElementProps) => {
-  const { 
-    name, width, height, fill} = props    
+  const { name, width, height, fill} = props    
   return (
     <Rect
       name={name}
