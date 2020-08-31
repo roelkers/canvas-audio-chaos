@@ -28,12 +28,14 @@ interface Canvas {
 }
 
 interface CanvasStateNonHistoric {
+  focussedNode: string;
   nodes: INodeNonHistoric[];
 }
 
 const initialState: Canvas = {
   historyStep: 0,
   nonHistory: {
+    focussedNode: '',
     nodes: [
       {
         id: '0', active: false,
@@ -110,7 +112,6 @@ const canvasSlice = createSlice({
         history.push(nextState)
         state.history = history
         state.historyStep += 1
-        console.log(state.historyStep)
       },
       undo(state,action) {
         if(state.historyStep === 0) {
@@ -123,6 +124,10 @@ const canvasSlice = createSlice({
           return
         }
         state.historyStep += 1
+      },
+      focusNode(state, action) {
+        if(action.payload === 'none') return
+        state.nonHistory.focussedNode = action.payload 
       },
       updateNode(state, action) {
 
@@ -161,10 +166,12 @@ export const selectNodes = createSelector(
   (historicNodes, nonHistoricNodes) =>  <INode[]><unknown>zipWith(merge, historicNodes, nonHistoricNodes) 
 )
 
+export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistory.focussedNode
+
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode, undo, redo } = actions
+export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode, undo, redo, focusNode } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

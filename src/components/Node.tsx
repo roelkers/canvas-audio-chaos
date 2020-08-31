@@ -24,6 +24,7 @@ const Node = ({ node, virtualAudioGraph }: { node: INode, virtualAudioGraph: Vir
     >
       <Wave nodeId={node.id} />
       <CanvasElement
+        nodeId={node.id}
         width={50}
         height={50}
         fill={fill}
