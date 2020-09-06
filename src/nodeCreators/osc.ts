@@ -1,6 +1,13 @@
 import { createNode, oscillator, gain } from 'virtual-audio-graph'
 
-export default createNode(({
+export interface OscConfig {
+  gain: number;
+  stopTime: number
+  frequency: number;
+  type: string;
+}
+
+const nodeCreator = createNode(({
     gain: gainValue,
     startTime,
     stopTime,
@@ -19,3 +26,5 @@ export default createNode(({
       1: oscillator(0, { startTime, stopTime, ...rest }),
     }
   })
+
+export default nodeCreator

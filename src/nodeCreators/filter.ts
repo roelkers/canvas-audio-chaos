@@ -1,5 +1,13 @@
 import { createNode, biquadFilter, gain } from 'virtual-audio-graph'
 
+export interface FilterConfig {
+  gain: number
+  startTime: number,
+  stopTime: number,
+  frequency: number,
+  resonance: number,
+}
+
 export default createNode(({
   gain: gainValue,
   startTime,

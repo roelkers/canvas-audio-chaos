@@ -16,7 +16,6 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
   let konvaAnim: any = useRef(null)
   useEffect(() => {
     // konvaAnim.current?.stop()
-    // circle.current?.scale({ x: 1, y: 1 })
     const layer = circle.current.getLayer()
     const stage = layer.getStage()
     const stageWidth = stage.getWidth()
