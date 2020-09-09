@@ -14,6 +14,7 @@ export interface INodeHistoric extends IPaletteElement {
 export interface INodeNonHistoric {
   id: string;
   active: boolean;
+  startTime: number | null;
 }
 
 export interface INode extends INodeHistoric, INodeNonHistoric { }
@@ -24,6 +25,7 @@ interface CanvasStateHistoric {
 }
 
 interface Canvas {
+  canvasHover: boolean;
   historyStep: number;
   history: CanvasStateHistoric[],
   nonHistory: CanvasStateNonHistoric
@@ -35,15 +37,16 @@ interface CanvasStateNonHistoric {
 }
 
 const initialState: Canvas = {
+  canvasHover: false,
   historyStep: 0,
   nonHistory: {
     focussedNode: '',
     nodes: [
       {
-        id: '0', active: false,
+        id: '0', active: false, startTime: null
       },
       {
-        id: '1', active: false,
+        id: '1', active: false, startTime: null
       },
       // {
       //   id: '2', active: false,
@@ -175,6 +178,16 @@ const canvasSlice = createSlice({
       if (node) {
         node.active = false
       }
+    },
+    setNodeStartTime(state,action) {
+      const { nodeId, startTime } = action.payload
+      const node = state.nonHistory.nodes.find(n => n.id === nodeId)
+      if (node) {
+        node.startTime = startTime
+      }
+    },
+    initialCanvasHover(state,action) {
+      state.canvasHover = true
     }
   }
 })
@@ -198,7 +211,8 @@ export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistor
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, deleteNode, activateNode, deactivateNode, dragNode, undo, redo, focusNode } = actions
+export const { createNode, updateNode, setNodeStartTime, deleteNode, 
+  activateNode, deactivateNode, dragNode, undo, redo, focusNode } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

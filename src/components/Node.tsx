@@ -30,11 +30,6 @@ const Node = ({ node, virtualAudioGraph }: { node: INode, virtualAudioGraph: Vir
         fill={fill}
         name='triggerable'
       />
-      <AudioElement
-        active={node.active}
-        audio={node.audio}
-        virtualAudioGraph={virtualAudioGraph}
-      />
     </Group>
   );
 }

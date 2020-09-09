@@ -14,7 +14,7 @@ const Canvas = ({ virtualAudioGraph }: { virtualAudioGraph: VirtualAudioGraph}) 
   const stage = useRef(null)
 
   return (
-    <Stage ref={stage} width={window.innerWidth} height={window.innerHeight}>
+    <Stage ref={stage} width={window.innerWidth} height={window.innerHeight} onMouseOver={() => virtualAudioGraph.audioContext.resume()}>
       <Provider store={store} >
         <Layer >
           {
