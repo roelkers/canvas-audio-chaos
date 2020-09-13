@@ -1,53 +1,48 @@
 import VirtualAudioGraph from 'virtual-audio-graph/dist/VirtualAudioGraph';
 import { map, pipe, filter, prop, reduce } from 'ramda';
 import { IVirtualAudioNodeGraph } from 'virtual-audio-graph/dist/types';
-import { INode, setNodeStartTime } from '../slices/canvas';
-import { useEffect } from 'react';
+import { INode, setNodeStartTime, selectInitialCanvasHover, initialCanvasHover } from '../slices/canvas';
+import { useEffect, useRef, MutableRefObject } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectNodes } from '../slices/canvas';
 import outputNode from '../nodeCreators/outputNode'
+import createVirtualAudioGraph from 'virtual-audio-graph'
 
-const filterInactiveNodesWithoutStartTime = (node : INode) => node.startTime !== null || node.active === true 
-
-const useAudio = (virtualAudioGraph: VirtualAudioGraph) => {
+const useAudio = () => {
   const nodes = useSelector(selectNodes)
+  const virtualAudioGraph = <MutableRefObject<VirtualAudioGraph | null>>useRef(null)
+  const initialCanvasHover = useSelector(selectInitialCanvasHover)
   const dispatch = useDispatch()
   useEffect(() => {
-    const { currentTime } = virtualAudioGraph
-    for(const node of nodes) {
-      if(node.active && node.startTime === null) {
-        dispatch(setNodeStartTime({ startTime: currentTime, nodeId: node.id }))
-      }
-      if(node.startTime) {
-
+    if (!virtualAudioGraph.current && initialCanvasHover) {
+      virtualAudioGraph.current = createVirtualAudioGraph()
+      virtualAudioGraph.current.audioContext.resume()
+    }
+  }, [initialCanvasHover])
+  useEffect(() => {
+    if (virtualAudioGraph.current === null) {
+      return
+    }
+    const { currentTime } = virtualAudioGraph.current
+    for (const node of nodes) {
+      if (node.active) {
+        const startTime = currentTime
+        dispatch(setNodeStartTime({ startTime, nodeId: node.id }))
       }
     }
-  },[virtualAudioGraph, nodes])
+  }, [virtualAudioGraph, nodes,, dispatch])
   useEffect(() => {
-      const { currentTime } = virtualAudioGraph
-      const filteredNodes = filter(filterInactiveNodesWithoutStartTime)(nodes); 
-      const audioNodes = map( prop('audio'))(filteredNodes)
-      const update = audioNodes.reduce((acc, audio, i) => Object.assign(acc, { [i]: outputNode('output', { audio, currentTime }) }), {}) as unknown as IVirtualAudioNodeGraph
-      // const update = { 
-      //   0: osc('output', {
-      //     frequency: 110,
-      //     gain: 0.2,
-      //     startTime: currentTime,
-      //     stopTime: currentTime + 1,
-      //     type: 'square',
-      //   }),
-      //   1: osc('output', {
-      //     frequency: 110,
-      //     gain: 0.2,
-      //     startTime: currentTime,
-      //     stopTime: currentTime + 1,
-      //     type: 'square',
-      //   })
-      // }
-      // const mapFunction = audioMapper(currentTime) 
-      // const update = map(mapFunction, audio as AudioConfig[]) as unknown as IVirtualAudioNodeGraph
-      virtualAudioGraph.update(update)
-  },[virtualAudioGraph, nodes] )
-} 
+    if (virtualAudioGraph.current === null) {
+      return
+    }
+    const filterInactiveNodesWithoutStartTime = (node: INode) => node.startTime !== null
+    const filteredNodes = filter(filterInactiveNodesWithoutStartTime, nodes);
+    const audioNodes = map((node: INode) => [prop('startTime',node), prop('audio', node)])(filteredNodes)
+    const update = audioNodes.reduce((acc, [startTime, audio], i) => Object.assign(acc, { [i]: outputNode('output', { audio, startTime }) }), {}) as unknown as IVirtualAudioNodeGraph
+
+    virtualAudioGraph.current.update(update)
+
+  }, [virtualAudioGraph, nodes])
+}
 
 export default useAudio

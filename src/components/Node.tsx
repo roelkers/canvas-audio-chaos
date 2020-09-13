@@ -1,13 +1,11 @@
-import React, { Component, useRef, useState, useEffect } from 'react';
-import { Stage, Layer, Rect, Group, Ring, Circle, KonvaNodeComponent } from 'react-konva';
-import { useSelector, useDispatch } from 'react-redux'
-import { createNode, selectNodes, dragNode, INode } from '../slices/canvas';
+import React  from 'react';
+import { Group } from 'react-konva';
+import { useDispatch } from 'react-redux'
+import { dragNode, INode } from '../slices/canvas';
 import Wave from './Wave'
 import CanvasElement from './CanvasElement'
-import AudioElement from './AudioElement';
-import VirtualAudioGraph from 'virtual-audio-graph/dist/VirtualAudioGraph';
 
-const Node = ({ node, virtualAudioGraph }: { node: INode, virtualAudioGraph: VirtualAudioGraph }) => {
+const Node = ({ node }: { node: INode }) => {
   const dispatch = useDispatch()
   const { x, y , active} = node
   const fill = active ? '#ff0000' : '#00ff00'

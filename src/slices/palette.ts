@@ -4,12 +4,13 @@ import { OscConfig } from '../nodeCreators/osc'
 import { NodeCreator } from '../nodeCreators'
 import { FilterConfig } from '../nodeCreators/filter'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
+import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 
 
 export interface AudioConfig {
   nodeCreator: NodeCreator; 
   output: string;
-  params: OscConfig | FilterConfig | AttackReleaseOscConfig 
+  params: OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig 
 }
 
 export type AudioRecord = Record<number, AudioConfig>

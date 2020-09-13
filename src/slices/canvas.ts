@@ -3,6 +3,7 @@ import { RootState } from '../store'
 import { IPaletteElement } from './palette'
 import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
+import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { OscConfig } from '../nodeCreators/osc'
 
 export interface INodeHistoric extends IPaletteElement {
@@ -15,6 +16,7 @@ export interface INodeNonHistoric {
   id: string;
   active: boolean;
   startTime: number | null;
+  stopTime: number | null;
 }
 
 export interface INode extends INodeHistoric, INodeNonHistoric { }
@@ -37,16 +39,16 @@ interface CanvasStateNonHistoric {
 }
 
 const initialState: Canvas = {
-  canvasHover: false,
+  canvasHover: true,
   historyStep: 0,
   nonHistory: {
     focussedNode: '',
     nodes: [
       {
-        id: '0', active: false, startTime: null
+        id: '0', active: false, startTime: null, stopTime: null,
       },
       {
-        id: '1', active: false, startTime: null
+        id: '1', active: false, startTime: null, stopTime: null
       },
       // {
       //   id: '2', active: false,
@@ -68,11 +70,11 @@ const initialState: Canvas = {
             nodeCreator: 'attackReleaseOsc',
             output: 'output',
             params: {
-              frequency: 110,
+              frequency: 264,
               gain: 0.2,
-              type: 'square',
-              attack : 0.1,
-              release : 5 
+              type: 'sawtooth',
+              attack : 0.5,
+              release : 2
             } as AttackReleaseOscConfig
           }
         }
@@ -82,15 +84,26 @@ const initialState: Canvas = {
         elementId: '0', behaviour: 'Trigger', groups: ['0'],
         x: 0, y: 200,
         audio: {
+          0: {
+            nodeCreator: 'attackReleaseOsc',
+            output: '1',
+            params: {
+              frequency: 330,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack : 0.8,
+              release : 1 
+            } as AttackReleaseOscConfig,
+          },
           1: {
-            nodeCreator: 'osc',
+            nodeCreator: 'filter_simple',
             output: 'output',
             params: {
-              frequency: 110,
-              gain: 0.2,
-              stopTime: 1,
-              type: 'square',
-            } as OscConfig
+              frequency: 2520,
+              type: '',
+              resonance: 35 
+            } as SimpleFilterConfig,
+            
           }
         }
       },
@@ -180,7 +193,7 @@ const canvasSlice = createSlice({
       }
     },
     setNodeStartTime(state,action) {
-      const { nodeId, startTime } = action.payload
+      const { nodeId, startTime, stopTime } = action.payload
       const node = state.nonHistory.nodes.find(n => n.id === nodeId)
       if (node) {
         node.startTime = startTime
@@ -208,11 +221,13 @@ export const selectNodes = createSelector(
 
 export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistory.focussedNode
 
+export const selectInitialCanvasHover = (state: RootState) => state.canvas.canvasHover
+
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode, 
-  activateNode, deactivateNode, dragNode, undo, redo, focusNode } = actions
+  activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

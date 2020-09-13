@@ -1,31 +1,27 @@
-import { createNode, gain } from 'virtual-audio-graph'
+import { createNode } from 'virtual-audio-graph'
 import nodeCreators from '../nodeCreators';
-import { map, pipe, filter, prop, reduce } from 'ramda';
-import { AudioRecord, AudioConfig } from '../slices/palette';
-import { CustomVirtualAudioNodeFactory } from 'virtual-audio-graph/dist/types';
+import { map  } from 'ramda';
+import { AudioConfig } from '../slices/palette';
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 
 const audioMapper
-  = (currentTime: number) => (audioConfig: AudioConfig) => {
+  = (startTime: number) => (audioConfig: AudioConfig) => {
     const nodeCreatorName = audioConfig.nodeCreator
     return nodeCreators[nodeCreatorName](
       audioConfig.output,
       {
         ...audioConfig.params,
-        startTime: currentTime,
+        startTime
       }
     )
   }
  
  
 const nodeCreator = createNode(({
-  currentTime,
+  startTime,
   audio,
   }) => {
-    // console.log(currentTime)
-    const audioNodes = map(audioMapper(currentTime), audio as AudioConfig[]) as Record<number,CustomVirtualAudioNode>
-    // console.log(audioNodes)
-    return audioNodes 
+    return map(audioMapper(startTime), audio as AudioConfig[]) as Record<number,CustomVirtualAudioNode>
   })
 
 export default nodeCreator
