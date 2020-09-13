@@ -1,16 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, MutableRefObject, RefObject } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import store from '../store'
 import Node from './Node'
 import { selectNodes, initialCanvasHover } from '../slices/canvas';
 import Palette from './Palette'
+import { Layer as LayerType } from 'konva/types/Layer';
 
 const Canvas = () => {
   
   const nodes = useSelector(selectNodes)
   const dispatch = useDispatch()
   const stage = useRef(null)
+  const paletteLayer = useRef(null) as RefObject<LayerType> | null
 
   return (
     <Stage ref={stage} width={window.innerWidth} height={window.innerHeight} onMouseOver={() => dispatch(initialCanvasHover(null))}>
@@ -25,8 +27,8 @@ const Canvas = () => {
             )
           }
         </Layer>
-        <Layer >
-          <Palette stage={stage} />
+        <Layer ref={paletteLayer}>
+          <Palette layer={paletteLayer?.current} stage={stage} />
         </Layer>
       </Provider>
     </Stage>

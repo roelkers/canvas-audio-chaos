@@ -16,7 +16,6 @@ export interface INodeNonHistoric {
   id: string;
   active: boolean;
   startTime: number | null;
-  stopTime: number | null;
 }
 
 export interface INode extends INodeHistoric, INodeNonHistoric { }
@@ -45,17 +44,11 @@ const initialState: Canvas = {
     focussedNode: '',
     nodes: [
       {
-        id: '0', active: false, startTime: null, stopTime: null,
+        id: '0', active: false, startTime: null
       },
       {
-        id: '1', active: false, startTime: null, stopTime: null
+        id: '1', active: false, startTime: null
       },
-      // {
-      //   id: '2', active: false,
-      // },
-      // {
-      //   id: '3', active: false,
-      // }
     ]
   },
   history: [{
@@ -73,8 +66,8 @@ const initialState: Canvas = {
               frequency: 264,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.5,
-              release : 2
+              attack : 0.1,
+              release : 0.2 
             } as AttackReleaseOscConfig
           }
         }
@@ -91,8 +84,8 @@ const initialState: Canvas = {
               frequency: 330,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.8,
-              release : 1 
+              attack : 0.05,
+              release : 0.1 
             } as AttackReleaseOscConfig,
           },
           1: {
@@ -101,7 +94,7 @@ const initialState: Canvas = {
             params: {
               frequency: 2520,
               type: '',
-              resonance: 35 
+              resonance: 15 
             } as SimpleFilterConfig,
             
           }
@@ -127,19 +120,21 @@ const canvasSlice = createSlice({
   reducers: {
     createNode(state, action) {
       const history = state.history.slice(0, state.historyStep + 1)
-      const prev = history[state.historyStep - 1]
+      const prev = history[state.historyStep]
+      const nextId = String(prev.nextId)
       const nextState = {
         ...prev,
         nodes: [
           ...prev.nodes,
           {
-            id: String(prev.nextId),
+            id: nextId, 
             ...action.payload
           }
         ],
         nextId: prev.nextId + 1
       }
       state.history.push(nextState)
+      state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null })
       state.historyStep += 1
     },
     dragNode(state, action) {
@@ -149,8 +144,7 @@ const canvasSlice = createSlice({
       const moveNode = (node: INodeHistoric) => node.id === targetNodeId ? { ...node, x, y } : node
       const nextState = {
         ...prev,
-        nodes: map(moveNode, prev.nodes),
-        nextId: prev.nextId + 1
+        nodes: map(moveNode, prev.nodes)
       }
       history.push(nextState)
       state.history = history

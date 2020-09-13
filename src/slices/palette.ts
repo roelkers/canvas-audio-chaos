@@ -6,7 +6,6 @@ import { FilterConfig } from '../nodeCreators/filter'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 
-
 export interface AudioConfig {
   nodeCreator: NodeCreator; 
   output: string;
@@ -34,18 +33,29 @@ const initialState: CanvasState = {
       elementId: '0',
       behaviour: 'Trigger',
       groups: ['0'],
-      audio: {
-        0: {
-          nodeCreator: 'osc',
-          output: 'output',
-          params: {
-            frequency: 110,
-            gain: 0.2,
-            stopTime: 1,
-            type: 'square',
-          } as OscConfig
+        audio: {
+          0: {
+            nodeCreator: 'attackReleaseOsc',
+            output: '1',
+            params: {
+              frequency: 330,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack : 0.10,
+              release : 0.10 
+            } as AttackReleaseOscConfig,
+          },
+          1: {
+            nodeCreator: 'filter_simple',
+            output: 'output',
+            params: {
+              frequency: 1020,
+              type: '',
+              resonance: 10 
+            } as SimpleFilterConfig,
+            
+          }
         }
-      }
     },
     // { elementId : '0', behaviour: 'Listener', groups: ['0'] },
     // { elementId : '0',  behaviour: 'ListenerTrigger', groups: ['0'] },
