@@ -1,4 +1,4 @@
-import createVirtualAudioGraph, {
+import {
   createNode,
   delay,
   gain,

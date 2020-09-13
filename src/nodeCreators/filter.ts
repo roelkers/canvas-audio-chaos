@@ -1,4 +1,4 @@
-import { createNode, biquadFilter, gain } from 'virtual-audio-graph'
+import { createNode, biquadFilter } from 'virtual-audio-graph'
 
 export interface FilterConfig {
   gain: number

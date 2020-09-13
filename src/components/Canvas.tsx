@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import store from '../store'
@@ -8,7 +8,6 @@ import Palette from './Palette'
 
 const Canvas = () => {
   
-  const [targetColor, setTargetColor] = useState('#0000ff')
   const nodes = useSelector(selectNodes)
   const dispatch = useDispatch()
   const stage = useRef(null)

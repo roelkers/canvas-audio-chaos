@@ -1,7 +1,7 @@
 import VirtualAudioGraph from 'virtual-audio-graph/dist/VirtualAudioGraph';
-import { map, pipe, filter, prop, reduce } from 'ramda';
+import { map, filter, prop } from 'ramda';
 import { IVirtualAudioNodeGraph } from 'virtual-audio-graph/dist/types';
-import { INode, setNodeStartTime, selectInitialCanvasHover, initialCanvasHover } from '../slices/canvas';
+import { INode, setNodeStartTime, selectInitialCanvasHover } from '../slices/canvas';
 import { useEffect, useRef, MutableRefObject } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectNodes } from '../slices/canvas';
@@ -10,7 +10,7 @@ import createVirtualAudioGraph from 'virtual-audio-graph'
 
 const useAudio = () => {
   const nodes = useSelector(selectNodes)
-  const virtualAudioGraph = <MutableRefObject<VirtualAudioGraph | null>>useRef(null)
+  const virtualAudioGraph = useRef(null) as unknown as MutableRefObject<VirtualAudioGraph | null>
   const initialCanvasHover = useSelector(selectInitialCanvasHover)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -18,7 +18,7 @@ const useAudio = () => {
       virtualAudioGraph.current = createVirtualAudioGraph()
       virtualAudioGraph.current.audioContext.resume()
     }
-  }, [initialCanvasHover])
+  }, [virtualAudioGraph, initialCanvasHover])
   useEffect(() => {
     if (virtualAudioGraph.current === null) {
       return
@@ -30,7 +30,7 @@ const useAudio = () => {
         dispatch(setNodeStartTime({ startTime, nodeId: node.id }))
       }
     }
-  }, [virtualAudioGraph, nodes,, dispatch])
+  }, [virtualAudioGraph, nodes, dispatch])
   useEffect(() => {
     if (virtualAudioGraph.current === null) {
       return

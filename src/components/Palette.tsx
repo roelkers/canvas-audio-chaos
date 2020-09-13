@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import { Group, Rect } from "react-konva"
 import { useSelector } from 'react-redux'
 import { selectPaletteElements } from '../slices/palette'

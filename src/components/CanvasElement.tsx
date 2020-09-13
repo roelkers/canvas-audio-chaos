@@ -1,7 +1,7 @@
 import React from 'react';
-import { Stage, Layer, Rect, Group, Ring, Circle, KonvaNodeComponent } from 'react-konva';
+import { Rect } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux'
-import { createNode, selectNodes, INode, focusNode, selectFocussedNodeId } from '../slices/canvas';
+import { focusNode, selectFocussedNodeId } from '../slices/canvas';
 
 interface CanvasElementProps {
   width: number;

@@ -1,5 +1,4 @@
 import { createNode, oscillator, gain } from 'virtual-audio-graph'
-import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode'
 
 export interface AttackReleaseOscConfig {
   gain: number;

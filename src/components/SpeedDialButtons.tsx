@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOpen, selectIsSpeedDialOpen } from '../slices/action-buttons'
 import { styled } from '@material-ui/core/styles'
 import { undo, redo } from '../slices/canvas'
-import { pipe, find, propEq, tap } from 'ramda'
+import { pipe, find, propEq } from 'ramda'
 
 
 const FloatedSpeedDial = styled(SpeedDial)(({ theme }) => ({
@@ -27,7 +27,6 @@ const SpeedDialButtons = () => {
     { icon: <Icon path={mdiContentCopy} size={1} />, name: 'Clone', action: () => null },
   ];
   const handleClick = (actionName : string) => {
-    // console.log(e.target)
     pipe(
      find(propEq('name', actionName )),  
      (a: any) => a.action() 

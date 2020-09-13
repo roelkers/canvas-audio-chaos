@@ -2,12 +2,11 @@ import { Ring } from 'react-konva';
 import React, { useRef, useEffect } from 'react';
 import { isIntersecting } from '../functions/geometry'
 import Konva from 'konva'
-import { useDispatch, useSelector } from 'react-redux';
-import { activateNode, deactivateNode, selectNodes } from '../slices/canvas';
+import { useDispatch } from 'react-redux';
+import { activateNode, deactivateNode } from '../slices/canvas';
 
 const Wave = ({ nodeId }: { nodeId: string }) => {
   const dispatch = useDispatch()
-  const nodes = useSelector(selectNodes)
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
   const initialInnerRadius = 1
@@ -15,7 +14,6 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
 
   let konvaAnim: any = useRef(null)
   useEffect(() => {
-    // konvaAnim.current?.stop()
     const layer = circle.current.getLayer()
     const stage = layer.getStage()
     const stageWidth = stage.getWidth()
@@ -28,12 +26,9 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
     konvaAnim.current = new Konva.Animation(
       (frame: any) => {
         const scale = (frame.time / 1000 * velocity) % maxRadius
-        // circle.current.outerRadius = or
-        // circle.current.innerRadius = or - 10 
         const currentInnerRadius = initialInnerRadius * scale
         circle.current.attrs.innerRadius = currentInnerRadius
         circle.current.attrs.outerRadius = currentInnerRadius + ringDiameter
-        const waveId = circle.current._id
 
         layer.find('.triggerable').each((target: any) => {
           const parentGroupId = target.parent.attrs.id
@@ -54,7 +49,7 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
       layer)
     konvaAnim.current.start()
     return () => konvaAnim.current?.stop()
-  }, [])
+  }, [dispatch, nodeId])
 
   return (
     <Ring

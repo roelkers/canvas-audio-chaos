@@ -1,4 +1,4 @@
-import { configureStore, applyMiddleware } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import canvas from '../slices/canvas'
 import palette from '../slices/palette'
 import action from '../slices/action-buttons'
