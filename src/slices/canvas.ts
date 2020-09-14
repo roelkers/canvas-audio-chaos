@@ -56,7 +56,11 @@ const initialState: Canvas = {
     nodes: [
       {
         id: '0',
-        elementId: '0', behaviour: 'Trigger', groups: ['0'],
+        elementId: '0',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
         x: 0, y: 0,
         audio: {
           0: {
@@ -66,15 +70,19 @@ const initialState: Canvas = {
               frequency: 264,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.1,
-              release : 0.2 
+              attack: 0.1,
+              release: 0.2
             } as AttackReleaseOscConfig
           }
         }
       },
       {
         id: '1',
-        elementId: '0', behaviour: 'Trigger', groups: ['0'],
+        elementId: '0',
+        groups: ['0'],
+        periodicTrigger: true,
+        activeTrigger: true,
+        soundOnActivate: true,
         x: 0, y: 200,
         audio: {
           0: {
@@ -84,8 +92,8 @@ const initialState: Canvas = {
               frequency: 330,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.05,
-              release : 0.1 
+              attack: 0.05,
+              release: 0.1
             } as AttackReleaseOscConfig,
           },
           1: {
@@ -94,22 +102,12 @@ const initialState: Canvas = {
             params: {
               frequency: 2520,
               type: '',
-              resonance: 15 
+              resonance: 15
             } as SimpleFilterConfig,
-            
+
           }
         }
       },
-      // {
-      //   id: '2',
-      //   elementId: '0', behaviour: 'Trigger', groups: ['0'],
-      //   x: 200, y: 0
-      // },
-      // {
-      //   id: '3',
-      //   elementId: '0', behaviour: 'Trigger', groups: ['0'],
-      //   x: 200, y: 200
-      // }
     ],
   }]
 }
@@ -127,7 +125,7 @@ const canvasSlice = createSlice({
         nodes: [
           ...prev.nodes,
           {
-            id: nextId, 
+            id: nextId,
             ...action.payload
           }
         ],
@@ -186,14 +184,14 @@ const canvasSlice = createSlice({
         node.active = false
       }
     },
-    setNodeStartTime(state,action) {
+    setNodeStartTime(state, action) {
       const { nodeId, startTime, stopTime } = action.payload
       const node = state.nonHistory.nodes.find(n => n.id === nodeId)
       if (node) {
         node.startTime = startTime
       }
     },
-    initialCanvasHover(state,action) {
+    initialCanvasHover(state, action) {
       state.canvasHover = true
     }
   }
@@ -220,7 +218,7 @@ export const selectInitialCanvasHover = (state: RootState) => state.canvas.canva
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, setNodeStartTime, deleteNode, 
+export const { createNode, updateNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover } = actions
 // Export the reducer, either as a default or named export
 export default reducer

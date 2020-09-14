@@ -1,11 +1,13 @@
 import { Ring } from 'react-konva';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { isIntersecting } from '../functions/geometry'
 import Konva from 'konva'
 import { useDispatch } from 'react-redux';
-import { activateNode, deactivateNode } from '../slices/canvas';
+import { activateNode, deactivateNode, INode } from '../slices/canvas';
 
-const Wave = ({ nodeId }: { nodeId: string }) => {
+const Wave = ({ node }: { node : INode}) => {
+  const { id: nodeId, active, activeTrigger, periodicTrigger } = node
+  const [stopped, setStopped] = useState(false)
   const dispatch = useDispatch()
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
@@ -13,7 +15,13 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
   const ringDiameter = 5 
 
   let konvaAnim: any = useRef(null)
+
+  const dependencies :any = [dispatch, nodeId]
+  if(activeTrigger) {
+    dependencies.push(active)
+  }
   useEffect(() => {
+    circle.current?.show()
     const layer = circle.current.getLayer()
     const stage = layer.getStage()
     const stageWidth = stage.getWidth()
@@ -21,10 +29,14 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
     const maxRadius = stageWidth > stageHeight ? stageWidth : stageHeight
     const duration = 5;
     const velocity = maxRadius / duration;
-    let intersections: string[] = []
+    const stop = () => konvaAnim.current?.stop() && circle.current?.hide() 
 
+    let intersections: string[] = []
     konvaAnim.current = new Konva.Animation(
       (frame: any) => {
+        if(!periodicTrigger && frame.time / 1000 > duration) {
+          return stop()
+        }
         const scale = (frame.time / 1000 * velocity) % maxRadius
         const currentInnerRadius = initialInnerRadius * scale
         circle.current.attrs.innerRadius = currentInnerRadius
@@ -48,8 +60,13 @@ const Wave = ({ nodeId }: { nodeId: string }) => {
       },
       layer)
     konvaAnim.current.start()
-    return () => konvaAnim.current?.stop()
-  }, [dispatch, nodeId])
+    return () => {
+      konvaAnim.current?.stop() //To do : deactivate interceptions
+      for(const intersection of intersections) {
+         dispatch(deactivateNode({ targetNodeId: intersection }))
+      }
+    }
+  }, dependencies )
 
   return (
     <Ring

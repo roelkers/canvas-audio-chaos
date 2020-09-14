@@ -17,7 +17,9 @@ export type AudioRecord = Record<number, AudioConfig>
 export interface IPaletteElement {
   elementId: string;
   groups: string[];
-  behaviour: 'Trigger' | 'Listener' | 'ListenerTrigger'
+  periodicTrigger: boolean;
+  activeTrigger: boolean;
+  soundOnActivate: boolean;
   audio: AudioRecord 
 }
 
@@ -31,8 +33,10 @@ const initialState: CanvasState = {
   elements: [
     {
       elementId: '0',
-      behaviour: 'Trigger',
       groups: ['0'],
+      periodicTrigger: true,
+      activeTrigger: true,
+      soundOnActivate: true,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',

@@ -12,7 +12,6 @@ const initialState : IActionState =
       action: ''
     }
 
-
 const canvasSlice = createSlice({
   name: 'action',
   initialState,

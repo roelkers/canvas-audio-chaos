@@ -12,7 +12,6 @@ const PaletteElement = ({ element, x, y, redraw }: { element: IPaletteElement, x
 
   const handleDragEnd = (e: any) => {
     if(group.current === null) return 
-    console.log(e)
     dispatch(createNode({ ...element, x: e.evt.x, y: e.evt.y }))
     group.current.position({ x, y})  
     redraw()
