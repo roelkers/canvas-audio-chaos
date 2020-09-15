@@ -47,7 +47,7 @@ const makeWedge = (props: ShapeProps) =>
   <RegularPolygon
     {...props} 
     sides={6}
-    radius={props.width/5*3}
+    radius={props.width/7*4}
   />
 
 const makeCircle = (props: ShapeProps) => <Circle {...props} radius={props.width/2}/>

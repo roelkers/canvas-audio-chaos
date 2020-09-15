@@ -5,6 +5,7 @@ import { NodeCreator } from '../nodeCreators'
 import { FilterConfig } from '../nodeCreators/filter'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
+import testPalette from '../assets/testPalette'
 
 export interface AudioConfig {
   nodeCreator: NodeCreator; 
@@ -23,52 +24,12 @@ export interface IPaletteElement {
   audio: AudioRecord 
 }
 
-interface CanvasState {
+export interface ICanvasState {
   nextId: number;
   elements: IPaletteElement[];
 }
 
-const initialState: CanvasState = {
-  nextId: 2,
-  elements: [
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-        audio: {
-          0: {
-            nodeCreator: 'attackReleaseOsc',
-            output: '1',
-            params: {
-              frequency: 330,
-              gain: 0.2,
-              type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
-          },
-          1: {
-            nodeCreator: 'filter_simple',
-            output: 'output',
-            params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
-            
-          }
-        }
-    },
-    // { elementId : '0', behaviour: 'Listener', groups: ['0'] },
-    // { elementId : '0',  behaviour: 'ListenerTrigger', groups: ['0'] },
-    // { elementId : '0', behaviour: 'Trigger', groups: ['0'] },
-    // { elementId : '0', behaviour: 'Trigger', groups: ['0'] },
-    // { elementId : '0', behaviour: 'Listener', groups: ['0'] },
-    // { elementId : '0', behaviour: 'Trigger', groups: ['0'] }
-  ],
-}
+const initialState: ICanvasState = testPalette 
 
 const canvasSlice = createSlice({
   name: 'palette',

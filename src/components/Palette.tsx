@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectPaletteElements } from '../slices/palette'
 import Element from './PaletteElement'
 import { Layer } from 'konva/types/Layer'
+import PaletteElement from './PaletteElement'
 
 const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | undefined }) => {
   let width = 0, height = 0, containerX = 0, containerY = 0
@@ -13,7 +14,7 @@ const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | u
 
   if(stage) {
     width = stage.width() - 50 
-    height = 110; 
+    height = 120; 
     containerY = stage.height() - height - 25;
     containerX = (stage.width()- width) / 2; 
   }
@@ -30,14 +31,15 @@ const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | u
       />
       {
        elements.map(( elem, index) => {
-          const elemX = index * 55 + containerX +5; 
-
-          return (<Element 
+          return <PaletteElement 
               redraw={redraw}
               element={elem}
-              x={elemX}
-              y={containerY + 5} 
-           />)
+              index={index}
+              containerX={containerX}
+              containerY={containerY} 
+              containerWidth={width}
+              containerHeight={height}
+           />
         })
       }
     </Group>
