@@ -35,7 +35,7 @@ const initialState: CanvasState = {
       elementId: '0',
       groups: ['0'],
       periodicTrigger: true,
-      activeTrigger: true,
+      activeTrigger: false,
       soundOnActivate: true,
         audio: {
           0: {

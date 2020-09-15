@@ -26,6 +26,9 @@ const PaletteElement = ({ element, x, y, redraw }: { element: IPaletteElement, x
     >
       <CanvasElement
         nodeId='none'
+        periodicTrigger={element.periodicTrigger}
+        activeTrigger={element.activeTrigger}
+        soundOnActivate={element.soundOnActivate}
         name='palette'
         width={50}
         height={50}

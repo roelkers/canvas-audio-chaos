@@ -7,7 +7,6 @@ import { activateNode, deactivateNode, INode } from '../slices/canvas';
 
 const Wave = ({ node }: { node : INode}) => {
   const { id: nodeId, active, activeTrigger, periodicTrigger } = node
-  const [stopped, setStopped] = useState(false)
   const dispatch = useDispatch()
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
@@ -16,9 +15,9 @@ const Wave = ({ node }: { node : INode}) => {
 
   let konvaAnim: any = useRef(null)
 
-  const dependencies :any = [dispatch, nodeId]
+  let dependencies :any = [dispatch, nodeId]
   if(activeTrigger) {
-    dependencies.push(active)
+    dependencies = [ ...dependencies, active]
   }
   useEffect(() => {
     circle.current?.show()
@@ -61,7 +60,7 @@ const Wave = ({ node }: { node : INode}) => {
       layer)
     konvaAnim.current.start()
     return () => {
-      konvaAnim.current?.stop() //To do : deactivate interceptions
+      konvaAnim.current?.stop() 
       for(const intersection of intersections) {
          dispatch(deactivateNode({ targetNodeId: intersection }))
       }

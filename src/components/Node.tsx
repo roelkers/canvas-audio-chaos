@@ -23,6 +23,9 @@ const Node = ({ node }: { node: INode }) => {
       <Wave node={node} />
       <CanvasElement
         nodeId={node.id}
+        periodicTrigger={node.periodicTrigger}
+        activeTrigger={node.activeTrigger}
+        soundOnActivate={node.soundOnActivate}
         width={50}
         height={50}
         fill={fill}
