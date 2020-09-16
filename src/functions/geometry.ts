@@ -20,3 +20,9 @@ export const isIntersecting = (ring: IRing, elem: ShapeConfig) => {
     dist  < outerRadius 
   )
 }
+
+export const getShapeName = (periodicTrigger: boolean, activeTrigger: boolean) => 
+  periodicTrigger && !activeTrigger ? 'wedge' :
+    !periodicTrigger && activeTrigger ? 'rect' :
+      periodicTrigger && activeTrigger ? 'triangle' : 
+  /*!periodicTrigger && !activeTrigger ?*/ 'circle' 

@@ -6,8 +6,7 @@ import { Group } from 'react-konva';
 import { useDispatch } from 'react-redux';
 import { createNode } from '../slices/canvas';
 import { head } from 'ramda';
-
-
+import { getShapeName } from '../functions/geometry';
 
 interface PaletteElementProps {
    element: IPaletteElement, 
@@ -26,22 +25,16 @@ const shapeOffset = (width: number) => ({
   circle: [width/2,width/2]
 })
 
-const getShapeName = (periodicTrigger: boolean, activeTrigger: boolean) => 
-  periodicTrigger && !activeTrigger ? 'wedge' :
-    !periodicTrigger && activeTrigger ? 'rect' :
-      periodicTrigger && activeTrigger ? 'triangle' : 
-  /*!periodicTrigger && !activeTrigger ?*/ 'circle' 
-
 const PaletteElement = (props: PaletteElementProps ) => {
   const { element, redraw, index, containerX, containerY, containerHeight, containerWidth } = props
   const group : any = useRef(null)
   const dispatch = useDispatch()
   const width = 50;
-  const height = 50;
+  const gutter = 10 
 
   const shapeName = getShapeName(element.periodicTrigger, element.activeTrigger)
-  const baseX = (index * 60 + containerX + 5) % containerWidth; 
-  const baseY = (containerWidth / index >= 61) ? containerY + 5 : containerY + 65
+  const baseX = (index * (width + gutter) + containerX + 5) % containerWidth; 
+  const baseY = (containerWidth / index >= 63) ? containerY + 5 : containerY + 65
   const offset = shapeOffset(width)[shapeName]
   const x = baseX + offset[0]
   const y = baseY + offset[1]
@@ -52,6 +45,9 @@ const PaletteElement = (props: PaletteElementProps ) => {
     group.current.position({ x, y})  
     redraw()
   }
+  if(index / 2  * (width + gutter) > containerWidth ){
+    return null
+  } 
   return (
     <Group
       x={x}

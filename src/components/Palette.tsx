@@ -13,10 +13,12 @@ const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | u
   const redraw = () => layer?.draw()
 
   if(stage) {
-    width = stage.width() - 50 
+    const marginLeft = 25
+    const marginRight = 300
+    width = stage.width() - (marginLeft + marginRight); 
     height = 120; 
     containerY = stage.height() - height - 25;
-    containerX = (stage.width()- width) / 2; 
+    containerX = marginLeft 
   }
 
   return (

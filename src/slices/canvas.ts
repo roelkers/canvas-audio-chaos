@@ -193,13 +193,27 @@ const canvasSlice = createSlice({
     },
     initialCanvasHover(state, action) {
       state.canvasHover = true
+    },
+    setTriggerBehaviour(state, action) {
+      const { nodeId, periodicTrigger, activeTrigger } = action.payload
+      const node = state.nonHistory.nodes.find(n => n.id === nodeId)
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const setTrigger = (node: INodeHistoric) => node.id === nodeId ? { ...node, periodicTrigger, activeTrigger } : node
+      const nextState = {
+        ...prev,
+        nodes: map(setTrigger, prev.nodes)
+      }
+      history.push(nextState)
+      state.history = history
+      state.historyStep += 1
     }
   }
 })
 
 const sortById = sortBy(compose(toLower, prop('id')))
 
-export const selectHistoricNodes = (state: RootState) => <CanvasStateHistoric[]>compose(
+export const selectHistoricNodes = (state: RootState) => <INodeHistoric[]>compose(
   sortById,
   propOr([], 'nodes'),
   nth(state.canvas.historyStep))
@@ -212,6 +226,10 @@ export const selectNodes = createSelector(
 )
 
 export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistory.focussedNode
+export const selectFocussedNode = createSelector(
+  [selectHistoricNodes, selectFocussedNodeId],
+  (nodes, id) => nodes.find(n => n.id === id) 
+) 
 
 export const selectInitialCanvasHover = (state: RootState) => state.canvas.canvasHover
 
@@ -219,7 +237,8 @@ export const selectInitialCanvasHover = (state: RootState) => state.canvas.canva
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
-  activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover } = actions
+  activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover,
+  setTriggerBehaviour } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 
