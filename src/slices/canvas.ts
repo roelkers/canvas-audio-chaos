@@ -5,6 +5,7 @@ import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map } from
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { OscConfig } from '../nodeCreators/osc'
+import { setgroups } from 'process'
 
 export interface INodeHistoric extends IPaletteElement {
   id: string;
@@ -57,10 +58,11 @@ const initialState: Canvas = {
       {
         id: '0',
         elementId: '0',
-        groups: ['0'],
+        groups: ['0','1','2','3'],
         periodicTrigger: false,
         activeTrigger: true,
         soundOnActivate: true,
+        velocity: 240,
         x: 0, y: 0,
         audio: {
           0: {
@@ -79,10 +81,11 @@ const initialState: Canvas = {
       {
         id: '1',
         elementId: '0',
-        groups: ['0'],
+        groups: ['0','1','2','3'],
         periodicTrigger: true,
         activeTrigger: true,
         soundOnActivate: true,
+        velocity: 240,
         x: 0, y: 200,
         audio: {
           0: {
@@ -196,13 +199,38 @@ const canvasSlice = createSlice({
     },
     setTriggerBehaviour(state, action) {
       const { nodeId, periodicTrigger, activeTrigger } = action.payload
-      const node = state.nonHistory.nodes.find(n => n.id === nodeId)
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
       const setTrigger = (node: INodeHistoric) => node.id === nodeId ? { ...node, periodicTrigger, activeTrigger } : node
       const nextState = {
         ...prev,
         nodes: map(setTrigger, prev.nodes)
+      }
+      history.push(nextState)
+      state.history = history
+      state.historyStep += 1
+    },
+    setVelocity(state, action) {
+      const { nodeId, velocity } = action.payload
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const setVelocity = (node: INodeHistoric) => node.id === nodeId ? { ...node, velocity } : node
+      const nextState = {
+        ...prev,
+        nodes: map(setVelocity, prev.nodes)
+      }
+      history.push(nextState)
+      state.history = history
+      state.historyStep += 1
+    },
+    setGroups(state,action) {
+      const { nodeId, groups } = action.payload
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const setGroups = (node: INodeHistoric) => node.id === nodeId ? { ...node, groups } : node
+      const nextState = {
+        ...prev,
+        nodes: map(setGroups, prev.nodes)
       }
       history.push(nextState)
       state.history = history
@@ -238,7 +266,7 @@ const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover,
-  setTriggerBehaviour } = actions
+  setTriggerBehaviour, setVelocity, setGroups } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

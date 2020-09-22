@@ -1,14 +1,19 @@
 import React from 'react'
-import { INode, INodeHistoric, setTriggerBehaviour } from '../slices/canvas'
-import { makeStyles, Select, InputLabel, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { INode, INodeHistoric, setTriggerBehaviour, setVelocity, setGroups } from '../slices/canvas'
+import { makeStyles, Select, InputLabel, MenuItem, ListItemIcon, ListItemText, Grid, Slider, Input, Typography, TextField, Chip } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 import { getShapeName } from '../functions/geometry'
 import { mdiSquare, mdiTriangle, mdiHexagon, mdiCircle } from '@mdi/js'
 import Icon from '@mdi/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectGroups } from '../slices/groups'
 const useStyles = makeStyles((theme) => ({
   root: {
 
-  }
+  },
+  input: {
+    width: 42,
+  }, 
 }))
 const selectValueForShapeName = (shapeName: string) =>
   shapeName === 'wedge' ? <><Icon path={mdiHexagon} size={1} />Hexagon</> :
@@ -17,9 +22,11 @@ const selectValueForShapeName = (shapeName: string) =>
   /*shapeName === 'square' ?*/ <><Icon path={mdiSquare} size={1} />Square</>
 
 const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
-  const { periodicTrigger, activeTrigger } = node
+  const { periodicTrigger, activeTrigger, velocity } = node
   const dispatch = useDispatch()
+  const classes = useStyles()
   const shapeName = getShapeName(periodicTrigger, activeTrigger)
+  const groups = useSelector(selectGroups)
 
   const handleTriggerChange = (e: any) => {
     const value = e.target.value
@@ -30,42 +37,99 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
     /*value === 'triangle' ?*/ { activeTrigger: true, periodicTrigger: false }
     return dispatch(setTriggerBehaviour({ ...payload, nodeId: node.id }))
   }
+
+  const handleSliderChange = (e: any, newValue : number | number []) => dispatch(setVelocity({ nodeId: node.id, velocity: Number(newValue) })) 
+  const handleInputChange = (e: any) => dispatch(setVelocity({ nodeId: node.id , velocity: e.target.value })) 
+  const changeGroups = (event: any, newValue: any) => dispatch(setGroups({ nodeId: node.id, groups: newValue })) 
   return (
     <div>
-      <InputLabel id='element-trigger-label'>Shape</InputLabel>
-      <Select
-        labelId='element-trigger-label'
-        id='element-trigger'
-        renderValue={() => selectValueForShapeName(shapeName)}
-        onChange={handleTriggerChange}
-        value={shapeName}
-      >
-        <MenuItem value='wedge'>
-          <ListItemIcon>
-            <Icon path={mdiHexagon} size={1} />
-          </ListItemIcon>
-          <ListItemText>Hexagon</ListItemText>
-        </MenuItem>
-        <MenuItem value='circle'>
-          <ListItemIcon>
-            <Icon path={mdiCircle} size={1} />
-          </ListItemIcon>
-          <ListItemText>Circle</ListItemText>
-        </MenuItem>
-        <MenuItem value='triangle'>
-          <ListItemIcon>
-            <Icon path={mdiTriangle} size={1} />
-          </ListItemIcon>
-          <ListItemText>Triangle</ListItemText>
-        </MenuItem>
-        <MenuItem value='square'>
-          <ListItemIcon>
-            <Icon path={mdiSquare} size={1} />
-          </ListItemIcon>
-          <ListItemText>Square</ListItemText>
-        </MenuItem>
-      </Select>
-
+      <Grid container spacing={2} alignItems='center'>
+        <Grid item xs={12}>
+          <InputLabel id='element-trigger-label'>Shape</InputLabel>
+          <Select
+            labelId='element-trigger-label'
+            id='element-trigger'
+            renderValue={() => selectValueForShapeName(shapeName)}
+            onChange={handleTriggerChange}
+            value={shapeName}
+          >
+            <MenuItem value='wedge'>
+              <ListItemIcon>
+                <Icon path={mdiHexagon} size={1} />
+              </ListItemIcon>
+              <ListItemText>Hexagon</ListItemText>
+            </MenuItem>
+            <MenuItem value='circle'>
+              <ListItemIcon>
+                <Icon path={mdiCircle} size={1} />
+              </ListItemIcon>
+              <ListItemText>Circle</ListItemText>
+            </MenuItem>
+            <MenuItem value='triangle'>
+              <ListItemIcon>
+                <Icon path={mdiTriangle} size={1} />
+              </ListItemIcon>
+              <ListItemText>Triangle</ListItemText>
+            </MenuItem>
+            <MenuItem value='square'>
+              <ListItemIcon>
+                <Icon path={mdiSquare} size={1} />
+              </ListItemIcon>
+              <ListItemText>Square</ListItemText>
+            </MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs>
+          <Typography gutterBottom>
+            Wave velocity
+          </Typography>
+          <Slider
+            value={velocity}
+            onChange={handleSliderChange}
+            aria-labelledby="input-slider"
+            min={0}
+            max={1000}
+            step={10}
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            className={classes.input}
+            value={velocity}
+            margin="dense"
+            onChange={handleInputChange}
+            inputProps={{
+              step: 10,
+              min: 0,
+              max: 1000,
+              type: 'number',
+              'aria-labelledby': 'input-slider',
+            }}
+          />
+        </Grid>
+        <Autocomplete
+        multiple
+        id="groups"
+        options={groups.map(g => g.id)}
+        getOptionLabel={(option) => option}
+        value={node.groups}
+        onChange={changeGroups}
+        filterSelectedOptions
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label="Groups"
+            placeholder="Select Trigger Groups"
+          />
+        )}
+        renderTags={(value: string[], getTagProps) => {
+          return value.map((option: string, index: number) => (
+            <Chip style={{ backgroundColor: groups.find(g => g.id === option )?.fill }} variant="outlined" label={option} {...getTagProps({ index })} />
+          ))}
+        }
+      /> 
+      </Grid>
     </div>
   )
 }

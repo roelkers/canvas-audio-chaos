@@ -64,7 +64,8 @@ const PaletteElement = (props: PaletteElementProps ) => {
         name='palette'
         width={width}
         height={width}
-        fill={'#0f0f0f'}
+        active={false}
+        groups={element.groups}
       />
       </Group>
   );

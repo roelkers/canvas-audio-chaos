@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { activateNode, deactivateNode, INode } from '../slices/canvas';
 
 const Wave = ({ node }: { node : INode}) => {
-  const { id: nodeId, active, activeTrigger, periodicTrigger } = node
+  const { id: nodeId, active, activeTrigger, periodicTrigger, velocity } = node
   const dispatch = useDispatch()
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
@@ -26,8 +26,7 @@ const Wave = ({ node }: { node : INode}) => {
     const stageWidth = stage.getWidth()
     const stageHeight = stage.getHeight()
     const maxRadius = stageWidth > stageHeight ? stageWidth : stageHeight
-    const duration = 5;
-    const velocity = maxRadius / duration;
+    const duration = maxRadius / velocity
     const stop = () => konvaAnim.current?.stop() && circle.current?.hide() 
 
     let intersections: string[] = []

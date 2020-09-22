@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit' 
 import { RootState } from '../store'
 
-interface IGroup {
+export interface IGroup {
   id: string;
   fill: string;
 }
 
 const initialState : IGroup[] = 
   [
-    { id: '0', fill: '00ff00'},
+    { id: '0', fill: '#00ff00'},
+    { id: '1', fill: '#ff0000'},
+    { id: '2', fill: '#f0f0f0'},
+    { id: '3', fill: '#0f0f0f'},
   ]
 
 const canvasSlice = createSlice({
@@ -21,7 +24,7 @@ const canvasSlice = createSlice({
   }
 })
 
-export const selectPaletteElements = (state : RootState) => state.palette.elements
+export const selectGroups = (state : RootState) => state.groups
 
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice

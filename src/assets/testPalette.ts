@@ -12,6 +12,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -41,6 +42,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -70,6 +72,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -99,6 +102,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -128,6 +132,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -157,6 +162,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -186,6 +192,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -215,6 +222,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -245,6 +253,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -274,6 +283,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -303,6 +313,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -332,6 +343,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -362,6 +374,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -391,6 +404,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -420,6 +434,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -449,6 +464,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -479,6 +495,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -508,6 +525,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -537,6 +555,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -566,6 +585,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -596,6 +616,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -625,6 +646,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -654,6 +676,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -683,6 +706,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -713,6 +737,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -742,6 +767,7 @@ const state: ICanvasState = {
       periodicTrigger: true,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -771,6 +797,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: true,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',
@@ -800,6 +827,7 @@ const state: ICanvasState = {
       periodicTrigger: false,
       activeTrigger: false,
       soundOnActivate: true,
+      velocity: 240,
         audio: {
           0: {
             nodeCreator: 'attackReleaseOsc',

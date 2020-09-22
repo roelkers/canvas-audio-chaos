@@ -21,6 +21,7 @@ export interface IPaletteElement {
   periodicTrigger: boolean;
   activeTrigger: boolean;
   soundOnActivate: boolean;
+  velocity: number;
   audio: AudioRecord 
 }
 
@@ -29,7 +30,11 @@ export interface ICanvasState {
   elements: IPaletteElement[];
 }
 
-const initialState: ICanvasState = testPalette 
+// const initialState: ICanvasState = testPalette 
+ const initialState: ICanvasState = {
+   nextId: 0,
+   elements: []
+ } 
 
 const canvasSlice = createSlice({
   name: 'palette',

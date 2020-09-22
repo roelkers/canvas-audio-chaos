@@ -7,8 +7,7 @@ import CanvasElement from './CanvasElement'
 
 const Node = ({ node }: { node: INode }) => {
   const dispatch = useDispatch()
-  const { x, y, active} = node
-  const fill = active ? '#ff0000' : '#00ff00'
+  const { x, y } = node
   const handleDragEnd = (e: any) => 
     dispatch(dragNode({ x: e.target.x(), y: e.target.y(), targetNodeId: node.id }))
   
@@ -22,13 +21,14 @@ const Node = ({ node }: { node: INode }) => {
     >
       <Wave node={node} />
       <CanvasElement
+        active={node.active}
         nodeId={node.id}
+        groups={node.groups}
         periodicTrigger={node.periodicTrigger}
         activeTrigger={node.activeTrigger}
         soundOnActivate={node.soundOnActivate}
         width={50}
         height={50}
-        fill={fill}
         name='triggerable'
       />
     </Group>
