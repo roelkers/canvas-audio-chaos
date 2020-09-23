@@ -1,30 +1,37 @@
 import { createNode, biquadFilter } from 'virtual-audio-graph'
+import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output  } from 'virtual-audio-graph/dist/types'
+import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 
 export interface FilterConfig {
-  gain: number
+  envAmount: number
   startTime: number,
-  stopTime: number,
   frequency: number,
   resonance: number,
+  attack: number,
+  release: number,
+  type: string
 }
 
-export default createNode(({
-  gain: gainValue,
+type myCustomVirtualAudioNodeFactory = (_: FilterConfig) => IVirtualAudioNodeGraph;
+
+const createFilter = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
+
+export default createFilter(({
+  envAmount,
   startTime,
-  stopTime,
   frequency,
+  attack,
+  release,
   resonance,
   type,
-  ...rest
 }) => {
-  const duration = stopTime - startTime
+  const stopTime = startTime + attack + release
   return {
     0: biquadFilter('output', {
       frequency: [
-        ['setValueAtTime', 0, startTime],
-        ['linearRampToValueAtTime', gainValue, startTime + duration * 0.15],
-        ['setValueAtTime', gainValue, stopTime - duration * 0.25],
-        ['linearRampToValueAtTime', 0, stopTime],
+        ['setValueAtTime', frequency, startTime],
+        ['linearRampToValueAtTime', frequency + envAmount, startTime + attack ],
+        ['linearRampToValueAtTime', 0, frequency, stopTime],
       ],
       Q: resonance, type
     }, 'input'),

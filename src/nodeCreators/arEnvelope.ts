@@ -1,28 +1,24 @@
-import { createNode, oscillator, gain } from 'virtual-audio-graph'
+import { createNode, gain } from 'virtual-audio-graph'
 import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output  } from 'virtual-audio-graph/dist/types'
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 
-export interface AttackReleaseOscConfig {
+export interface arEnvelopeConfig {
   gain: number;
   attack: number;
   release: number;
-  frequency: number;
   startTime: number;
-  type: string;
 }
 
-type myCustomVirtualAudioNodeFactory = (_: AttackReleaseOscConfig) => IVirtualAudioNodeGraph;
+type myCustomVirtualAudioNodeFactory = (_: arEnvelopeConfig) => IVirtualAudioNodeGraph;
 
-const createArOsc = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
+const createArEnvelope = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
 
-const nodeCreator = createArOsc(({
+const nodeCreator = createArEnvelope(({
     gain: gainValue,
     startTime,
     attack,
     release,
-    type,
-    frequency
-  }) => {
+  } : arEnvelopeConfig) => {
     const stopTime = startTime + attack + release
     return {
       0: gain('output', {
@@ -31,8 +27,7 @@ const nodeCreator = createArOsc(({
           ['linearRampToValueAtTime', gainValue, startTime + attack ],
           ['linearRampToValueAtTime', 0, stopTime],
         ],
-      }),
-      1: oscillator(0, { startTime, stopTime, type, frequency }),
+      }, 'input'),
     }
   })
 

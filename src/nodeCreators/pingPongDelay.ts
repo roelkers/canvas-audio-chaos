@@ -4,8 +4,19 @@ import {
   gain,
   stereoPanner,
 } from 'virtual-audio-graph'
+import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output  } from 'virtual-audio-graph/dist/types'
+import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 
-export default createNode(({
+export interface PingPongConfig {
+  decay: number;
+  delayTime: number;
+}
+
+type myCustomVirtualAudioNodeFactory = (_: PingPongConfig) => IVirtualAudioNodeGraph;
+
+const createPingPongDelay = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
+
+export default createPingPongDelay(({
   decay,
   delayTime,
 }) => ({

@@ -1,4 +1,4 @@
-import React, { useRef, MutableRefObject, RefObject } from 'react';
+import React, { useRef, RefObject } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import store from '../store'
