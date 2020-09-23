@@ -49,7 +49,7 @@ const Wave = ({ node }: { node : INode}) => {
              && !intersections.includes(parentGroupId) 
           ) {
             intersections.push(parentGroupId)
-            dispatch(activateNode({ targetNodeId: parentGroupId }))
+            dispatch(activateNode({ targetNodeId: parentGroupId, sourceNodeId: nodeId }))
           } else if (intersections.includes(parentGroupId)) {
             intersections = intersections.filter(n => n !== parentGroupId)
             dispatch(deactivateNode({ targetNodeId: parentGroupId }))

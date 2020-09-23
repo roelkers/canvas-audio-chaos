@@ -2,20 +2,24 @@ import React from 'react';
 import Canvas from './components/Canvas'
 import { styled } from '@material-ui/core/styles' 
 import Settings from './components/ActionButtons'
-import { Box } from '@material-ui/core';
+import { Box, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import Audio from './components/Audio'
 
-const Container = styled(Box)({
-
+const theme = createMuiTheme({
+  typography: {
+    h6: {
+      fontSize: 12
+    }
+  }
 })
 
 function App() {
   return (
-    <Container>
+    <ThemeProvider theme={theme}>
       <Settings />
       <Canvas />
       <Audio />
-    </Container>
+    </ThemeProvider>
   );
 }
 

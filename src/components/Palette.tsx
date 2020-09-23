@@ -1,7 +1,7 @@
 import React from 'react'
 import { Group, Rect } from "react-konva"
 import { useSelector } from 'react-redux'
-import { selectPaletteElements } from '../slices/palette'
+import { IPaletteElement, selectPaletteElements } from '../slices/palette'
 import Element from './PaletteElement'
 import { Layer } from 'konva/types/Layer'
 import PaletteElement from './PaletteElement'
@@ -32,7 +32,7 @@ const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | u
         y={containerY} 
       />
       {
-       elements.map(( elem, index) => {
+       elements.map(( elem: IPaletteElement, index :number) => {
           return <PaletteElement 
               redraw={redraw}
               element={elem}

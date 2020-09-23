@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { IPaletteElement } from './palette'
-import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map } from 'ramda'
+import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { OscConfig } from '../nodeCreators/osc'
@@ -42,7 +42,7 @@ const initialState: Canvas = {
   canvasHover: true,
   historyStep: 0,
   nonHistory: {
-    focussedNode: '',
+    focussedNode: '0',
     nodes: [
       {
         id: '0', active: false, startTime: null
@@ -174,10 +174,15 @@ const canvasSlice = createSlice({
 
     },
     activateNode(state, action) {
-      const { targetNodeId } = action.payload
-      const node = state.nonHistory.nodes.find(n => n.id === targetNodeId)
-      if (node) {
-        node.active = true
+      const { targetNodeId, sourceNodeId } = action.payload
+      const targetNodeNonHistoric = state.nonHistory.nodes.find(n => n.id === targetNodeId)
+      const targetNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === targetNodeId) 
+      const sourceNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === sourceNodeId) 
+
+      if (targetNodeNonHistoric && targetNodeHistoric && sourceNodeHistoric) {
+        if(!isEmpty(intersection(targetNodeHistoric.groups, sourceNodeHistoric.groups))) {
+          targetNodeNonHistoric.active = true
+        } 
       }
     },
     deactivateNode(state, action) {

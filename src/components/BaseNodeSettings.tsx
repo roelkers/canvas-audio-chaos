@@ -7,13 +7,24 @@ import { mdiSquare, mdiTriangle, mdiHexagon, mdiCircle } from '@mdi/js'
 import Icon from '@mdi/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectGroups } from '../slices/groups'
+import debounce from 'debounce'
+
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    padding: theme.spacing(1),
+  },
+  select: {
+    // width: '100%'
+  },
+  chip: {
+    width: 54
   },
   input: {
     width: 42,
-  }, 
+  },
+  label: {
+    fontSize: theme.typography.h6.fontSize
+  }
 }))
 const selectValueForShapeName = (shapeName: string) =>
   shapeName === 'wedge' ? <><Icon path={mdiHexagon} size={1} />Hexagon</> :
@@ -38,15 +49,16 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
     return dispatch(setTriggerBehaviour({ ...payload, nodeId: node.id }))
   }
 
-  const handleSliderChange = (e: any, newValue : number | number []) => dispatch(setVelocity({ nodeId: node.id, velocity: Number(newValue) })) 
-  const handleInputChange = (e: any) => dispatch(setVelocity({ nodeId: node.id , velocity: e.target.value })) 
-  const changeGroups = (event: any, newValue: any) => dispatch(setGroups({ nodeId: node.id, groups: newValue })) 
+  const handleSliderChange = (e: any, newValue: number | number[]) => dispatch(setVelocity({ nodeId: node.id, velocity: Number(newValue) }))
+  const handleInputChange = (e: any) => dispatch(setVelocity({ nodeId: node.id, velocity: e.target.value }))
+  const changeGroups = (event: any, newValue: any) => dispatch(setGroups({ nodeId: node.id, groups: newValue }))
   return (
     <div>
-      <Grid container spacing={2} alignItems='center'>
+      <Grid className={classes.root} container spacing={2} alignItems='center'>
         <Grid item xs={12}>
-          <InputLabel id='element-trigger-label'>Shape</InputLabel>
+          <InputLabel className={classes.label} id='element-trigger-label'>Shape</InputLabel>
           <Select
+            className={classes.select}
             labelId='element-trigger-label'
             id='element-trigger'
             renderValue={() => selectValueForShapeName(shapeName)}
@@ -80,15 +92,15 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
           </Select>
         </Grid>
         <Grid item xs>
-          <Typography gutterBottom>
+          <InputLabel className={classes.label}>
             Wave velocity
-          </Typography>
+          </InputLabel>
           <Slider
             value={velocity}
-            onChange={handleSliderChange}
+            onChange={debounce(handleSliderChange, 25)}
             aria-labelledby="input-slider"
             min={0}
-            max={1000}
+            max={400}
             step={10}
           />
         </Grid>
@@ -107,28 +119,34 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
             }}
           />
         </Grid>
-        <Autocomplete
-        multiple
-        id="groups"
-        options={groups.map(g => g.id)}
-        getOptionLabel={(option) => option}
-        value={node.groups}
-        onChange={changeGroups}
-        filterSelectedOptions
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Groups"
-            placeholder="Select Trigger Groups"
+        <Grid item>
+          <Autocomplete
+            multiple
+            id="groups"
+            options={groups.map(g => g.id)}
+            getOptionLabel={(option) => option}
+            renderOption={(option: string, state) => (
+              <Chip className={classes.chip} style={{ backgroundColor: groups.find(g => g.id === option)?.fill }} variant="outlined" label={option} />
+            )}
+            value={node.groups}
+            onChange={changeGroups}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Groups"
+                placeholder=""
+              />
+            )}
+            renderTags={(value: string[], getTagProps) => {
+              return value.map((option: string, index: number) => (
+                <Chip className={classes.chip} style={{ backgroundColor: groups.find(g => g.id === option)?.fill }} variant="outlined" label={option} {...getTagProps({ index })} />
+              ))
+            }
+            }
           />
-        )}
-        renderTags={(value: string[], getTagProps) => {
-          return value.map((option: string, index: number) => (
-            <Chip style={{ backgroundColor: groups.find(g => g.id === option )?.fill }} variant="outlined" label={option} {...getTagProps({ index })} />
-          ))}
-        }
-      /> 
+        </Grid>
       </Grid>
     </div>
   )

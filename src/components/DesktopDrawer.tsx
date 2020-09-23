@@ -30,7 +30,7 @@ const DesktopDrawer = () => {
       variant="permanent"
       anchor="right"
     >
-    <Typography>Settings</Typography>
+    <Typography variant='h4' align='center'>Settings</Typography>
     { focussedNode && 
     <BaseNodeSettings node={focussedNode} />
     }

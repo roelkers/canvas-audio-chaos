@@ -30,11 +30,11 @@ export interface ICanvasState {
   elements: IPaletteElement[];
 }
 
-// const initialState: ICanvasState = testPalette 
- const initialState: ICanvasState = {
-   nextId: 0,
-   elements: []
- } 
+const initialState: ICanvasState = testPalette 
+//  const initialState: ICanvasState = {
+//    nextId: 0,
+//    elements: []
+//  } 
 
 const canvasSlice = createSlice({
   name: 'palette',

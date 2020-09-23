@@ -83,7 +83,7 @@ const getFillLinearGradientColorStops = (groups: IGroup[], groupsOfNode: string[
     const group = groups.find(gr => gr.id === id) 
     if(! group) return null
     return [ denominator*index, group.fill, denominator*(index+1), group.fill]
-  },groupsOfNode)   
+    },groupsOfNode)   
   return flatten(colorlists) as Array<number | string>
 }
 
