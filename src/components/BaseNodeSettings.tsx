@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.h6.fontSize
   }
 }))
+
 const selectValueForShapeName = (shapeName: string) =>
   shapeName === 'wedge' ? <><Icon path={mdiHexagon} size={1} />Hexagon</> :
     shapeName === 'circle' ? <><Icon path={mdiCircle} size={1} />Circle</> :

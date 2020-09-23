@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { OscConfig } from '../nodeCreators/osc'
-import { NodeCreator } from '../nodeCreators'
-import { FilterConfig } from '../nodeCreators/filter'
-import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
-import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
+import { Config, NodeCreator } from '../nodeCreators'
 import testPalette from '../assets/testPalette'
 
 export interface AudioConfig {
   nodeCreator: NodeCreator; 
   output: string;
-  params: OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig 
+  params: Config
 }
 
 export type AudioRecord = Record<number, AudioConfig>

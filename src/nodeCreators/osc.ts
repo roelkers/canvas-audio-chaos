@@ -6,12 +6,13 @@ export interface OscConfig {
   envFrequencyAmount: number;
   frequency: number;
   type: string;
-  startTime: number;
   attack: number;
   release: number;
 }
 
-type myCustomVirtualAudioNodeFactory = (_: OscConfig) => IVirtualAudioNodeGraph;
+interface OscConfigWithStartTime extends OscConfig { startTime: number }
+
+type myCustomVirtualAudioNodeFactory = (_: OscConfigWithStartTime) => IVirtualAudioNodeGraph;
 
 const createOsc = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
 
@@ -31,7 +32,7 @@ const nodeCreator = createOsc(({
         ['linearRampToValueAtTime', frequency + envFrequencyAmount, startTime + attack],
         ['linearRampToValueAtTime', frequency, stopTime ],
       ],
-      startTime, stopTime, type
+      startTime, type
     }),
   }
 })

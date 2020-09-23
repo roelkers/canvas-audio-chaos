@@ -4,9 +4,9 @@ import { IPaletteElement } from './palette'
 import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
+import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 import { OscConfig } from '../nodeCreators/osc'
-import { setgroups } from 'process'
-
+ 
 export interface INodeHistoric extends IPaletteElement {
   id: string;
   x: number;
@@ -66,15 +66,26 @@ const initialState: Canvas = {
         x: 0, y: 0,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
-            output: 'output',
+            nodeCreator: 'osc',
+            output: '1',
             params: {
               frequency: 264,
               gain: 0.2,
               type: 'sawtooth',
               attack: 0.1,
-              release: 0.2
-            } as AttackReleaseOscConfig
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+
           }
         }
       },
