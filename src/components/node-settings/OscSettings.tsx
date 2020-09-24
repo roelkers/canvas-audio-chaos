@@ -1,24 +1,24 @@
-import { Grid, Input, InputLabel, Slider, Typography } from '@material-ui/core';
+import { Grid, Input, InputLabel, Slider } from '@material-ui/core';
 import React, { ChangeEvent } from 'react'
 import { SettingsProps } from '.';
-import { arEnvelopeConfig } from '../../nodeCreators/arEnvelope';
 import useGridStyles from '../../hooks/useGridStyles'
+import { OscConfig } from '../../nodeCreators/osc';
 import SettingsCollapse from '../SettingsCollapse';
 
-export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig>) {
+export default function OscSettings(props: SettingsProps<OscConfig>) {
   const { handleSetParams, params } = props
-  const { attack, release, gain } = params
+  const { attack, release, frequency } = params
   const classes = useGridStyles()
   const handleSliderChange = (param: string) => (e: ChangeEvent<{}>, newValue: number | number[]) =>
     handleSetParams({ ...params, [param]: newValue })
   const handleInputChange = (param: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     handleSetParams({ ...params, [param]: Number(e.target.value) })
   return (
-    <SettingsCollapse title='Amplitude Envelope'>
+    <SettingsCollapse title='Oscillator'>
     <Grid className={classes.grid} container spacing={2} >
       <Grid item xs >
         <InputLabel className={classes.label}>
-          Attack
+          Attack 
          </InputLabel>
         <Slider
           value={attack}
@@ -78,27 +78,27 @@ export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig
     <Grid className={classes.grid} container spacing={2} >
       <Grid item xs >
         <InputLabel className={classes.label}>
-           Gain 
+           Frequency 
          </InputLabel>
         <Slider
-          value={gain}
-          onChange={handleSliderChange('gain')}
+          value={frequency}
+          onChange={handleSliderChange('frequency')}
           aria-labelledby="input-slider"
           min={0}
-          max={1}
-          step={0.01}
+          max={1000}
+          step={10}
         />
       </Grid>
       <Grid item >
         <Input
           className={classes.input}
-          value={gain}
+          value={frequency}
           margin="dense"
-          onChange={handleInputChange('gain')}
+          onChange={handleInputChange('frequency')}
           inputProps={{
-            step: 0.1,
+            step: 10,
             min: 0,
-            max: 10,
+            max: 1000,
             type: 'number',
             'aria-labelledby': 'input-slider',
           }}

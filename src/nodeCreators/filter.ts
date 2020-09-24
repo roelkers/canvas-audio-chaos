@@ -1,10 +1,10 @@
 import { createNode, biquadFilter } from 'virtual-audio-graph'
 import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output  } from 'virtual-audio-graph/dist/types'
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
+import { ConfigWithStartTime, Params } from '.';
 
 export interface FilterConfig {
   envAmount: number
-  startTime: number,
   frequency: number,
   resonance: number,
   attack: number,
@@ -12,7 +12,7 @@ export interface FilterConfig {
   type: string
 }
 
-type myCustomVirtualAudioNodeFactory = (_: FilterConfig) => IVirtualAudioNodeGraph;
+type myCustomVirtualAudioNodeFactory = (_: ConfigWithStartTime<FilterConfig>) => IVirtualAudioNodeGraph;
 
 const createFilter = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
 

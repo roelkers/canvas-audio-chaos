@@ -8,6 +8,7 @@ import BaseNodeSettings from './node-settings/BaseNodeSettings';
 import { addIndex, compose, map, values } from 'ramda';
 import VirtualAudioNodeSettings from './node-settings'
 import { AudioConfig } from '../slices/palette';
+import SettingsCollapse from './SettingsCollapse';
 
 const drawerWidth = 270;
 
@@ -30,7 +31,8 @@ const getAudioSettings = (focussedNode: INodeHistoric) => {
         nodeId={focussedNode.id} 
         params={audio.params} 
         nodeCreator={audio.nodeCreator} 
-      />,
+      />
+      ,
      focussedNode.audio as AudioConfig[]
     )
   return values(obj)

@@ -16,6 +16,8 @@ export type NodeCreator = 'osc' | 'filter' | 'filter_simple' |
 
 export type Params = OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig | arEnvelopeConfig | outputGainConfig | PingPongConfig
 
+export type ConfigWithStartTime<T extends Params> = T & { startTime: number }
+
 export default {
   osc,
   filter,

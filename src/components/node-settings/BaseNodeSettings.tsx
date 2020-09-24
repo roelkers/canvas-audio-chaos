@@ -8,6 +8,7 @@ import Icon from '@mdi/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectGroups } from '../../slices/groups'
 import debounce from 'debounce'
+import SettingsCollapse from '../SettingsCollapse'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,8 +55,8 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
   const handleInputChange = (e: any) => dispatch(setVelocity({ nodeId: node.id, velocity: e.target.value }))
   const changeGroups = (event: any, newValue: any) => dispatch(setGroups({ nodeId: node.id, groups: newValue }))
   return (
-    <div>
-      <Grid className={classes.root} container spacing={2} alignItems='center'>
+    <SettingsCollapse title='Trigger'>
+      <Grid className={classes.root} container spacing={1} alignItems='center'>
         <Grid item xs={12}>
           <InputLabel className={classes.label} id='element-trigger-label'>Shape</InputLabel>
           <Select
@@ -149,7 +150,7 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
           />
         </Grid>
       </Grid>
-    </div>
+    </SettingsCollapse>
   )
 }
 

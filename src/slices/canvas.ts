@@ -6,6 +6,7 @@ import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 import { OscConfig } from '../nodeCreators/osc'
+import { FilterConfig } from '../nodeCreators/filter'
  
 export interface INodeHistoric extends IPaletteElement {
   id: string;
@@ -78,6 +79,18 @@ const initialState: Canvas = {
             } as OscConfig
           },
           1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: '',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
             nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
@@ -85,7 +98,6 @@ const initialState: Canvas = {
               attack: 0.3,
               release: 0.2,
             } as arEnvelopeConfig,
-
           }
         }
       },
