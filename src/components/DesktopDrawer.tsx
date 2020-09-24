@@ -1,10 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import { Typography, styled } from '@material-ui/core';
-import { selectFocussedNodeId, selectFocussedNode, INode, INodeHistoric } from '../slices/canvas';
+import { Typography } from '@material-ui/core';
+import { selectFocussedNode, INodeHistoric } from '../slices/canvas';
 import { useSelector } from 'react-redux';
-import BaseNodeSettings from './BaseNodeSettings';
+import BaseNodeSettings from './node-settings/BaseNodeSettings';
+import { addIndex, compose, map, values } from 'ramda';
+import VirtualAudioNodeSettings from './node-settings'
+import { AudioConfig } from '../slices/palette';
 
 const drawerWidth = 270;
 
@@ -19,7 +22,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const getAudioSettings = (focussedNode: INodeHistoric) => {
-  
+  const mapper = addIndex(map) as (func : (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[] 
+  const obj = mapper(
+     (audio : AudioConfig, index: number) => 
+      <VirtualAudioNodeSettings 
+        virtualAudioNodeIndex={index}
+        nodeId={focussedNode.id} 
+        params={audio.params} 
+        nodeCreator={audio.nodeCreator} 
+      />,
+     focussedNode.audio as AudioConfig[]
+    )
+  return values(obj)
 }
 
 const DesktopDrawer = () => {

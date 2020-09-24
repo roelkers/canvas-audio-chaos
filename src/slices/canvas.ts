@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { IPaletteElement } from './palette'
-import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty } from 'ramda'
+import { AudioConfig, IPaletteElement } from './palette'
+import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty, addIndex } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
@@ -251,6 +251,31 @@ const canvasSlice = createSlice({
       history.push(nextState)
       state.history = history
       state.historyStep += 1
+    },
+    setAudioParams(state, action) {
+      const { nodeId, params, virtualAudioNodeIndex } = action.payload
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const mapper = addIndex(map) as (func : (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[] 
+      const audioSetter = (audio: AudioConfig, index: number) => index === virtualAudioNodeIndex ?
+      {
+        ...audio,
+        params
+      } : audio
+
+      const nodeSetter = (node: INodeHistoric) => node.id === nodeId ? 
+      { 
+        ...node, 
+        audio: mapper(audioSetter, node.audio as AudioConfig[]) 
+      } : node
+
+      const nextState = {
+        ...prev,
+        nodes: map(nodeSetter, prev.nodes)
+      }
+      history.push(nextState)
+      state.history = history
+      state.historyStep += 1
     }
   }
 })
@@ -282,7 +307,7 @@ const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover,
-  setTriggerBehaviour, setVelocity, setGroups } = actions
+  setTriggerBehaviour, setVelocity, setGroups, setAudioParams } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

@@ -14,7 +14,7 @@ import { OscConfig } from '../nodeCreators/osc'
 export type NodeCreator = 'osc' | 'filter' | 'filter_simple' |
  'pingPongDelay' | 'attackReleaseOsc' | 'arEnvelope' | 'outputGain'
 
-export type Config = OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig | arEnvelopeConfig | outputGainConfig | PingPongConfig
+export type Params = OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig | arEnvelopeConfig | outputGainConfig | PingPongConfig
 
 export default {
   osc,

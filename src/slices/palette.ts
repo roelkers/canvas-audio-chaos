@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { Config, NodeCreator } from '../nodeCreators'
+import { Params, NodeCreator } from '../nodeCreators'
 import testPalette from '../assets/testPalette'
 
 export interface AudioConfig {
   nodeCreator: NodeCreator; 
   output: string;
-  params: Config
+  params: Params 
 }
 
 export type AudioRecord = Record<number, AudioConfig>

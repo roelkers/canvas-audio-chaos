@@ -1,12 +1,12 @@
 import React from 'react'
-import { INode, INodeHistoric, setTriggerBehaviour, setVelocity, setGroups } from '../slices/canvas'
+import { INode, INodeHistoric, setTriggerBehaviour, setVelocity, setGroups } from '../../slices/canvas'
 import { makeStyles, Select, InputLabel, MenuItem, ListItemIcon, ListItemText, Grid, Slider, Input, Typography, TextField, Chip } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
-import { getShapeName } from '../functions/geometry'
+import { getShapeName } from '../../functions/geometry'
 import { mdiSquare, mdiTriangle, mdiHexagon, mdiCircle } from '@mdi/js'
 import Icon from '@mdi/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectGroups } from '../slices/groups'
+import { selectGroups } from '../../slices/groups'
 import debounce from 'debounce'
 
 const useStyles = makeStyles((theme) => ({
@@ -114,7 +114,7 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
             inputProps={{
               step: 10,
               min: 0,
-              max: 1000,
+              max: 400,
               type: 'number',
               'aria-labelledby': 'input-slider',
             }}

@@ -2,7 +2,6 @@ import React from 'react'
 import { Group, Rect } from "react-konva"
 import { useSelector } from 'react-redux'
 import { IPaletteElement, selectPaletteElements } from '../slices/palette'
-import Element from './PaletteElement'
 import { Layer } from 'konva/types/Layer'
 import PaletteElement from './PaletteElement'
 

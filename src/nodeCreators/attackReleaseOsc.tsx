@@ -43,13 +43,3 @@ export default nodeCreator
 interface arOscSettingsProps {
   config: AttackReleaseOscConfig;
 }
-
-export function arOscSettings(props: arOscSettingsProps) {
-  return (
-    <Grid>
-      <Grid item>
-        
-      </Grid>
-    </Grid>
-  )
-}

@@ -6,10 +6,11 @@ export interface arEnvelopeConfig {
   gain: number;
   attack: number;
   release: number;
-  startTime: number;
 }
 
-type myCustomVirtualAudioNodeFactory = (_: arEnvelopeConfig) => IVirtualAudioNodeGraph;
+interface arEnvelopeConfigWithStartTime extends arEnvelopeConfig { startTime: number }
+
+type myCustomVirtualAudioNodeFactory = (_: arEnvelopeConfigWithStartTime) => IVirtualAudioNodeGraph;
 
 const createArEnvelope = createNode as (node: myCustomVirtualAudioNodeFactory) => (output: Output, params?: IVirtualAudioNodeParams) => CustomVirtualAudioNode;
 
@@ -18,7 +19,7 @@ const nodeCreator = createArEnvelope(({
     startTime,
     attack,
     release,
-  } : arEnvelopeConfig) => {
+  } : arEnvelopeConfigWithStartTime) => {
     const stopTime = startTime + attack + release
     return {
       0: gain('output', {
