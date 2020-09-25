@@ -26,7 +26,7 @@ export interface SettingsProps<T> {
 
 const VirtualAudioNodeSettings = ({ nodeId, nodeCreator, params, virtualAudioNodeIndex }: VirtualAudioNodeSettingsProps) => {
   const dispatch = useDispatch()
-  const handleSetParams = debounce((params : Params) => dispatch(setAudioParams({ params, nodeId, virtualAudioNodeIndex })),20)
+  const handleSetParams = debounce((params : Params) => dispatch(setAudioParams({ params, nodeId, virtualAudioNodeIndex })),100)
   const props = {
     params,
     virtualAudioNodeIndex,
