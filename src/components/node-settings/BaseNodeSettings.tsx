@@ -55,7 +55,7 @@ const BaseNodeSettings = ({ node }: { node: INodeHistoric }) => {
   const handleInputChange = (e: any) => dispatch(setVelocity({ nodeId: node.id, velocity: e.target.value }))
   const changeGroups = (event: any, newValue: any) => dispatch(setGroups({ nodeId: node.id, groups: newValue }))
   return (
-    <SettingsCollapse title='Trigger'>
+    <SettingsCollapse title='Trigger' virtualAudioNodeIndex={-1} nodeId={node.id}>
       <Grid className={classes.root} container spacing={1} alignItems='center'>
         <Grid item xs={12}>
           <InputLabel className={classes.label} id='element-trigger-label'>Shape</InputLabel>

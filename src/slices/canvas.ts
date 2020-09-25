@@ -1,13 +1,13 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { AudioConfig, IPaletteElement } from './palette'
-import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty, addIndex } from 'ramda'
+import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty, addIndex, contains, filter, find, propEq } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 import { OscConfig } from '../nodeCreators/osc'
 import { FilterConfig } from '../nodeCreators/filter'
- 
+
 export interface INodeHistoric extends IPaletteElement {
   id: string;
   x: number;
@@ -18,6 +18,7 @@ export interface INodeNonHistoric {
   id: string;
   active: boolean;
   startTime: number | null;
+  collapsedAudioNodeSettingsIndexes: number[]
 }
 
 export interface INode extends INodeHistoric, INodeNonHistoric { }
@@ -46,10 +47,12 @@ const initialState: Canvas = {
     focussedNode: '0',
     nodes: [
       {
-        id: '0', active: false, startTime: null
+        id: '0', active: false, startTime: null,
+        collapsedAudioNodeSettingsIndexes: [0]
       },
       {
-        id: '1', active: false, startTime: null
+        id: '1', active: false, startTime: null,
+        collapsedAudioNodeSettingsIndexes: [0]
       },
     ]
   },
@@ -59,7 +62,7 @@ const initialState: Canvas = {
       {
         id: '0',
         elementId: '0',
-        groups: ['0','1','2','3'],
+        groups: ['0', '1', '2', '3'],
         periodicTrigger: false,
         activeTrigger: true,
         soundOnActivate: true,
@@ -104,7 +107,7 @@ const initialState: Canvas = {
       {
         id: '1',
         elementId: '0',
-        groups: ['0','1','2','3'],
+        groups: ['0', '1', '2', '3'],
         periodicTrigger: true,
         activeTrigger: true,
         soundOnActivate: true,
@@ -158,7 +161,7 @@ const canvasSlice = createSlice({
         nextId: prev.nextId + 1
       }
       state.history.push(nextState)
-      state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null })
+      state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: [] })
       state.historyStep += 1
     },
     dragNode(state, action) {
@@ -199,13 +202,13 @@ const canvasSlice = createSlice({
     activateNode(state, action) {
       const { targetNodeId, sourceNodeId } = action.payload
       const targetNodeNonHistoric = state.nonHistory.nodes.find(n => n.id === targetNodeId)
-      const targetNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === targetNodeId) 
-      const sourceNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === sourceNodeId) 
+      const targetNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === targetNodeId)
+      const sourceNodeHistoric = state.history[state.historyStep].nodes.find(n => n.id === sourceNodeId)
 
       if (targetNodeNonHistoric && targetNodeHistoric && sourceNodeHistoric) {
-        if(!isEmpty(intersection(targetNodeHistoric.groups, sourceNodeHistoric.groups))) {
+        if (!isEmpty(intersection(targetNodeHistoric.groups, sourceNodeHistoric.groups))) {
           targetNodeNonHistoric.active = true
-        } 
+        }
       }
     },
     deactivateNode(state, action) {
@@ -251,7 +254,7 @@ const canvasSlice = createSlice({
       state.history = history
       state.historyStep += 1
     },
-    setGroups(state,action) {
+    setGroups(state, action) {
       const { nodeId, groups } = action.payload
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
@@ -268,18 +271,18 @@ const canvasSlice = createSlice({
       const { nodeId, params, virtualAudioNodeIndex } = action.payload
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
-      const mapper = addIndex(map) as (func : (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[] 
+      const mapper = addIndex(map) as (func: (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[]
       const audioSetter = (audio: AudioConfig, index: number) => index === virtualAudioNodeIndex ?
-      {
-        ...audio,
-        params
-      } : audio
+        {
+          ...audio,
+          params
+        } : audio
 
-      const nodeSetter = (node: INodeHistoric) => node.id === nodeId ? 
-      { 
-        ...node, 
-        audio: mapper(audioSetter, node.audio as AudioConfig[]) 
-      } : node
+      const nodeSetter = (node: INodeHistoric) => node.id === nodeId ?
+        {
+          ...node,
+          audio: mapper(audioSetter, node.audio as AudioConfig[])
+        } : node
 
       const nextState = {
         ...prev,
@@ -288,8 +291,22 @@ const canvasSlice = createSlice({
       history.push(nextState)
       state.history = history
       state.historyStep += 1
+    },
+    setCollapseAudioNodeSettings(state, action) {
+      const { collapsed, nodeId, virtualAudioNodeIndex } = action.payload
+      const node = state.nonHistory.nodes.find(n => n.id === nodeId)
+      console.log(node)
+      if (node) {
+        const containsIndex = contains( virtualAudioNodeIndex, node.collapsedAudioNodeSettingsIndexes)
+        console.log(containsIndex)
+        if(collapsed && !containsIndex)  {
+          node.collapsedAudioNodeSettingsIndexes = [ ...node.collapsedAudioNodeSettingsIndexes, virtualAudioNodeIndex] 
+        } else if (!collapsed && containsIndex) {
+          node.collapsedAudioNodeSettingsIndexes = filter((i) => i !== virtualAudioNodeIndex, node.collapsedAudioNodeSettingsIndexes) 
+        }
+      }
     }
-  }
+  },
 })
 
 const sortById = sortBy(compose(toLower, prop('id')))
@@ -309,17 +326,21 @@ export const selectNodes = createSelector(
 export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistory.focussedNode
 export const selectFocussedNode = createSelector(
   [selectHistoricNodes, selectFocussedNodeId],
-  (nodes, id) => nodes.find(n => n.id === id) 
-) 
+  (nodes, id) => nodes.find(n => n.id === id)
+)
 
 export const selectInitialCanvasHover = (state: RootState) => state.canvas.canvasHover
+
+export const selectCollapsedAudioNodeSettings = (nodeId: string) => 
+ createSelector([selectNonHistoricNodes], (nodes) => find(propEq('id', nodeId),nodes)?.collapsedAudioNodeSettingsIndexes)
 
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover,
-  setTriggerBehaviour, setVelocity, setGroups, setAudioParams } = actions
+  setTriggerBehaviour, setVelocity, setGroups, setAudioParams,
+  setCollapseAudioNodeSettings } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

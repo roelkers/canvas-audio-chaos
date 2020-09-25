@@ -26,6 +26,7 @@
     "react-konva": "^16.13.0-6",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
+    "tonal": "^2.2.2",
     "typescript": "~3.7.2",
     "virtual-audio-graph": "^1.1.6"
   },

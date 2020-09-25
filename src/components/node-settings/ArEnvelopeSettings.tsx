@@ -6,7 +6,7 @@ import useGridStyles from '../../hooks/useGridStyles'
 import SettingsCollapse from '../SettingsCollapse';
 
 export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig>) {
-  const { handleSetParams, params } = props
+  const { handleSetParams, params, nodeId, virtualAudioNodeIndex } = props
   const { attack, release, gain } = params
   const classes = useGridStyles()
   const handleSliderChange = (param: string) => (e: ChangeEvent<{}>, newValue: number | number[]) =>
@@ -14,7 +14,7 @@ export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig
   const handleInputChange = (param: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     handleSetParams({ ...params, [param]: Number(e.target.value) })
   return (
-    <SettingsCollapse title='Amplitude Envelope'>
+    <SettingsCollapse nodeId={nodeId} title='Amplitude Envelope' virtualAudioNodeIndex={virtualAudioNodeIndex}>
     <Grid className={classes.grid} container spacing={2} >
       <Grid item xs >
         <InputLabel className={classes.label}>

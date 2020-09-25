@@ -19,6 +19,8 @@ interface VirtualAudioNodeSettingsProps {
 
 export interface SettingsProps<T> {
   params: T;
+  nodeId: string;
+  virtualAudioNodeIndex: number;
   handleSetParams : (params: T) => void
 }
 
@@ -27,7 +29,9 @@ const VirtualAudioNodeSettings = ({ nodeId, nodeCreator, params, virtualAudioNod
   const handleSetParams = debounce((params : Params) => dispatch(setAudioParams({ params, nodeId, virtualAudioNodeIndex })),20)
   const props = {
     params,
-    handleSetParams 
+    virtualAudioNodeIndex,
+    handleSetParams,
+    nodeId 
   }
   const settingsMap = {
     arEnvelope : <ArEnvelopeSettings {...props as SettingsProps<arEnvelopeConfig>} />,   

@@ -6,7 +6,7 @@ import { OscConfig } from '../../nodeCreators/osc';
 import SettingsCollapse from '../SettingsCollapse';
 
 export default function OscSettings(props: SettingsProps<OscConfig>) {
-  const { handleSetParams, params } = props
+  const { handleSetParams, params, nodeId, virtualAudioNodeIndex } = props
   const { attack, release, frequency } = params
   const classes = useGridStyles()
   const handleSliderChange = (param: string) => (e: ChangeEvent<{}>, newValue: number | number[]) =>
@@ -14,7 +14,7 @@ export default function OscSettings(props: SettingsProps<OscConfig>) {
   const handleInputChange = (param: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     handleSetParams({ ...params, [param]: Number(e.target.value) })
   return (
-    <SettingsCollapse title='Oscillator'>
+    <SettingsCollapse title='Oscillator' nodeId={nodeId} virtualAudioNodeIndex={virtualAudioNodeIndex}>
     <Grid className={classes.grid} container spacing={2} >
       <Grid item xs >
         <InputLabel className={classes.label}>

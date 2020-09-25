@@ -6,7 +6,7 @@ import { FilterConfig } from '../../nodeCreators/filter';
 import SettingsCollapse from '../SettingsCollapse';
 
 export default function FilterSettings(props: SettingsProps<FilterConfig>) {
-  const { handleSetParams, params } = props
+  const { handleSetParams, params, virtualAudioNodeIndex, nodeId } = props
   const { attack, release, frequency, resonance, envAmount } = params
   const classes = useGridStyles()
   const handleSliderChange = (param: string) => (e: ChangeEvent<{}>, newValue: number | number[]) =>
@@ -14,7 +14,7 @@ export default function FilterSettings(props: SettingsProps<FilterConfig>) {
   const handleInputChange = (param: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     handleSetParams({ ...params, [param]: Number(e.target.value) })
   return (
-    <SettingsCollapse title='Filter'>
+    <SettingsCollapse title='Filter' nodeId={nodeId} virtualAudioNodeIndex={virtualAudioNodeIndex}>
     <Grid className={classes.grid} container spacing={2} >
       <Grid item xs >
         <InputLabel className={classes.label}>
