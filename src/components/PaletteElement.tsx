@@ -39,7 +39,9 @@ const PaletteElement = (props: PaletteElementProps) => {
 
   const shapeName = getShapeName(element.periodicTrigger, element.activeTrigger)
   const baseX = (index * (width + gutter) + containerX + 5) % containerWidth;
-  const baseY = (containerWidth / index >= 64) ? containerY + 5 : containerY + 65
+  //This will move the element to the bottom row based on whether the top row is full
+  //The second condition is for making sure it will not overlap the first element on row 1
+  const baseY = (containerWidth / index -1 >= 60 && baseX > -10 + containerX +5) ? containerY + 5 : containerY + 65
   const offset = shapeOffset(width)[shapeName]
   const x = baseX + offset[0]
   const y = baseY + offset[1]
