@@ -5,13 +5,14 @@ import { AudioConfig } from '../slices/palette';
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 
 const audioMapper
-  = (startTime: number) => (audioConfig: AudioConfig) => {
+  = (startTime: number, scale : string[]) => (audioConfig: AudioConfig) => {
     const nodeCreatorName = audioConfig.nodeCreator
     return nodeCreators[nodeCreatorName](
       audioConfig.output,
       {
         ...audioConfig.params,
-        startTime
+        startTime,
+        scale
       }
     )
   }
@@ -20,8 +21,9 @@ const audioMapper
 const nodeCreator = createNode(({
   startTime,
   audio,
+  scale
   }) => {
-    return map(audioMapper(startTime), audio as AudioConfig[]) as Record<number,CustomVirtualAudioNode>
+    return map(audioMapper(startTime,scale), audio as AudioConfig[]) as Record<number,CustomVirtualAudioNode>
   })
 
 export default nodeCreator

@@ -36,7 +36,7 @@ interface Canvas {
 }
 
 interface CanvasStateNonHistoric {
-  focussedNode: string;
+  focus: string;
   nodes: INodeNonHistoric[];
 }
 
@@ -44,7 +44,7 @@ const initialState: Canvas = {
   canvasHover: true,
   historyStep: 0,
   nonHistory: {
-    focussedNode: '0',
+    focus: '0',
     nodes: [
       {
         id: '0', active: false, startTime: null,
@@ -73,7 +73,8 @@ const initialState: Canvas = {
             nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 264,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
               attack: 0.1,
@@ -189,9 +190,9 @@ const canvasSlice = createSlice({
       }
       state.historyStep += 1
     },
-    focusNode(state, action) {
+    focus(state, action) {
       if (action.payload === 'none') return
-      state.nonHistory.focussedNode = action.payload
+      state.nonHistory.focus = action.payload
     },
     updateNode(state, action) {
 
@@ -323,9 +324,9 @@ export const selectNodes = createSelector(
   (historicNodes, nonHistoricNodes) => <INode[]><unknown>zipWith(merge, historicNodes, nonHistoricNodes)
 )
 
-export const selectFocussedNodeId = (state: RootState) => state.canvas.nonHistory.focussedNode
+export const selectFocus = (state: RootState) => state.canvas.nonHistory.focus
 export const selectFocussedNode = createSelector(
-  [selectHistoricNodes, selectFocussedNodeId],
+  [selectHistoricNodes, selectFocus],
   (nodes, id) => nodes.find(n => n.id === id)
 )
 
@@ -338,7 +339,7 @@ export const selectCollapsedAudioNodeSettings = (nodeId: string) =>
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
-  activateNode, deactivateNode, dragNode, undo, redo, focusNode, initialCanvasHover,
+  activateNode, deactivateNode, dragNode, undo, redo, focus, initialCanvasHover,
   setTriggerBehaviour, setVelocity, setGroups, setAudioParams,
   setCollapseAudioNodeSettings } = actions
 // Export the reducer, either as a default or named export

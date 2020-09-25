@@ -26,12 +26,12 @@ const SpeedDialButtons = () => {
     { icon: <Icon path={mdiRedo} size={1} />, name: 'Redo', action: () => dispatch(redo(null)) },
     { icon: <Icon path={mdiContentCopy} size={1} />, name: 'Clone', action: () => null },
   ];
-  const handleClick = (actionName : string) => {
+  const handleClick = (actionName : string) => 
     pipe(
      find(propEq('name', actionName )),  
      (a: any) => a.action() 
     )(actions)
-  }
+  
 
   return (
     <FloatedSpeedDial

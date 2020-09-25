@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rect, Circle, Star, RegularPolygon } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux'
-import { focusNode, selectFocussedNodeId } from '../slices/canvas';
+import { focus, selectFocus } from '../slices/canvas';
 import { selectGroups, IGroup } from '../slices/groups';
 import { map, addIndex, flatten } from 'ramda';
 
@@ -89,7 +89,7 @@ const getFillLinearGradientColorStops = (groups: IGroup[], groupsOfNode: string[
 
 const CanvasElement = (props: CanvasElementProps) => {
   const { name, groups: groupsOfNode, width, height, active, nodeId, periodicTrigger, activeTrigger } = props
-  const focussed = useSelector(selectFocussedNodeId) === nodeId
+  const focussed = useSelector(selectFocus) === nodeId
   const groups = useSelector(selectGroups)
   const fill = active ? '#ff0000' : undefined 
   const dispatch = useDispatch()
@@ -103,8 +103,8 @@ const CanvasElement = (props: CanvasElementProps) => {
     stroke: 'blue',
     strokeEnabled: focussed,
     strokeWidth: 4,
-    onClick: () => dispatch(focusNode(nodeId)),
-    onTouchStart: () => dispatch(focusNode(nodeId))
+    onClick: () => dispatch(focus(nodeId)),
+    onTouchStart: () => dispatch(focus(nodeId))
   }
   return getShape(periodicTrigger, activeTrigger)(shapeProps)
 }

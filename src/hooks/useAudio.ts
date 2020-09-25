@@ -7,11 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectNodes } from '../slices/canvas';
 import outputNode from '../nodeCreators/outputNode'
 import createVirtualAudioGraph from 'virtual-audio-graph'
+import { selectScale } from '../slices/global-audio';
 
 const useAudio = () => {
   const nodes = useSelector(selectNodes)
   const virtualAudioGraph = useRef(null) as unknown as MutableRefObject<VirtualAudioGraph | null>
   const initialCanvasHover = useSelector(selectInitialCanvasHover)
+  const scale = useSelector(selectScale)
   const dispatch = useDispatch()
   useEffect(() => {
     if (!virtualAudioGraph.current && initialCanvasHover) {
@@ -38,7 +40,7 @@ const useAudio = () => {
     const filterInactiveNodesWithoutStartTime = (node: INode) => node.startTime !== null
     const filteredNodes = filter(filterInactiveNodesWithoutStartTime, nodes);
     const audioNodes = map((node: INode) => [prop('startTime',node), prop('audio', node)])(filteredNodes)
-    const update = audioNodes.reduce((acc, [startTime, audio], i) => Object.assign(acc, { [i]: outputNode('output', { audio, startTime }) }), {}) as unknown as IVirtualAudioNodeGraph
+    const update = audioNodes.reduce((acc, [startTime, audio], i) => Object.assign(acc, { [i]: outputNode('output', { audio, startTime, scale }) }), {}) as unknown as IVirtualAudioNodeGraph
 
     virtualAudioGraph.current.update(update)
 
