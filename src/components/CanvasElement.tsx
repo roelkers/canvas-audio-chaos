@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { focus, selectFocus } from '../slices/canvas';
 import { selectGroups, IGroup } from '../slices/groups';
 import { map, addIndex, flatten } from 'ramda';
+import { setMobileDrawerOpen } from '../slices/app';
 
 interface CanvasElementProps {
   width: number;
@@ -27,7 +28,8 @@ interface ShapeProps {
   strokeWidth: number,
   fillLinearGradientColorStops: Array<string | number> | undefined
   onClick: () => void
-  onTouchStart: () => void
+  onTouchStart: () => void,
+  onDblTap : () => void
 }
 
 const makeStar = (props: ShapeProps) =>
@@ -94,6 +96,10 @@ const CanvasElement = (props: CanvasElementProps) => {
   const fill = active ? '#ff0000' : undefined 
   const dispatch = useDispatch()
   const fillLinearGradientColorStops = active ? undefined : getFillLinearGradientColorStops(groups, groupsOfNode)
+  const onDoubleTap = () => {
+    dispatch(focus(nodeId)) 
+    dispatch(setMobileDrawerOpen(true))
+  } 
   const shapeProps: ShapeProps = {
     name,
     width,
@@ -104,7 +110,9 @@ const CanvasElement = (props: CanvasElementProps) => {
     strokeEnabled: focussed,
     strokeWidth: 4,
     onClick: () => dispatch(focus(nodeId)),
-    onTouchStart: () => dispatch(focus(nodeId))
+    onTouchStart: () => dispatch(focus(nodeId)),
+    onDblTap: onDoubleTap
+    
   }
   return getShape(periodicTrigger, activeTrigger)(shapeProps)
 }

@@ -1,14 +1,12 @@
 
-import React, { MutableRefObject, RefObject, useRef } from 'react';
+import React, { RefObject, useRef } from 'react';
 import { IPaletteElement } from '../slices/palette';
 import CanvasElement from './CanvasElement'
 import { Group } from 'react-konva';
 import { useDispatch } from 'react-redux';
 import { createNode } from '../slices/canvas';
-import { head } from 'ramda';
 import { getShapeName } from '../functions/geometry';
 import { Group as GroupType } from 'konva/types/Group'
-import { groupCollapsed } from 'console';
 
 interface PaletteElementProps {
   element: IPaletteElement,

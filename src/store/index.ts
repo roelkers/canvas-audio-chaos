@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import canvas from '../slices/canvas'
 import palette from '../slices/palette'
-import action from '../slices/action-buttons'
+import app from '../slices/app'
 import groups from '../slices/groups'
 import globalAudio from '../slices/global-audio'
 
@@ -9,7 +9,7 @@ const store = configureStore({
   reducer: {
     canvas,
     palette,
-    action,
+    app,
     groups,
     globalAudio 
   }

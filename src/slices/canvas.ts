@@ -299,7 +299,6 @@ const canvasSlice = createSlice({
       console.log(node)
       if (node) {
         const containsIndex = contains( virtualAudioNodeIndex, node.collapsedAudioNodeSettingsIndexes)
-        console.log(containsIndex)
         if(collapsed && !containsIndex)  {
           node.collapsedAudioNodeSettingsIndexes = [ ...node.collapsedAudioNodeSettingsIndexes, virtualAudioNodeIndex] 
         } else if (!collapsed && containsIndex) {
