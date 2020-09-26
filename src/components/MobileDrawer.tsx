@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    // overflowX: 'hidden'
+    overflowX: 'hidden'
   },
   close: {
     position: 'absolute',
@@ -42,7 +42,7 @@ const MobileDrawer = ({ children } : MobileDrawerProps) => {
       classes={{
         paper: classes.drawerPaper
       }}
-      anchor="bottom"
+      anchor="top"
     >
     <IconButton className={classes.close} onClick={onClose}>
       <Icon size={0.8} path={mdiClose}/>

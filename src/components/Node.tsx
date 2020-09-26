@@ -1,11 +1,13 @@
 import React  from 'react';
 import { Group } from 'react-konva';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { dragNode, INode } from '../slices/canvas';
 import Wave from './Wave'
 import CanvasElement from './CanvasElement'
+import { selectIsMobile } from '../slices/app';
 
 const Node = ({ node }: { node: INode }) => {
+  const mobile = useSelector(selectIsMobile)
   const dispatch = useDispatch()
   const { x, y } = node
   const handleDragEnd = (e: any) => 
@@ -27,8 +29,8 @@ const Node = ({ node }: { node: INode }) => {
         periodicTrigger={node.periodicTrigger}
         activeTrigger={node.activeTrigger}
         soundOnActivate={node.soundOnActivate}
-        width={50}
-        height={50}
+        width={mobile ? 30 : 50}
+        height={mobile ? 30 : 50}
         name='triggerable'
       />
     </Group>

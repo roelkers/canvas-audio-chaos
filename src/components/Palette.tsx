@@ -5,69 +5,99 @@ import { IPaletteElement, selectPaletteElements } from '../slices/palette'
 import { Layer } from 'konva/types/Layer'
 import { Group as GroupType } from 'konva/types/Group'
 import PaletteElement from './PaletteElement'
+import { selectIsMobile } from '../slices/app'
+import { getDefaultCompilerOptions } from 'typescript'
 
-const Palette = ({ stage : ref, layer } : { stage : any, layer: Layer | null | undefined }) => {
-  let width = 0, height = 0, containerX = 0, containerY = 0
+const getDimensions = (stage: any) => {
+  if(! stage) {
+    return { width: 0, height: 0, containerX : 0, containerY : 0 }
+  }
+  const marginLeft = 25
+  const marginRight = 300
+  const width = stage.width() - (marginLeft + marginRight);
+  const height = 120;
+  const containerY = stage.height() - height - 25;
+  const containerX = marginLeft
+  return {
+    width,
+    height,
+    containerX,
+    containerY
+  }
+}
+
+const getMobileDimensions = (stage: any) => {
+  if(! stage) {
+    return { width: 0, height: 0, containerX : 0, containerY : 0 }
+  }
+  const marginLeft = 15
+  const marginRight = 15 
+  const width = stage.width() - (marginLeft + marginRight);
+  const height = 80;
+  const containerY = stage.height() - height - 15;
+  const containerX = marginLeft
+  return {
+    width,
+    height,
+    containerX,
+    containerY
+  }
+}
+
+
+const Palette = ({ stage: ref, layer }: { stage: any, layer: Layer | null | undefined }) => {
   const elements = useSelector(selectPaletteElements)
+  const mobile = useSelector(selectIsMobile)
   const stage = ref.current
   const redraw = () => layer?.draw()
   const clipGroup = useRef(null) as RefObject<GroupType> | null
   const nonClipGroup = useRef(null) as RefObject<GroupType> | null
-  
-  const handleDisableClipOfElement = (element : GroupType) => {
-    if(!nonClipGroup || !nonClipGroup.current) return
+
+  const handleDisableClipOfElement = (element: GroupType) => {
+    if (!nonClipGroup || !nonClipGroup.current) return
     element.moveTo(nonClipGroup.current)
     // redraw()
   }
   const handleEnableClipOfElement = (element: GroupType) => {
-    if(!clipGroup || !clipGroup.current) return
-    element.moveTo(clipGroup.current) 
+    if (!clipGroup || !clipGroup.current) return
+    element.moveTo(clipGroup.current)
     redraw()
   }
 
-  if(stage) {
-    const marginLeft = 25
-    const marginRight = 300
-    width = stage.width() - (marginLeft + marginRight); 
-    height = 120; 
-    containerY = stage.height() - height - 25;
-    containerX = marginLeft 
-  }
+  const dimensions = mobile ? getMobileDimensions(stage) : getDimensions(stage)
+  const { containerX, containerY , width, height } = dimensions
 
   return (
     <Group
     >
-      <Rect 
+      <Rect
         width={width}
-        height={height} 
+        height={height}
         fill='#fff'
         stroke='#000'
         x={containerX}
-        y={containerY} 
+        y={containerY}
       />
-    <Group
-      ref={clipGroup}
-      clip={{
-        width: width -10,
-        height: height -10, 
-        x: containerX +5,
-        y: containerY +5,
-      }} 
-    >
-      {
-       elements.map(( elem: IPaletteElement, index :number) => {
-          return <PaletteElement 
+      <Group
+        ref={clipGroup}
+        clip={{
+          width: width - 10,
+          height: height - 10,
+          x: containerX + 5,
+          y: containerY + 5,
+        }}
+      >
+        {
+          elements.map((elem: IPaletteElement, index: number) => {
+            return <PaletteElement
               handleDisableClipOfElement={handleDisableClipOfElement}
               handleEnableClipOfElement={handleEnableClipOfElement}
               element={elem}
               index={index}
-              containerX={containerX}
-              containerY={containerY} 
-              containerWidth={width}
-              containerHeight={height}
-           />
-        })
-      }
+              paletteDimensions={dimensions}
+            />
+          })
+        }
       </Group>
       <Group ref={nonClipGroup} />
     </Group>

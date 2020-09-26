@@ -1,6 +1,8 @@
 import { Ring as IRing } from 'konva/types/shapes/Ring';
 import { ShapeConfig } from 'konva/types/Shape';
 
+export type shapeName = 'wedge' | 'rect' | 'triangle' | 'circle'
+
 export const euclideanDistance2D = (elemX :number , elemY: number, targetX:number, targetY:number) =>
   Math.sqrt(Math.pow(elemX - targetX,2) + Math.pow(elemY - targetY, 2))
 
@@ -21,7 +23,8 @@ export const isIntersecting = (ring: IRing, elem: ShapeConfig) => {
   )
 }
 
-export const getShapeName = (periodicTrigger: boolean, activeTrigger: boolean) => 
+export const getShapeName : (periodicTrigger: boolean, activeTrigger: boolean) => shapeName = 
+  (periodicTrigger, activeTrigger) => 
   periodicTrigger && !activeTrigger ? 'wedge' :
     !periodicTrigger && activeTrigger ? 'rect' :
       periodicTrigger && activeTrigger ? 'triangle' : 
