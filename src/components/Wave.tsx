@@ -4,8 +4,9 @@ import { isIntersecting } from '../functions/geometry'
 import Konva from 'konva'
 import { useDispatch } from 'react-redux';
 import { activateNode, deactivateNode, INode } from '../slices/canvas';
+import { usePrevious } from '../hooks/usePrevious';
 
-interface WaveProps {
+export interface WaveProps {
   id: string;
   active: boolean | undefined;
   activeTrigger: boolean;
@@ -16,17 +17,19 @@ interface WaveProps {
 const Wave = (props: WaveProps) => {
   const { id: nodeId, active, activeTrigger, periodicTrigger, velocity } = props 
   const dispatch = useDispatch()
+  const previousActive = usePrevious<boolean>( active )
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
   const initialInnerRadius = 1
   const ringDiameter = 5 
-  console.log("render")
   let konvaAnim: any = useRef(null)
 
-  let dependencies :any = [dispatch, nodeId]
-  if(activeTrigger) {
-    dependencies = [ ...dependencies, active]
-  }
+  //Only rerender animation when in inactive state before and 
+  //active trigger is enabled
+  //This only works though after the 2nd rerender, so the 2nd rerender will still happen... 
+  const activeDependency = activeTrigger && previousActive === false || undefined
+
+  let dependencies :any = [dispatch, nodeId, activeDependency]
   useEffect(() => {
     circle.current?.show()
     const layer = circle.current.getLayer()

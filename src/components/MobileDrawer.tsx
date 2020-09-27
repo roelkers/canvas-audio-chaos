@@ -43,6 +43,7 @@ const MobileDrawer = ({ children } : MobileDrawerProps) => {
         paper: classes.drawerPaper
       }}
       anchor="top"
+      disableSwipeToOpen={true}
     >
     <IconButton className={classes.close} onClick={onClose}>
       <Icon size={0.8} path={mdiClose}/>

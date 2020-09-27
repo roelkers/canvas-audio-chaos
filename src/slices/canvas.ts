@@ -48,11 +48,11 @@ const initialState: Canvas = {
     nodes: [
       {
         id: '0', active: false, startTime: null,
-        collapsedAudioNodeSettingsIndexes: [0]
+        collapsedAudioNodeSettingsIndexes: []
       },
       {
         id: '1', active: false, startTime: null,
-        collapsedAudioNodeSettingsIndexes: [0]
+        collapsedAudioNodeSettingsIndexes: []
       },
     ]
   },
@@ -213,11 +213,19 @@ const canvasSlice = createSlice({
       if (action.payload === 'none') return
       state.nonHistory.focus = action.payload
     },
-    updateNode(state, action) {
-
-    },
     deleteNode(state, action) {
-
+      const focussedNodeId = state.nonHistory.focus
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const filterNode = (node: INodeHistoric | INodeNonHistoric) => node.id !== focussedNodeId
+      const nextState = {
+        ...prev,
+        nodes: filter(filterNode, prev.nodes)
+      }
+      history.push(nextState)
+      state.nonHistory.nodes = filter(filterNode,state.nonHistory.nodes)
+      state.history = history
+      state.historyStep += 1
     },
     activateNode(state, action) {
       const { targetNodeId, sourceNodeId } = action.payload
@@ -355,7 +363,7 @@ export const selectCollapsedAudioNodeSettings = (nodeId: string) =>
 // Extract the action creators object and the reducer
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
-export const { createNode, updateNode, setNodeStartTime, deleteNode,
+export const { createNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focus, initialCanvasHover,
   setTriggerBehaviour, setVelocity, setGroups, setAudioParams,
   setCollapseAudioNodeSettings, cloneNode } = actions

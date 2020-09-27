@@ -2,7 +2,7 @@ import React  from 'react';
 import { Group } from 'react-konva';
 import { useDispatch, useSelector } from 'react-redux'
 import { dragNode, INode } from '../slices/canvas';
-import Wave from './Wave'
+import Wave, { WaveProps } from './Wave'
 import CanvasElement from './CanvasElement'
 import { selectIsMobile } from '../slices/app';
 
@@ -18,6 +18,17 @@ export interface NodeProps {
   velocity: number;
 }
 
+const memoWavePropsAreEqual = (prevProps: WaveProps, props: WaveProps) => {
+  //Memo not working, still rendering either twice or wave not dispatched
+  return false // Boolean(prevProps.active) && !Boolean(props.active) 
+}
+
+const MemoWave = React.memo((props: WaveProps) => (
+  <Wave
+    {...props}
+  />
+), memoWavePropsAreEqual)
+
 const Node = (props: NodeProps ) => {
   const mobile = useSelector(selectIsMobile)
   const dispatch = useDispatch()
@@ -32,7 +43,7 @@ const Node = (props: NodeProps ) => {
       id={id}
       onDragEnd={handleDragEnd}
     >
-      <Wave 
+      <MemoWave 
         id={id}
         active={activeTrigger ? active : undefined}
         activeTrigger={activeTrigger}
