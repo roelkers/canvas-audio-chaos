@@ -7,7 +7,7 @@ import { mdiRedo, mdiUndo, mdiContentCopy } from '@mdi/js'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpen, selectIsSpeedDialOpen } from '../slices/app'
 import { styled } from '@material-ui/core/styles'
-import { undo, redo } from '../slices/canvas'
+import { undo, redo, cloneNode } from '../slices/canvas'
 import { pipe, find, propEq } from 'ramda'
 
 
@@ -24,7 +24,7 @@ const SpeedDialButtons = () => {
   const actions = [
     { icon: <Icon path={mdiUndo} size={1} />, name: 'Undo', action: () => dispatch(undo(null)) },
     { icon: <Icon path={mdiRedo} size={1} />, name: 'Redo', action: () => dispatch(redo(null)) },
-    { icon: <Icon path={mdiContentCopy} size={1} />, name: 'Clone', action: () => null },
+    { icon: <Icon path={mdiContentCopy} size={1} />, name: 'Clone', action: () => dispatch(cloneNode(null)) },
   ];
   const handleClick = (actionName : string) => 
     pipe(

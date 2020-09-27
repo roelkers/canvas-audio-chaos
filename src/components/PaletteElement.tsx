@@ -108,7 +108,6 @@ const PaletteElement = (props: PaletteElementProps) => {
         nodeId='none'
         periodicTrigger={element.periodicTrigger}
         activeTrigger={element.activeTrigger}
-        soundOnActivate={element.soundOnActivate}
         name='palette'
         width={width}
         height={width}

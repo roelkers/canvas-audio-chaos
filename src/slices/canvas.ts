@@ -165,6 +165,25 @@ const canvasSlice = createSlice({
       state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: [] })
       state.historyStep += 1
     },
+    cloneNode(state, action) {
+      const focussedNodeId = state.nonHistory.focus
+      const history = state.history.slice(0, state.historyStep + 1)
+      const prev = history[state.historyStep]
+      const nextId = String(prev.nextId)
+      const existingNode = find((node: INodeHistoric) => node.id === focussedNodeId, prev.nodes)
+      if(!existingNode) return
+      const clone = JSON.parse(JSON.stringify(existingNode))
+      clone.x = clone.x + 60
+      clone.id = nextId
+      const nextState = {
+        ...prev,
+        nodes: [...prev.nodes, clone],
+        nextId: prev.nextId + 1
+      }
+      state.history.push(nextState)
+      state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: [] }) 
+      state.historyStep += 1
+    },
     dragNode(state, action) {
       const { x, y, targetNodeId } = action.payload
       const history = state.history.slice(0, state.historyStep + 1)
@@ -296,7 +315,6 @@ const canvasSlice = createSlice({
     setCollapseAudioNodeSettings(state, action) {
       const { collapsed, nodeId, virtualAudioNodeIndex } = action.payload
       const node = state.nonHistory.nodes.find(n => n.id === nodeId)
-      console.log(node)
       if (node) {
         const containsIndex = contains( virtualAudioNodeIndex, node.collapsedAudioNodeSettingsIndexes)
         if(collapsed && !containsIndex)  {
@@ -340,7 +358,7 @@ const { actions, reducer } = canvasSlice
 export const { createNode, updateNode, setNodeStartTime, deleteNode,
   activateNode, deactivateNode, dragNode, undo, redo, focus, initialCanvasHover,
   setTriggerBehaviour, setVelocity, setGroups, setAudioParams,
-  setCollapseAudioNodeSettings } = actions
+  setCollapseAudioNodeSettings, cloneNode } = actions
 // Export the reducer, either as a default or named export
 export default reducer
 

@@ -13,7 +13,6 @@ interface CanvasElementProps {
   nodeId: string;
   periodicTrigger: boolean;
   activeTrigger: boolean;
-  soundOnActivate: boolean;
   active: boolean;
   groups: string[];
 }

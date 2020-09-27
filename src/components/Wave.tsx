@@ -5,14 +5,22 @@ import Konva from 'konva'
 import { useDispatch } from 'react-redux';
 import { activateNode, deactivateNode, INode } from '../slices/canvas';
 
-const Wave = ({ node }: { node : INode}) => {
-  const { id: nodeId, active, activeTrigger, periodicTrigger, velocity } = node
+interface WaveProps {
+  id: string;
+  active: boolean | undefined;
+  activeTrigger: boolean;
+  periodicTrigger: boolean;
+  velocity: number;
+}
+
+const Wave = (props: WaveProps) => {
+  const { id: nodeId, active, activeTrigger, periodicTrigger, velocity } = props 
   const dispatch = useDispatch()
   let circle: any = useRef(null)
   const ringFill = '#ff0000'
   const initialInnerRadius = 1
   const ringDiameter = 5 
-
+  console.log("render")
   let konvaAnim: any = useRef(null)
 
   let dependencies :any = [dispatch, nodeId]

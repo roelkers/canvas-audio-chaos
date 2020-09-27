@@ -6,29 +6,45 @@ import Wave from './Wave'
 import CanvasElement from './CanvasElement'
 import { selectIsMobile } from '../slices/app';
 
-const Node = ({ node }: { node: INode }) => {
+export interface NodeProps {
+  key: string;
+  id: string;
+  x: number,
+  y: number,
+  active: boolean;
+  groups: string[]
+  activeTrigger: boolean;
+  periodicTrigger: boolean;
+  velocity: number;
+}
+
+const Node = (props: NodeProps ) => {
   const mobile = useSelector(selectIsMobile)
   const dispatch = useDispatch()
-  const { x, y } = node
+  const { x, y, velocity, id, active, groups, periodicTrigger, activeTrigger } = props 
   const handleDragEnd = (e: any) => 
-    dispatch(dragNode({ x: e.target.x(), y: e.target.y(), targetNodeId: node.id }))
-  
+    dispatch(dragNode({ x: e.target.x(), y: e.target.y(), targetNodeId: id }))
   return (
     <Group
         x={x}
         y={y}
       draggable
-      id={node.id}
+      id={id}
       onDragEnd={handleDragEnd}
     >
-      <Wave node={node} />
+      <Wave 
+        id={id}
+        active={activeTrigger ? active : undefined}
+        activeTrigger={activeTrigger}
+        periodicTrigger={periodicTrigger}  
+        velocity={velocity}
+      />
       <CanvasElement
-        active={node.active}
-        nodeId={node.id}
-        groups={node.groups}
-        periodicTrigger={node.periodicTrigger}
-        activeTrigger={node.activeTrigger}
-        soundOnActivate={node.soundOnActivate}
+        active={active}
+        nodeId={id}
+        groups={groups}
+        periodicTrigger={periodicTrigger}
+        activeTrigger={activeTrigger}
         width={mobile ? 30 : 50}
         height={mobile ? 30 : 50}
         name='triggerable'
