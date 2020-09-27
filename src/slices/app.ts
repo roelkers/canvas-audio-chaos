@@ -23,9 +23,6 @@ const canvasSlice = createSlice({
     setOpen (state, action) {
       state.actionButtonsOpen = action.payload
     },
-    setAction (state, action) {
-      state.action = action.payload
-    },
     setMobile (state, action) {
       state.mobile = action.payload
     },
@@ -44,7 +41,7 @@ export const selectIsMobileDrawerOpen = (state: RootState) => state.app.mobileDr
 const { actions, reducer } = canvasSlice
 // Extract and export each action creator by name
 // Export the reducer, either as a default or named export
-export const { setMobileDrawerOpen, setOpen, setAction, setMobile } = actions 
+export const { setMobileDrawerOpen, setOpen, setMobile } = actions 
 
 export default reducer
 

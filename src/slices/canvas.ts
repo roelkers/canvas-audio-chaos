@@ -40,7 +40,7 @@ interface CanvasStateNonHistoric {
   nodes: INodeNonHistoric[];
 }
 
-const initialState: Canvas = {
+export const canvasInitialState: Canvas = {
   canvasHover: true,
   historyStep: 0,
   nonHistory: {
@@ -107,7 +107,7 @@ const initialState: Canvas = {
       },
       {
         id: '1',
-        elementId: '0',
+        elementId: '1',
         groups: ['0', '1', '2', '3'],
         periodicTrigger: true,
         activeTrigger: true,
@@ -144,7 +144,7 @@ const initialState: Canvas = {
 
 const canvasSlice = createSlice({
   name: 'canvas',
-  initialState,
+  initialState: canvasInitialState,
   reducers: {
     createNode(state, action) {
       const history = state.history.slice(0, state.historyStep + 1)
