@@ -14,8 +14,8 @@ import { saveNodeAsElementAndSavePalette } from '../slices/palette'
 
 const FloatedSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
-  marginTop: theme.spacing(3),
-  marginLeft: theme.spacing(3),
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
 }))
 
 const SpeedDialButtons = () => {
