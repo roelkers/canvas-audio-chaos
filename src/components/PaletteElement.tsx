@@ -102,7 +102,6 @@ const PaletteElement = (props: PaletteElementProps) => {
        targetY = evt.y
     } 
 
-    console.log(evt)
     dispatch(createNode({ ...element, x: targetX, y: targetY }))
     group?.current?.position({ x, y })
     handleEnableClipOfElement(group.current)

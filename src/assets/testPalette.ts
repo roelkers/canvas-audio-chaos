@@ -1,857 +1,1464 @@
 import { FilterConfig } from '../nodeCreators/filter'
-import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
-import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { ICanvasState } from '../slices/palette'
+import { OscConfig } from '../nodeCreators/osc'
+import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 
 const state: ICanvasState = {
   nextId: 2,
   elements: [
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+    { 
+        elementId: '0',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '1',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '3',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '4',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '5',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '6',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '7',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '8',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '9',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '10',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '11',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '12',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '13',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '14',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '15',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '16',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '17',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '18',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '19',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '20',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '21',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '22',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '23',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '24',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '25',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 330,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.10,
-              release : 0.10 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: true,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '26',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: true,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '27',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-    {
-      elementId: '0',
-      groups: ['0'],
-      periodicTrigger: false,
-      activeTrigger: false,
-      soundOnActivate: true,
-      velocity: 240,
+      },
+    { 
+        elementId: '28',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
         audio: {
           0: {
-            nodeCreator: 'attackReleaseOsc',
+            nodeCreator: 'osc',
             output: '1',
             params: {
-              frequency: 110,
+              scaleNoteIndex: 1,
+              octave: 4,
               gain: 0.2,
               type: 'sawtooth',
-              attack : 0.20,
-              release : 0.30 
-            } as AttackReleaseOscConfig,
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
           },
           1: {
-            nodeCreator: 'filter_simple',
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
             output: 'output',
             params: {
-              frequency: 1020,
-              type: '',
-              resonance: 10 
-            } as SimpleFilterConfig,
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
           }
         }
-    },
-  ]
-}
+      },
+    { 
+        elementId: '29',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
+        audio: {
+          0: {
+            nodeCreator: 'osc',
+            output: '1',
+            params: {
+              scaleNoteIndex: 1,
+              octave: 4,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+          }
+        }
+      },
+    { 
+        elementId: '30',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
+        audio: {
+          0: {
+            nodeCreator: 'osc',
+            output: '1',
+            params: {
+              scaleNoteIndex: 1,
+              octave: 4,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+          }
+        }
+      },
+    { 
+        elementId: '31',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
+        audio: {
+          0: {
+            nodeCreator: 'osc',
+            output: '1',
+            params: {
+              scaleNoteIndex: 1,
+              octave: 4,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+          }
+        }
+      },
+    { 
+        elementId: '32',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
+        audio: {
+          0: {
+            nodeCreator: 'osc',
+            output: '1',
+            params: {
+              scaleNoteIndex: 1,
+              octave: 4,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+          }
+        }
+      },
+    { 
+        elementId: '33',
+        groups: ['0'],
+        periodicTrigger: false,
+        activeTrigger: true,
+        soundOnActivate: true,
+        velocity: 240,
+        audio: {
+          0: {
+            nodeCreator: 'osc',
+            output: '1',
+            params: {
+              scaleNoteIndex: 1,
+              octave: 4,
+              gain: 0.2,
+              type: 'sawtooth',
+              attack: 0.1,
+              release: 0.2,
+              envFrequencyAmount: 3,
+            } as OscConfig
+          },
+          1: {
+            nodeCreator: 'filter',
+            output: '2',
+            params: {
+              resonance: 1,
+              attack: 0.3,
+              release: 0.2,
+              frequency: 5000,
+              type: 'lowpass',
+              envAmount: 2000
+            } as FilterConfig,
+          },
+          2: {
+            nodeCreator: 'arEnvelope',
+            output: 'output',
+            params: {
+              gain: 1,
+              attack: 0.3,
+              release: 0.2,
+            } as arEnvelopeConfig,
+          }
+        }
+      },
+    ]
+  }
 
 export default state

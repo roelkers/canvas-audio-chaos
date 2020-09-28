@@ -49,15 +49,11 @@ export const canvasInitialState: Canvas = {
       {
         id: '0', active: false, startTime: null,
         collapsedAudioNodeSettingsIndexes: []
-      },
-      {
-        id: '1', active: false, startTime: null,
-        collapsedAudioNodeSettingsIndexes: []
-      },
+      }
     ]
   },
   history: [{
-    nextId: 2,
+    nextId: 1,
     nodes: [
       {
         id: '0',
@@ -67,7 +63,7 @@ export const canvasInitialState: Canvas = {
         activeTrigger: true,
         soundOnActivate: true,
         velocity: 240,
-        x: 0, y: 0,
+        x: 150, y: 150,
         audio: {
           0: {
             nodeCreator: 'osc',
@@ -90,7 +86,7 @@ export const canvasInitialState: Canvas = {
               attack: 0.3,
               release: 0.2,
               frequency: 5000,
-              type: '',
+              type: 'lowpass',
               envAmount: 2000
             } as FilterConfig,
           },
@@ -104,40 +100,7 @@ export const canvasInitialState: Canvas = {
             } as arEnvelopeConfig,
           }
         }
-      },
-      {
-        id: '1',
-        elementId: '1',
-        groups: ['0', '1', '2', '3'],
-        periodicTrigger: true,
-        activeTrigger: true,
-        soundOnActivate: true,
-        velocity: 240,
-        x: 0, y: 200,
-        audio: {
-          0: {
-            nodeCreator: 'attackReleaseOsc',
-            output: '1',
-            params: {
-              frequency: 330,
-              gain: 0.2,
-              type: 'sawtooth',
-              attack: 0.05,
-              release: 0.1
-            } as AttackReleaseOscConfig,
-          },
-          1: {
-            nodeCreator: 'filter_simple',
-            output: 'output',
-            params: {
-              frequency: 2520,
-              type: '',
-              resonance: 15
-            } as SimpleFilterConfig,
-
-          }
-        }
-      },
+      }
     ],
   }]
 }
@@ -147,7 +110,7 @@ const canvasSlice = createSlice({
   initialState: canvasInitialState,
   reducers: {
     createNode(state, action) {
-      console.log(action.payload.x)
+      console.log(action.payload)
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
       const nextId = String(prev.nextId)
