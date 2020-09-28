@@ -110,7 +110,6 @@ const canvasSlice = createSlice({
   initialState: canvasInitialState,
   reducers: {
     createNode(state, action) {
-      console.log(action.payload)
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
       const nextId = String(prev.nextId)

@@ -50,6 +50,7 @@ const canvasSlice = createSlice({
   reducers: {
     saveNodeAsElement(state, action) {
       const node = action.payload as INodeHistoric | undefined
+      console.log(node)
       if(!node) return
       const updatedElement : IPaletteElement = pick([
         'elementId', 
@@ -60,7 +61,7 @@ const canvasSlice = createSlice({
         'velocity',
         'audio',
        ], node)
-      const idx = state.elements.findIndex(e => e.elementId = node.elementId)
+      const idx = state.elements.findIndex(e => e.elementId === node.elementId)
       if(idx !== -1) {
         state.elements[idx] = updatedElement
       } 
