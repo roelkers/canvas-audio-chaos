@@ -1,7 +1,7 @@
 import { createNode, biquadFilter } from 'virtual-audio-graph'
 import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output  } from 'virtual-audio-graph/dist/types'
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
-import { EnhancedConfig, Params } from '.';
+import { EnhancedConfig } from '.';
 
 export interface FilterConfig {
   envAmount: number

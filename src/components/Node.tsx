@@ -1,7 +1,7 @@
 import React  from 'react';
 import { Group } from 'react-konva';
 import { useDispatch, useSelector } from 'react-redux'
-import { dragNode, INode } from '../slices/canvas';
+import { dragNode } from '../slices/canvas';
 import Wave, { WaveProps } from './Wave'
 import CanvasElement from './CanvasElement'
 import { selectIsMobile } from '../slices/app';

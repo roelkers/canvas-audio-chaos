@@ -147,6 +147,7 @@ const canvasSlice = createSlice({
   initialState: canvasInitialState,
   reducers: {
     createNode(state, action) {
+      console.log(action.payload.x)
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
       const nextId = String(prev.nextId)
@@ -247,7 +248,7 @@ const canvasSlice = createSlice({
       }
     },
     setNodeStartTime(state, action) {
-      const { nodeId, startTime, stopTime } = action.payload
+      const { nodeId, startTime } = action.payload
       const node = state.nonHistory.nodes.find(n => n.id === nodeId)
       if (node) {
         node.startTime = startTime
@@ -337,16 +338,17 @@ const canvasSlice = createSlice({
 
 const sortById = sortBy(compose(toLower, prop('id')))
 
-export const selectHistoricNodes = (state: RootState) => <INodeHistoric[]>compose(
+export const selectHistoricNodes = (state: RootState) => 
+compose(
   sortById,
   propOr([], 'nodes'),
   nth(state.canvas.historyStep))
-  (state.canvas.history)
+  (state.canvas.history) as INodeHistoric[]
 
 export const selectNonHistoricNodes = (state: RootState) => sortById(state.canvas.nonHistory.nodes)
 export const selectNodes = createSelector(
   [selectHistoricNodes, selectNonHistoricNodes],
-  (historicNodes, nonHistoricNodes) => <INode[]><unknown>zipWith(merge, historicNodes, nonHistoricNodes)
+  (historicNodes, nonHistoricNodes) => zipWith(merge, historicNodes, nonHistoricNodes) as unknown as INode[]
 )
 
 export const selectFocus = (state: RootState) => state.canvas.nonHistory.focus

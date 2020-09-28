@@ -1,5 +1,3 @@
-import { Grid } from '@material-ui/core';
-import React from 'react'
 import { createNode, oscillator, gain } from 'virtual-audio-graph'
 import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output } from 'virtual-audio-graph/dist/types'
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';

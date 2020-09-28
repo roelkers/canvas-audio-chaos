@@ -1,10 +1,9 @@
-import { useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsMobile, setMobile } from "../slices/app";
+import { useLayoutEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setMobile } from "../slices/app";
 
 export function useWindowSize() {
   const dispatch = useDispatch() 
-  const mobile = useSelector(selectIsMobile)
   useLayoutEffect(() => {
     function checkMobile() {
       if(window.innerWidth < 800) {

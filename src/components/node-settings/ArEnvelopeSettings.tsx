@@ -1,4 +1,4 @@
-import { Grid, Input, InputLabel, Slider, Typography } from '@material-ui/core';
+import { Grid, Input, InputLabel, Slider } from '@material-ui/core';
 import React, { ChangeEvent } from 'react'
 import { SettingsProps } from '.';
 import { arEnvelopeConfig } from '../../nodeCreators/arEnvelope';

@@ -6,7 +6,6 @@ import { Layer } from 'konva/types/Layer'
 import { Group as GroupType } from 'konva/types/Group'
 import PaletteElement from './PaletteElement'
 import { selectIsMobile } from '../slices/app'
-import { getDefaultCompilerOptions } from 'typescript'
 
 const getDimensions = (stage: any) => {
   if(! stage) {
@@ -90,6 +89,7 @@ const Palette = ({ stage: ref, layer }: { stage: any, layer: Layer | null | unde
         {
           elements.map((elem: IPaletteElement, index: number) => {
             return <PaletteElement
+              key={index}
               handleDisableClipOfElement={handleDisableClipOfElement}
               handleEnableClipOfElement={handleEnableClipOfElement}
               element={elem}

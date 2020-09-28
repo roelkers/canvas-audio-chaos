@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit' 
+import { createSlice } from '@reduxjs/toolkit' 
 import { RootState } from '../store'
 
 export interface IGroup {
@@ -27,7 +27,10 @@ const canvasSlice = createSlice({
 export const selectGroups = (state : RootState) => state.groups
 
 // Extract the action creators object and the reducer
-const { actions, reducer } = canvasSlice
+const { 
+  // actions, 
+  reducer
+ } = canvasSlice
 // Extract and export each action creator by name
 // Export the reducer, either as a default or named export
 export default reducer

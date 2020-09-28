@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createNode } from '../slices/canvas';
 import { getShapeName } from '../functions/geometry';
 import { Group as GroupType } from 'konva/types/Group'
-import { shapeName } from '../functions/geometry'
+import { shapeName as IshapeName } from '../functions/geometry'
 import { selectIsMobile } from '../slices/app';
 
 interface PaletteDimensions {
@@ -32,8 +32,8 @@ const shapeOffset = (width: number) => ({
   circle: [width / 2, width / 2]
 })
 
-const getElementDimensions = (paletteDimensions: PaletteDimensions, index : number, shapeName: shapeName) => {
-  const { containerX, containerY, height: containerHeight, width: containerWidth } = paletteDimensions 
+const getElementDimensions = (paletteDimensions: PaletteDimensions, index : number, shapeName: IshapeName) => {
+  const { containerX, containerY, width: containerWidth } = paletteDimensions 
 
   const width = 50;
   const gutter = 10
@@ -48,8 +48,8 @@ const getElementDimensions = (paletteDimensions: PaletteDimensions, index : numb
   return { containerWidth, width, gutter, x, y } 
 }
 
-const getMobileElementDimensions = (paletteDimensions: PaletteDimensions, index : number, shapeName: shapeName) => {
-  const { containerX, containerY, height: containerHeight, width: containerWidth } = paletteDimensions 
+const getMobileElementDimensions = (paletteDimensions: PaletteDimensions, index : number, shapeName: IshapeName) => {
+  const { containerX, containerY, width: containerWidth } = paletteDimensions 
 
   const width = 30;
   const gutter = 5 
@@ -68,6 +68,9 @@ const getMobileElementDimensions = (paletteDimensions: PaletteDimensions, index 
   return { containerWidth, width, gutter, x, y } 
 }
 
+const isTouchEvent = (evt: any) : evt is TouchEvent =>
+    (evt as TouchEvent).changedTouches !== undefined 
+
 const PaletteElement = (props: PaletteElementProps) => {
   const { handleEnableClipOfElement, element, paletteDimensions, index, handleDisableClipOfElement } = props
   const mobile = useSelector(selectIsMobile)
@@ -85,10 +88,22 @@ const PaletteElement = (props: PaletteElementProps) => {
     handleDisableClipOfElement(group.current)
   }
 
-  const handleDragEnd = (e: any) => {
+  const handleDragEnd = (
+    { evt } : { evt : TouchEvent | MouseEvent } 
+    ) => {
     if(!group || !group.current) return
-    console.log(x, y)
-    dispatch(createNode({ ...element, x: e.evt.x, y: e.evt.y }))
+    let targetX 
+    let targetY 
+    if(isTouchEvent(evt)) {
+       targetX = evt.changedTouches[0].clientX 
+       targetY = evt.changedTouches[0].clientY 
+    } else {
+       targetX = evt.x
+       targetY = evt.y
+    } 
+
+    console.log(evt)
+    dispatch(createNode({ ...element, x: targetX, y: targetY }))
     group?.current?.position({ x, y })
     handleEnableClipOfElement(group.current)
   }

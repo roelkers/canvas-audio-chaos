@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rect, Circle, Star, RegularPolygon } from 'react-konva';
+import { Rect, Circle, RegularPolygon } from 'react-konva';
 import { useSelector, useDispatch } from 'react-redux'
 import { focus, selectFocus } from '../slices/canvas';
 import { selectGroups, IGroup } from '../slices/groups';
@@ -31,13 +31,13 @@ interface ShapeProps {
   onDblTap : () => void
 }
 
-const makeStar = (props: ShapeProps) =>
-  <Star
-    {...props}
-    innerRadius={props.width / 2}
-    outerRadius={props.width}
-    numPoints={5}
-  />
+// const makeStar = (props: ShapeProps) =>
+//   <Star
+//     {...props}
+//     innerRadius={props.width / 2}
+//     outerRadius={props.width}
+//     numPoints={5}
+//   />
 
 const makeRect = (props: ShapeProps) => <Rect
   {...props}

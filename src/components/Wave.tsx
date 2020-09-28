@@ -1,9 +1,9 @@
 import { Ring } from 'react-konva';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { isIntersecting } from '../functions/geometry'
 import Konva from 'konva'
 import { useDispatch } from 'react-redux';
-import { activateNode, deactivateNode, INode } from '../slices/canvas';
+import { activateNode, deactivateNode } from '../slices/canvas';
 import { usePrevious } from '../hooks/usePrevious';
 
 export interface WaveProps {
@@ -27,9 +27,9 @@ const Wave = (props: WaveProps) => {
   //Only rerender animation when in inactive state before and 
   //active trigger is enabled
   //This only works though after the 2nd rerender, so the 2nd rerender will still happen... 
-  const activeDependency = activeTrigger && previousActive === false || undefined
+  const activeDependency = activeTrigger && (previousActive === false || previousActive === undefined)
 
-  let dependencies :any = [dispatch, nodeId, activeDependency]
+  let dependencies :any = [dispatch, nodeId, velocity, nodeId, periodicTrigger, activeDependency]
   useEffect(() => {
     circle.current?.show()
     const layer = circle.current.getLayer()

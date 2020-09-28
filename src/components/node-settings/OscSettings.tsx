@@ -1,5 +1,4 @@
 import { Grid, Input, InputLabel, Slider } from '@material-ui/core';
-import { addIndex, map } from 'ramda';
 import React, { ChangeEvent } from 'react'
 import { useSelector } from 'react-redux';
 import { SettingsProps } from '.';

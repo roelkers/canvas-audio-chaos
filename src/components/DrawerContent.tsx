@@ -1,10 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { selectFocussedNode, INodeHistoric, selectFocus } from '../slices/canvas';
 import { useSelector } from 'react-redux';
 import BaseNodeSettings from './node-settings/BaseNodeSettings';
-import { addIndex, compose, map, values } from 'ramda';
+import { addIndex, map, values } from 'ramda';
 import VirtualAudioNodeSettings from './node-settings'
 import { AudioConfig } from '../slices/palette';
 import ScaleSettings from './ScaleSettings';
@@ -13,7 +12,8 @@ const getAudioSettings = (focussedNode: INodeHistoric) => {
   const mapper = addIndex(map) as (func : (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[] 
   const obj = mapper(
      (audio : AudioConfig, index: number) => 
-      <VirtualAudioNodeSettings 
+      <VirtualAudioNodeSettings
+        key={index}
         virtualAudioNodeIndex={index}
         nodeId={focussedNode.id} 
         params={audio.params} 

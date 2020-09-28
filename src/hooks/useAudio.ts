@@ -44,7 +44,7 @@ const useAudio = () => {
 
     virtualAudioGraph.current.update(update)
 
-  }, [virtualAudioGraph, nodes])
+  }, [virtualAudioGraph, nodes, scale])
 }
 
 export default useAudio

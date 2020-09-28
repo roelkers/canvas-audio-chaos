@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { Params, NodeCreator } from '../nodeCreators'
 import testPalette from '../assets/testPalette'
-import { INode, INodeHistoric, INodeNonHistoric } from './canvas'
-import { find, merge, pick, propEq } from 'ramda'
+import { INodeHistoric } from './canvas'
+import { pick } from 'ramda'
 
 export interface AudioConfig {
   nodeCreator: NodeCreator;

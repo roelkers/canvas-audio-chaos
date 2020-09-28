@@ -21,10 +21,13 @@ const canvasSlice = createSlice({
 export const selectScale = (state: RootState) => state.globalAudio.scale 
 
 // Extract the action creators object and the reducer
-const { actions, reducer } = canvasSlice
+const { 
+  reducer 
+  // actions
+} = canvasSlice
 // Extract and export each action creator by name
 // Export the reducer, either as a default or named export
-export const { } = actions 
+// export const { } = actions 
 
 export default reducer
 

@@ -6,7 +6,6 @@ import Node, { NodeProps } from './Node'
 import { selectNodes, initialCanvasHover } from '../slices/canvas';
 import Palette from './Palette'
 import { Layer as LayerType } from 'konva/types/Layer';
-import { selectIsMobile } from '../slices/app';
 
 const MemoNode = React.memo((props: NodeProps) => (
   <Node
@@ -20,7 +19,6 @@ const Canvas = () => {
   const dispatch = useDispatch()
   const stage = useRef(null)
   const paletteLayer = useRef(null) as RefObject<LayerType> | null
-  const mobile = useSelector(selectIsMobile)
 
   return (
     <Stage ref={stage} width={window.innerWidth} height={window.innerHeight} onMouseOver={() => dispatch(initialCanvasHover(null))}>

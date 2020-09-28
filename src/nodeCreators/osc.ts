@@ -1,11 +1,9 @@
 import { Note } from '@tonaljs/tonal';
 import { last } from 'ramda';
-import { useSelector } from 'react-redux';
-import { createNode, oscillator, gain } from 'virtual-audio-graph'
+import { createNode, oscillator } from 'virtual-audio-graph'
 import { IVirtualAudioNodeParams, IVirtualAudioNodeGraph, Output } from 'virtual-audio-graph/dist/types'
 import CustomVirtualAudioNode from 'virtual-audio-graph/dist/VirtualAudioNodes/CustomVirtualAudioNode';
 import { EnhancedConfig } from '.';
-import { selectScale } from '../slices/global-audio';
 
 export interface OscConfig {
   envFrequencyAmount: number;
