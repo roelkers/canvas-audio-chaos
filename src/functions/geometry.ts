@@ -29,3 +29,5 @@ export const getShapeName : (periodicTrigger: boolean, activeTrigger: boolean) =
     !periodicTrigger && activeTrigger ? 'rect' :
       periodicTrigger && activeTrigger ? 'triangle' : 
   /*!periodicTrigger && !activeTrigger ?*/ 'circle' 
+
+export const roundToTwoDecimals = (value:number) => Math.round(value*100)/100

@@ -12,7 +12,8 @@ const getDimensions = (stage: any) => {
     return { width: 0, height: 0, containerX : 0, containerY : 0 }
   }
   const marginLeft = 25
-  const marginRight = 300
+  const asdf = 300
+  const marginRight = asdf
   const width = stage.width() - (marginLeft + marginRight);
   const height = 120;
   const containerY = stage.height() - height - 25;

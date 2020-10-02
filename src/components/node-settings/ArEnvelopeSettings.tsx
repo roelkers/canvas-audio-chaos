@@ -1,18 +1,22 @@
 import { Grid, Input, InputLabel, Slider } from '@material-ui/core';
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { SettingsProps } from '.';
 import { arEnvelopeConfig } from '../../nodeCreators/arEnvelope';
 import useGridStyles from '../../hooks/useGridStyles'
 import SettingsCollapse from '../SettingsCollapse';
+import { roundToTwoDecimals } from '../../functions/geometry';
 
 export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig>) {
   const { handleSetParams, params, nodeId, virtualAudioNodeIndex } = props
   const { attack, release, gain } = params
+  const attackSlider = Math.log(attack+1)  
+  const releaseSlider = Math.log(release+1)
+  const gainSlider = Math.exp(Math.LN2 * gain) - 1
   const classes = useGridStyles()
-  const handleSliderChange = (param: string) => (e: ChangeEvent<{}>, newValue: number | number[]) =>
-    handleSetParams({ ...params, [param]: newValue })
-  const handleInputChange = (param: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    handleSetParams({ ...params, [param]: Number(e.target.value) })
+  const handleSliderChange = (param: string) => (newValue: number) => { 
+    handleSetParams({ ...params, [param]:  newValue })  }
+  const lengthSliderFunc = (x:number) => Math.exp(x) -1
+  const gainSliderFunc = (x: number) => (Math.log(x + 1)/Math.LN2) 
   return (
     <SettingsCollapse nodeId={nodeId} title='Amplitude Envelope' virtualAudioNodeIndex={virtualAudioNodeIndex}>
     <Grid className={classes.grid} container spacing={2} >
@@ -21,27 +25,17 @@ export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig
           Attack
          </InputLabel>
         <Slider
-          value={attack}
-          onChange={handleSliderChange('attack')}
+          onChange={(e: any, newValue: number | number[]) => 
+            handleSliderChange('attack')
+            (lengthSliderFunc(newValue as number))}
+          valueLabelDisplay="auto"
+          valueLabelFormat={roundToTwoDecimals}
           aria-labelledby="input-slider"
           min={0}
-          max={10}
-          step={0.1}
-        />
-      </Grid>
-      <Grid item >
-        <Input
-          className={classes.input}
-          value={attack}
-          margin="dense"
-          onChange={handleInputChange('attack')}
-          inputProps={{
-            step: 0.1,
-            min: 0,
-            max: 10,
-            type: 'number',
-            'aria-labelledby': 'input-slider',
-          }}
+          scale={lengthSliderFunc}
+          max={2}
+          step={0.01}
+          value={attackSlider}
         />
       </Grid>
     </Grid>
@@ -51,27 +45,17 @@ export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig
           Release 
          </InputLabel>
         <Slider
-          value={release}
-          onChange={handleSliderChange('release')}
+          onChange={(e: any, newValue: number | number[]) => 
+            handleSliderChange('release')
+            (lengthSliderFunc(newValue as number))}
+          valueLabelDisplay="auto"
+          valueLabelFormat={roundToTwoDecimals}
           aria-labelledby="input-slider"
           min={0}
-          max={10}
-          step={0.1}
-        />
-      </Grid>
-      <Grid item >
-        <Input
-          className={classes.input}
-          value={release}
-          margin="dense"
-          onChange={handleInputChange('release')}
-          inputProps={{
-            step: 0.1,
-            min: 0,
-            max: 10,
-            type: 'number',
-            'aria-labelledby': 'input-slider',
-          }}
+          scale={lengthSliderFunc}
+          max={2}
+          step={0.01}
+          value={releaseSlider}
         />
       </Grid>
     </Grid>
@@ -81,30 +65,31 @@ export default function ArEnvelopeSettings(props: SettingsProps<arEnvelopeConfig
            Gain 
          </InputLabel>
         <Slider
-          value={gain}
-          onChange={handleSliderChange('gain')}
+          onChange={(e: any, newValue: number | number[]) => 
+            handleSliderChange('gain')
+            (gainSliderFunc(newValue as number))}
+          valueLabelDisplay="auto"
+          valueLabelFormat={roundToTwoDecimals}
           aria-labelledby="input-slider"
           min={0}
+          scale={gainSliderFunc}
           max={1}
           step={0.01}
-        />
-      </Grid>
-      <Grid item >
-        <Input
-          className={classes.input}
-          value={gain}
-          margin="dense"
-          onChange={handleInputChange('gain')}
-          inputProps={{
-            step: 0.1,
-            min: 0,
-            max: 10,
-            type: 'number',
-            'aria-labelledby': 'input-slider',
-          }}
+          value={gainSlider}
         />
       </Grid>
     </Grid>
     </SettingsCollapse>
-  )
-}
+  )}
+
+  // a = e ^ x - 1
+  // a + 1 = e ^ x
+
+  // x = log(a + 1 )
+
+  // f(0) = 0 = log x + 1 
+  // f(1) = 1 = (log x + 1) / ln2 
+  
+  // g ln2 = ln x + 1
+  // g ln2 - 1 = ln x
+  // x = exp(g ln2 ) -1 
