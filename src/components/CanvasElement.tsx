@@ -68,7 +68,6 @@ const makeCircle = (props: ShapeProps) => < Circle
   radius={props.width / 2}
   fillLinearGradientStartPoint={{ x: -props.width / 2 , y: 0 }}
   fillLinearGradientEndPoint={{ x: props.width / 2,  y: 0 }}
-  fillLinearGradientColorStops={[0, 'red', 0.5, 'red', 0.5, 'blue', 1, 'blue']}
 />
 
 const getShape = (periodicTrigger: boolean, activeTrigger: boolean) => (props: ShapeProps) =>
