@@ -1,11 +1,13 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { AudioConfig, IPaletteElement } from './palette'
-import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, intersection, isEmpty, addIndex, contains, filter, find, propEq } from 'ramda'
+import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, 
+  intersection, isEmpty, addIndex, contains, filter, find, propEq, difference, 
+  includes } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
-import { OscConfig } from '../nodeCreators/osc'
+import nodeCreator, { OscConfig } from '../nodeCreators/osc'
 import { FilterConfig } from '../nodeCreators/filter'
 
 export interface INodeHistoric extends IPaletteElement {
@@ -59,8 +61,8 @@ export const canvasInitialState: Canvas = {
         id: '0',
         elementId: '0',
         groups: ['0', '1', '2', '3'],
-        periodicTrigger: false,
-        activeTrigger: true,
+        periodicTrigger: true,
+        activeTrigger: false,
         soundOnActivate: true,
         velocity: 240,
         x: 150, y: 150,
@@ -164,11 +166,29 @@ const canvasSlice = createSlice({
       if (state.historyStep === 0) {
         return
       }
+      //Have to add node to nonhistory to prevent bug where it exists in historic states but not in nonhistoric
+      const stepBefore = state.history[state.historyStep-1]
+      const idMapper = map(prop('id')) 
+      const diff = difference(idMapper(stepBefore.nodes),idMapper(state.nonHistory.nodes))
+      if(!isEmpty(diff)) {
+         const addNodes= diff.map(id => ({ id, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: []}))
+         state.nonHistory.nodes = state.nonHistory.nodes.concat(addNodes
+         )
+      }
       state.historyStep -= 1
     },
     redo(state, action) {
       if (state.historyStep === state.history.length - 1) {
         return
+      }
+      //Have to remove node from nonhistory to prevent bug where it exists in nonhistoric state but not in historic
+      const stepAfter = state.history[state.historyStep+1]
+      if(stepAfter) {
+        const idMapper = map(prop('id')) 
+        const diff = difference(idMapper(state.nonHistory.nodes),idMapper(stepAfter.nodes))
+        if(!isEmpty(diff)) {
+           state.nonHistory.nodes = filter(n =>  !includes(n.id, diff), state.nonHistory.nodes)
+        }
       }
       state.historyStep += 1
     },
