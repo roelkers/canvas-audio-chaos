@@ -7,10 +7,11 @@ const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',  
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    overflowX: 'hidden'
   }
 }))
 
