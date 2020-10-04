@@ -8,10 +8,10 @@ export interface IGroup {
 
 const initialState : IGroup[] = 
   [
-    { id: '0', fill: '#00ff00'},
-    { id: '1', fill: '#ff0000'},
-    { id: '2', fill: '#f0f0f0'},
-    { id: '3', fill: '#0f0f0f'},
+    { id: '0', fill: '#C972DB'},
+    { id: '1', fill: '#66DBAC'},
+    { id: '2', fill: '#729BDB'},
+    { id: '3', fill: '#DBAE51'},
   ]
 
 const canvasSlice = createSlice({

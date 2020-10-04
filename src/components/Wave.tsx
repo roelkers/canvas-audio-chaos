@@ -19,7 +19,7 @@ const Wave = (props: WaveProps) => {
   const dispatch = useDispatch()
   const previousActive = usePrevious<boolean>( active )
   let circle: any = useRef(null)
-  const ringFill = '#ff0000'
+  const ringFill = '#A0DB53'
   const initialInnerRadius = 1
   const ringDiameter = 5 
   let konvaAnim: any = useRef(null)
