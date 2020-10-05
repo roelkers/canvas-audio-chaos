@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { Params, NodeCreator } from '../nodeCreators'
-import testPalette from '../assets/testPalette'
+import palette from '../assets/v1Palette'
 import { INodeHistoric } from './canvas'
 import { pick } from 'ramda'
 
@@ -28,11 +28,7 @@ export interface ICanvasState {
   elements: IPaletteElement[];
 }
 
-export const initialPaletteState: ICanvasState = testPalette
-//  const initialState: ICanvasState = {
-//    nextId: 0,
-//    elements: []
-//  } 
+export const initialPaletteState: ICanvasState = palette
 
 export const saveNodeAsElementAndSavePalette = createAsyncThunk(
   'palette/savePalette',
