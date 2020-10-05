@@ -3,12 +3,14 @@ import { RootState } from '../store'
 import { AudioConfig, IPaletteElement } from './palette'
 import { propOr, prop, zipWith, merge, sortBy, compose, toLower, nth, map, 
   intersection, isEmpty, addIndex, contains, filter, find, propEq, difference, 
-  includes } from 'ramda'
+  includes, takeLast } from 'ramda'
 import { AttackReleaseOscConfig } from '../nodeCreators/attackReleaseOsc'
 import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 import nodeCreator, { OscConfig } from '../nodeCreators/osc'
 import { FilterConfig } from '../nodeCreators/filter'
+
+const HISTORY_MAX_LENGTH = 50 
 
 export interface INodeHistoric extends IPaletteElement {
   id: string;
@@ -107,6 +109,13 @@ export const canvasInitialState: Canvas = {
   }]
 }
 
+const pushToHistory = (hist: CanvasStateHistoric[], step: CanvasStateHistoric) => 
+  takeLast(HISTORY_MAX_LENGTH, [...hist, step]) 
+
+const incrementHistoryStep = (historyStep :number) => 
+  historyStep +1 === HISTORY_MAX_LENGTH ? historyStep : historyStep + 1
+
+
 const canvasSlice = createSlice({
   name: 'canvas',
   initialState: canvasInitialState,
@@ -126,9 +135,9 @@ const canvasSlice = createSlice({
         ],
         nextId: prev.nextId + 1
       }
-      state.history.push(nextState)
+      state.history = pushToHistory(state.history, nextState)
       state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: [] })
-      state.historyStep += 1
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     cloneNode(state, action) {
       const focussedNodeId = state.nonHistory.focus
@@ -145,9 +154,9 @@ const canvasSlice = createSlice({
         nodes: [...prev.nodes, clone],
         nextId: prev.nextId + 1
       }
-      state.history.push(nextState)
+      state.history = pushToHistory(state.history, nextState)
       state.nonHistory.nodes.push({ id: nextId, active: false, startTime: null, collapsedAudioNodeSettingsIndexes: [] }) 
-      state.historyStep += 1
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     dragNode(state, action) {
       const { x, y, targetNodeId } = action.payload
@@ -158,9 +167,9 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: map(moveNode, prev.nodes)
       }
-      history.push(nextState)
+      state.history = pushToHistory(state.history, nextState)
       state.history = history
-      state.historyStep += 1
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     undo(state, action) {
       if (state.historyStep === 0) {
@@ -205,10 +214,9 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: filter(filterNode, prev.nodes)
       }
-      history.push(nextState)
+      state.history = pushToHistory(state.history, nextState)
       state.nonHistory.nodes = filter(filterNode,state.nonHistory.nodes)
-      state.history = history
-      state.historyStep += 1
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     activateNode(state, action) {
       const { targetNodeId, sourceNodeId } = action.payload
@@ -248,9 +256,8 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: map(setTrigger, prev.nodes)
       }
-      history.push(nextState)
-      state.history = history
-      state.historyStep += 1
+      state.history = pushToHistory(state.history, nextState)
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     setVelocity(state, action) {
       const { nodeId, velocity } = action.payload
@@ -261,9 +268,8 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: map(setVelocity, prev.nodes)
       }
-      history.push(nextState)
-      state.history = history
-      state.historyStep += 1
+      state.history = pushToHistory(state.history, nextState)
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     setGroups(state, action) {
       const { nodeId, groups } = action.payload
@@ -274,9 +280,8 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: map(setGroups, prev.nodes)
       }
-      history.push(nextState)
-      state.history = history
-      state.historyStep += 1
+      state.history = pushToHistory(state.history, nextState)
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     setAudioParams(state, action) {
       const { nodeId, params, virtualAudioNodeIndex } = action.payload
@@ -299,9 +304,8 @@ const canvasSlice = createSlice({
         ...prev,
         nodes: map(nodeSetter, prev.nodes)
       }
-      history.push(nextState)
-      state.history = history
-      state.historyStep += 1
+      state.history = pushToHistory(state.history, nextState)
+      state.historyStep = incrementHistoryStep(state.historyStep)
     },
     setCollapseAudioNodeSettings(state, action) {
       const { collapsed, nodeId, virtualAudioNodeIndex } = action.payload
