@@ -168,7 +168,6 @@ const canvasSlice = createSlice({
         nodes: map(moveNode, prev.nodes)
       }
       state.history = pushToHistory(state.history, nextState)
-      state.history = history
       state.historyStep = incrementHistoryStep(state.historyStep)
     },
     undo(state, action) {

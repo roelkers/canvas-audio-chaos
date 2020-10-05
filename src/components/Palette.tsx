@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { IPaletteElement, selectPaletteElements } from '../slices/palette'
 import { Layer } from 'konva/types/Layer'
 import { Group as GroupType } from 'konva/types/Group'
+import { Rect as RectType } from 'konva/types/shapes/Rect'
 import PaletteElement from './PaletteElement'
 import { selectIsMobile } from '../slices/app'
 
@@ -52,6 +53,7 @@ const Palette = ({ stage: ref, layer }: { stage: any, layer: Layer | null | unde
   const redraw = () => layer?.draw()
   const clipGroup = useRef(null) as RefObject<GroupType> | null
   const nonClipGroup = useRef(null) as RefObject<GroupType> | null
+  const rect = useRef(null) as RefObject<GroupType> | null
 
   const handleDisableClipOfElement = (element: GroupType) => {
     if (!nonClipGroup || !nonClipGroup.current) return
@@ -63,12 +65,20 @@ const Palette = ({ stage: ref, layer }: { stage: any, layer: Layer | null | unde
     element.moveTo(clipGroup.current)
     redraw()
   }
+  const intersectsPaletteRect = ({ x, y }: { x: number, y : number }) => {
+    const intersections = rect?.current?.getAllIntersections({ x, y })
+    const contains = !!intersections?.some(i => i.parent?.attrs.name === 'palette-container')
+    const exceeds = y > containerY 
+    return contains || exceeds 
+  }
 
   const dimensions = mobile ? getMobileDimensions(stage) : getDimensions(stage)
   const { containerX, containerY , width, height } = dimensions
 
   return (
     <Group
+      ref={rect}
+      name='palette-container'
     >
       <Rect
         width={width}
@@ -91,6 +101,7 @@ const Palette = ({ stage: ref, layer }: { stage: any, layer: Layer | null | unde
           elements.map((elem: IPaletteElement, index: number) => {
             return <PaletteElement
               key={index}
+              intersectsPaletteRect={intersectsPaletteRect}
               handleDisableClipOfElement={handleDisableClipOfElement}
               handleEnableClipOfElement={handleEnableClipOfElement}
               element={elem}

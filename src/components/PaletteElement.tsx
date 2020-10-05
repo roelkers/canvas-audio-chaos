@@ -20,7 +20,8 @@ interface PaletteDimensions {
 interface PaletteElementProps {
   element: IPaletteElement,
   index: number,
-  paletteDimensions: PaletteDimensions 
+  paletteDimensions: PaletteDimensions,
+  intersectsPaletteRect: ({x, y} : { x: number, y: number }) => boolean 
   handleDisableClipOfElement: (element: GroupType) => void
   handleEnableClipOfElement: (element: GroupType) => void
 }
@@ -100,11 +101,12 @@ const PaletteElement = (props: PaletteElementProps) => {
     } else {
        targetX = evt.x
        targetY = evt.y
-    } 
-
-    dispatch(createNode({ ...element, x: targetX, y: targetY }))
+    }
     group?.current?.position({ x, y })
     handleEnableClipOfElement(group.current)
+    if(props.intersectsPaletteRect({ x: targetX, y: targetY})) return
+
+    dispatch(createNode({ ...element, x: targetX, y: targetY }))
   }
   if (index / 2 * (width + gutter) > containerWidth) {
     return null
