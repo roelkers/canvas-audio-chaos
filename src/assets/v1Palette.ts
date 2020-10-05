@@ -20,7 +20,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 5,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.9347923344020317,
             release: 1.2704998375324057,
@@ -43,7 +43,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.5160151470036647,
+            gain: 0.5,
             attack: 1.2933187402641826,
             release: 1.2255409284924679
           }
@@ -67,7 +67,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -90,7 +90,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.4646682670034443,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -113,7 +113,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -136,7 +136,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -159,7 +159,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 0,
             octave: 2,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -182,7 +182,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.09417428370521042,
             release: 0.3099644507332475
           }
@@ -205,7 +205,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.9,
             release: 1.2,
@@ -228,7 +228,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -252,7 +252,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 2,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -275,7 +275,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -298,7 +298,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -321,7 +321,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.32,
+            gain: 0.5,
             attack: 0.3,
             release: 0
           }
@@ -344,7 +344,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 3,
             octave: 3,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 1,
             release: 2.3,
@@ -367,7 +367,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.63,
+            gain: 0.5,
             attack: 0,
             release: 0.2
           }
@@ -390,7 +390,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 1,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.5,
@@ -413,7 +413,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.82,
+            gain: 0.5,
             attack: 0.1,
             release: 0.8
           }
@@ -437,7 +437,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 0,
             octave: 5,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.5,
             release: 1.1,
@@ -460,7 +460,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.4,
+            gain: 0.5,
             attack: 0.6,
             release: 0.5
           }
@@ -483,7 +483,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 1.3,
             release: 1.2,
@@ -506,7 +506,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.78,
+            gain: 0.5,
             attack: 0.4,
             release: 0.7
           }
@@ -530,7 +530,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 6,
             octave: 2,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.5840739849944818,
             release: 1.203396426255937,
@@ -553,7 +553,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 0.4222330006830478,
+            gain: 0.5,
             attack: 0.22140275816016985,
             release: 0.4477346146633243
           }
@@ -576,7 +576,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -599,7 +599,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -622,7 +622,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -645,7 +645,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -668,7 +668,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -691,7 +691,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -714,7 +714,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -737,7 +737,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -760,7 +760,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -783,7 +783,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -806,7 +806,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -829,7 +829,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -852,7 +852,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -875,7 +875,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -898,7 +898,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -921,7 +921,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -944,7 +944,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -967,7 +967,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -990,7 +990,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1013,7 +1013,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1036,7 +1036,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1059,7 +1059,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1082,7 +1082,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1105,7 +1105,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1128,7 +1128,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1151,7 +1151,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1174,7 +1174,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1197,7 +1197,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1220,7 +1220,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1243,7 +1243,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1266,7 +1266,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1289,7 +1289,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1312,7 +1312,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1335,7 +1335,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1358,7 +1358,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1381,7 +1381,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1404,7 +1404,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1427,7 +1427,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1450,7 +1450,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1473,7 +1473,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
@@ -1496,7 +1496,7 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.2,
+            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1519,7 +1519,7 @@ const state: ICanvasState =
           nodeCreator: 'arEnvelope',
           output: 'output',
           params: {
-            gain: 1,
+            gain: 0.5,
             attack: 0.3,
             release: 0.2
           }
