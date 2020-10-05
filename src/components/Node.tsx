@@ -5,6 +5,7 @@ import { dragNode } from '../slices/canvas';
 import Wave, { WaveProps } from './Wave'
 import CanvasElement from './CanvasElement'
 import { selectIsMobile } from '../slices/app';
+import { getShapeName } from '../functions/geometry';
 
 export interface NodeProps {
   key: string;
@@ -35,6 +36,10 @@ const Node = (props: NodeProps ) => {
   const { x, y, velocity, id, active, groups, periodicTrigger, activeTrigger } = props 
   const handleDragEnd = (e: any) => 
     dispatch(dragNode({ x: e.target.x(), y: e.target.y(), targetNodeId: id }))
+  const width = mobile ? 30 : 50
+  const height = mobile ? 30 : 50 
+  //make wave origin to center of rectangle also
+  const waveOffset = (!periodicTrigger && activeTrigger) ? width/2 : 0 
   return (
     <Group
         x={x}
@@ -45,6 +50,8 @@ const Node = (props: NodeProps ) => {
     >
       <MemoWave 
         id={id}
+        x={waveOffset}
+        y={waveOffset}
         active={activeTrigger ? active : undefined}
         activeTrigger={activeTrigger}
         periodicTrigger={periodicTrigger}  
@@ -56,8 +63,8 @@ const Node = (props: NodeProps ) => {
         groups={groups}
         periodicTrigger={periodicTrigger}
         activeTrigger={activeTrigger}
-        width={mobile ? 30 : 50}
-        height={mobile ? 30 : 50}
+        width={width}
+        height={height}
         name='triggerable'
       />
     </Group>

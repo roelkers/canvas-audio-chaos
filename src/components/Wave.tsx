@@ -12,10 +12,12 @@ export interface WaveProps {
   activeTrigger: boolean;
   periodicTrigger: boolean;
   velocity: number;
+  x: number;
+  y: number;
 }
 
 const Wave = (props: WaveProps) => {
-  const { id: nodeId, active, activeTrigger, periodicTrigger, velocity } = props 
+  const { x,y, id: nodeId, active, activeTrigger, periodicTrigger, velocity } = props 
   const dispatch = useDispatch()
   const previousActive = usePrevious<boolean>( active )
   let circle: any = useRef(null)
@@ -83,8 +85,8 @@ const Wave = (props: WaveProps) => {
       fill={ringFill}
       innerRadius={1}
       outerRadius={1.05}
-      x={0}
-      y={0}
+      x={x}
+      y={y}
     />
   )
 }
