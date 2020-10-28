@@ -16,6 +16,16 @@ export type NodeCreator = 'osc' | 'filter' | 'filter_simple' |
 
 export type Params = OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig | arEnvelopeConfig | outputGainConfig | PingPongConfig
 
+export type NodeCreators = {
+  osc: OscConfig;
+  filter: FilterConfig; 
+  filter_simple: SimpleFilterConfig;
+  pingPongDelay: PingPongConfig;
+  outputGain: outputGainConfig;
+  attackReleaseOsc: AttackReleaseOscConfig;
+  arEnvelope: arEnvelopeConfig;
+}
+
 export type EnhancedConfig<T extends Params> = T & { startTime: number, scale: string[] }
 
 export default {

@@ -20,7 +20,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 5,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.9347923344020317,
             release: 1.2704998375324057,
@@ -67,7 +66,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -113,7 +111,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -159,7 +156,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 0,
             octave: 2,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -205,7 +201,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.9,
             release: 1.2,
@@ -252,7 +247,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 2,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -298,7 +292,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -344,7 +337,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 3,
             octave: 3,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 1,
             release: 2.3,
@@ -390,7 +382,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 1,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.5,
@@ -437,7 +428,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 0,
             octave: 5,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.5,
             release: 1.1,
@@ -483,7 +473,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 2,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 1.3,
             release: 1.2,
@@ -530,7 +519,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 6,
             octave: 2,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.5840739849944818,
             release: 1.203396426255937,
@@ -576,7 +564,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -622,7 +609,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -668,7 +654,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -714,7 +699,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -760,7 +744,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -806,7 +789,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -852,7 +834,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -898,7 +879,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -944,7 +924,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -990,7 +969,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1036,7 +1014,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1082,7 +1059,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1128,7 +1104,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1174,7 +1149,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1220,7 +1194,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1266,7 +1239,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1312,7 +1284,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1358,7 +1329,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1404,7 +1374,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1450,7 +1419,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,
@@ -1496,7 +1464,6 @@ const state: ICanvasState =
           params: {
             scaleNoteIndex: 1,
             octave: 4,
-            gain: 0.5,
             type: 'sawtooth',
             attack: 0.1,
             release: 0.2,

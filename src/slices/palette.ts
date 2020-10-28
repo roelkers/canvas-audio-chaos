@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { Params, NodeCreator } from '../nodeCreators'
+import { Params, NodeCreator, NodeCreators } from '../nodeCreators'
 import palette from '../assets/v1Palette'
 import { INodeHistoric } from './canvas'
 import { pick } from 'ramda'
 
-export interface AudioConfig {
-  nodeCreator: NodeCreator;
+export interface AudioConfig<T extends keyof NodeCreators> {
+  nodeCreator: T;
   output: string;
-  params: Params
+  params: NodeCreators[T] 
 }
 
-export type AudioRecord = Record<number, AudioConfig>
+export type AudioRecord<T extends keyof NodeCreators> = Record<number, AudioConfig<T>>
 
 export interface IPaletteElement {
   elementId: string;
@@ -20,12 +20,26 @@ export interface IPaletteElement {
   activeTrigger: boolean;
   soundOnActivate: boolean;
   velocity: number;
-  audio: AudioRecord
+  audio: AudioRecord<NodeCreator> 
+}
+
+export interface IPaletteElementBasic extends IPaletteElement {
+  elementId: string;
+  groups: string[];
+  periodicTrigger: boolean;
+  activeTrigger: boolean;
+  soundOnActivate: boolean;
+  velocity: number;
+  audio: {
+    0: AudioConfig<'osc'>,
+    1: AudioConfig<'filter'>,
+    2: AudioConfig<'arEnvelope'>
+  } 
 }
 
 export interface ICanvasState {
   nextId: number;
-  elements: IPaletteElement[];
+  elements: IPaletteElementBasic[] 
 }
 
 export const initialPaletteState: ICanvasState = palette
@@ -59,7 +73,7 @@ const canvasSlice = createSlice({
        ], node)
       const idx = state.elements.findIndex(e => e.elementId === node.elementId)
       if(idx !== -1) {
-        state.elements[idx] = updatedElement
+        state.elements[idx] = updatedElement as IPaletteElementBasic 
       } 
     }
   }

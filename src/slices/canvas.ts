@@ -9,6 +9,7 @@ import { SimpleFilterConfig } from '../nodeCreators/filter_simple'
 import { arEnvelopeConfig } from '../nodeCreators/arEnvelope'
 import nodeCreator, { OscConfig } from '../nodeCreators/osc'
 import { FilterConfig } from '../nodeCreators/filter'
+import { NodeCreator } from '../nodeCreators'
 
 const HISTORY_MAX_LENGTH = 50 
 
@@ -286,8 +287,8 @@ const canvasSlice = createSlice({
       const { nodeId, params, virtualAudioNodeIndex } = action.payload
       const history = state.history.slice(0, state.historyStep + 1)
       const prev = history[state.historyStep]
-      const mapper = addIndex(map) as (func: (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[]
-      const audioSetter = (audio: AudioConfig, index: number) => index === virtualAudioNodeIndex ?
+      const mapper = addIndex(map) as (func: (audio: AudioConfig<NodeCreator>, index: number) => any, audio: AudioConfig<NodeCreator>[]) => AudioConfig<NodeCreator>[]
+      const audioSetter = (audio: AudioConfig<NodeCreator>, index: number) => index === virtualAudioNodeIndex ?
         {
           ...audio,
           params
@@ -296,7 +297,7 @@ const canvasSlice = createSlice({
       const nodeSetter = (node: INodeHistoric) => node.id === nodeId ?
         {
           ...node,
-          audio: mapper(audioSetter, node.audio as AudioConfig[])
+          audio: mapper(audioSetter, node.audio as AudioConfig<NodeCreator>[])
         } : node
 
       const nextState = {

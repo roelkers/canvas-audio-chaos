@@ -7,11 +7,16 @@ import { addIndex, map, values } from 'ramda';
 import VirtualAudioNodeSettings from './node-settings'
 import { AudioConfig } from '../slices/palette';
 import ScaleSettings from './ScaleSettings';
+import { NodeCreator } from '../nodeCreators';
 
 const getAudioSettings = (focussedNode: INodeHistoric) => {
-  const mapper = addIndex(map) as (func : (audio: AudioConfig, index: number) => any, audio: AudioConfig[]) => AudioConfig[] 
+  const mapper = addIndex(map) as (func : (
+    audio: AudioConfig<NodeCreator>, 
+    index: number) => any, 
+    audio: AudioConfig<NodeCreator>[]
+  ) => AudioConfig<NodeCreator>[] 
   const obj = mapper(
-     (audio : AudioConfig, index: number) => 
+     (audio : AudioConfig<NodeCreator>, index: number) => 
       <VirtualAudioNodeSettings
         key={index}
         virtualAudioNodeIndex={index}
@@ -20,7 +25,7 @@ const getAudioSettings = (focussedNode: INodeHistoric) => {
         nodeCreator={audio.nodeCreator} 
       />
       ,
-     focussedNode.audio as AudioConfig[]
+     focussedNode.audio as AudioConfig<NodeCreator>[]
     )
   return values(obj)
 }
