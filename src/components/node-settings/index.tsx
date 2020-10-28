@@ -1,7 +1,7 @@
 import { debounce } from 'debounce'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Params, NodeCreator } from '../../nodeCreators'
+import { NodeCreator, NodeCreators } from '../../nodeCreators'
 import { arEnvelopeConfig } from '../../nodeCreators/arEnvelope'
 import { FilterConfig } from '../../nodeCreators/filter'
 import { OscConfig } from '../../nodeCreators/osc'
@@ -10,9 +10,9 @@ import  ArEnvelopeSettings from './ArEnvelopeSettings'
 import FilterSettings from './FilterSettings'
 import OscSettings from './OscSettings'
 
-interface VirtualAudioNodeSettingsProps {
-  nodeCreator: NodeCreator;
-  params: Params,
+interface VirtualAudioNodeSettingsProps<K extends keyof NodeCreators> {
+  nodeCreator: K;
+  params: NodeCreators[K],
   nodeId: string;
   virtualAudioNodeIndex: number;
 }
@@ -24,16 +24,16 @@ export interface SettingsProps<T> {
   handleSetParams : (params: T) => void
 }
 
-const VirtualAudioNodeSettings = ({ nodeId, nodeCreator, params, virtualAudioNodeIndex }: VirtualAudioNodeSettingsProps) => {
+const VirtualAudioNodeSettings = ({ nodeId, nodeCreator, params, virtualAudioNodeIndex }: VirtualAudioNodeSettingsProps<NodeCreator>) => {
   const dispatch = useDispatch()
-  const handleSetParams = debounce((params : Params) => dispatch(setAudioParams({ params, nodeId, virtualAudioNodeIndex })),100)
+  const handleSetParams = debounce((params : NodeCreators[keyof NodeCreators]) => dispatch(setAudioParams({ params, nodeId, virtualAudioNodeIndex })),100)
   const props = {
     params,
     virtualAudioNodeIndex,
     handleSetParams,
     nodeId 
   }
-  const settingsMap = {
+  const settingsMap : Record<keyof NodeCreators, JSX.Element | null> = {
     arEnvelope : <ArEnvelopeSettings {...props as SettingsProps<arEnvelopeConfig>} />,   
     osc: <OscSettings {...props as SettingsProps<OscConfig>}/>,
     filter: <FilterSettings {...props as SettingsProps<FilterConfig>} />,

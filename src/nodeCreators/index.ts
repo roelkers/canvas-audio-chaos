@@ -11,11 +11,6 @@ import { AttackReleaseOscConfig } from './attackReleaseOsc'
 import { SimpleFilterConfig } from './filter_simple'
 import { OscConfig } from '../nodeCreators/osc'
 
-export type NodeCreator = 'osc' | 'filter' | 'filter_simple' |
- 'pingPongDelay' | 'attackReleaseOsc' | 'arEnvelope' | 'outputGain'
-
-export type Params = OscConfig | FilterConfig | AttackReleaseOscConfig | SimpleFilterConfig | arEnvelopeConfig | outputGainConfig | PingPongConfig
-
 export type NodeCreators = {
   osc: OscConfig;
   filter: FilterConfig; 
@@ -26,7 +21,10 @@ export type NodeCreators = {
   arEnvelope: arEnvelopeConfig;
 }
 
-export type EnhancedConfig<T extends Params> = T & { startTime: number, scale: string[] }
+export type NodeCreator = keyof NodeCreators
+export type Config = NodeCreators[keyof NodeCreators]
+
+export type EnhancedConfig<T extends Config> = T & { startTime: number, scale: string[] }
 
 export default {
   osc,
