@@ -10,6 +10,7 @@ import { styled } from '@material-ui/core/styles'
 import { undo, redo, cloneNode, deleteNode, selectFocussedNode,focus } from '../slices/canvas'
 import { pipe, find, propEq } from 'ramda'
 import { saveNodeAsElementAndSavePalette } from '../slices/palette'
+import { ButtonBase } from '@material-ui/core'
 
 
 const FloatedSpeedDial = styled(SpeedDial)(({ theme }) => ({

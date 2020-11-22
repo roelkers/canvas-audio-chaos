@@ -5,6 +5,7 @@ import { selectIsMobile } from '../slices/app'
 import { useSelector } from 'react-redux'
 import MobileDrawer from './MobileDrawer'
 import DrawerContent from './DrawerContent'
+import Onboarding from './Onboarding'
 
 const Settings = () => {
   const mobile = useSelector(selectIsMobile)
@@ -15,6 +16,7 @@ const Settings = () => {
           <DrawerContent />
         </MobileDrawer>
         <SpeedDialButtons />
+        <Onboarding />
       </>
     ) :
     (
@@ -23,6 +25,7 @@ const Settings = () => {
           <DrawerContent />
         </DesktopDrawer>
         <SpeedDialButtons />
+        <Onboarding />
       </>
     )
 }
