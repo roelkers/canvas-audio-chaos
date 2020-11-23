@@ -17,7 +17,9 @@ const useAudio = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     if (!virtualAudioGraph.current && initialCanvasHover) {
-      virtualAudioGraph.current = createVirtualAudioGraph()
+      const w = window as any
+      const AudioContext = window.AudioContext || w.webkitAudioContext;
+      virtualAudioGraph.current = createVirtualAudioGraph({ audioContext : new AudioContext })
       virtualAudioGraph.current.audioContext.resume()
     }
   }, [virtualAudioGraph, initialCanvasHover])

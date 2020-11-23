@@ -24,12 +24,11 @@ const useStyles = makeStyles({
 
 interface StepperProps {
   activeStep: number
-  setActiveStep: React.Dispatch<React.SetStateAction<number>> 
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>
 }
 
 function DotsMobileStepper(props: StepperProps) {
   const classes = useStyles();
-  const theme = useTheme();
   const { activeStep, setActiveStep } = props
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -89,7 +88,7 @@ const DialogTitle = withStyles(titleStyles)((props: DialogTitleProps) => {
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <Icon path={mdiClose} size={1}/>
+          <Icon path={mdiClose} size={1} />
         </IconButton>
       ) : null}
     </MuiDialogTitle>
@@ -98,8 +97,8 @@ const DialogTitle = withStyles(titleStyles)((props: DialogTitleProps) => {
 
 const dialogStyles = makeStyles((theme) => {
   return {
-    root: {
-
+    img: {
+        width: '100%'
     },
     button: {
       zIndex: 3,
@@ -114,48 +113,45 @@ const dialogStyles = makeStyles((theme) => {
 })
 
 const dialogSteps = [
-  { 
-    title: 'Welcome to Waveism! Here are some tips to get you started:',
+  {
+    title: 'Welcome to Waveism! How to get started:',
     textContent: 'You can drag Nodes from the bottom onto the canvas. The Hexagon you start with and any other hexagon will send out a wave, that will trigger another Node and play its sound.',
-    src: Onboarding_Img_3 
+    src: Onboarding_Img_3
   },
-  { 
+  {
     title: 'Colors and groups',
     textContent: 'Every Node on the canvas belongs to one or more groups. These are indicated by the fill color. Only Nodes from the same group will trigger each other!',
     src: Onboarding_Img_2
   },
-  { 
+  {
     title: 'The Action Buttons',
     textContent: 'On the top left you can access actions with the "+" Button. Their function is from left to right (1) Undo, (2) Redo, (3) Copy and paste selected Node, (4) Delete selected Node, (5) Save selected node to palette and save it to the browsers storage (To reuse it in another patch).',
     src: Onboarding_Img_4
   },
-  { 
+  {
     title: 'Hexagons and Circles',
     textContent: 'Hexagons and Circles are the most simply objects in waveism. A hexagon will send out a wave in periodic intervals. A circle never sends out a wave but can get triggered by a hexagon.',
     src: Onboarding_Img_3
   },
-  { 
+  {
     title: 'Squares and Triangles',
     textContent: `Squares are special objects in waveism. They will react to an incoming wave and, if it belongs to an object of their group send out a wave on their own. Triangles share 
       basically the behaviour of the Circle and the Hexagon, meaning they will send out waves in periodic intervals and on reaction, whichever happens first.`,
-    src: Onboarding_Img_1 
+    src: Onboarding_Img_1
   },
-  { 
+  {
     title: 'Settings',
     textContent: 'In the settings on the right (on mobile double tap a node to open settings) you can configure the trigger options. You can change an objects shape and their groups. Also you can configure the speed of the wave (given in pixels/second). Advanced users can also configure the sound of the node.',
-    src: Onboarding_Img_5 
+    src: Onboarding_Img_5
   },
 ]
 
-export default function Onboarding () {
+export default function Onboarding() {
   const open = useSelector(selectOnboardingOpen)
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch()
   const classes = dialogStyles()
   const [activeStep, setActiveStep] = React.useState(0);
   const handleClickOpen = () => {
-    console.log("open")
     dispatch(setOnboardingOpen(true));
   };
   const handleClose = () => {
@@ -164,19 +160,19 @@ export default function Onboarding () {
 
   return (
     <React.Fragment>
-    <Fab size='small' className={classes.button} onClick={handleClickOpen}><Icon path={mdiHelpCircleOutline} size={1} /></Fab>
-    <Dialog open={open} onClose={handleClose} >
-      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        {dialogSteps[activeStep].title}
-      </DialogTitle>
-      <DialogContent dividers>
-      <img src={dialogSteps[activeStep].src} />
-      <Typography gutterBottom>
-        {dialogSteps[activeStep].textContent}
+      <Fab size='small' className={classes.button} onClick={handleClickOpen}><Icon path={mdiHelpCircleOutline} size={1} /></Fab>
+      <Dialog open={open} onClose={handleClose} >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {dialogSteps[activeStep].title}
+        </DialogTitle>
+        <DialogContent dividers>
+          <img src={dialogSteps[activeStep].src} className={classes.img} />
+          <Typography gutterBottom>
+            {dialogSteps[activeStep].textContent}
           </Typography>
-      </DialogContent>   
-      <DotsMobileStepper activeStep={activeStep} setActiveStep={setActiveStep} />
-    </Dialog>
-  </React.Fragment>
+        </DialogContent>
+        <DotsMobileStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+      </Dialog>
+    </React.Fragment>
   )
 }
