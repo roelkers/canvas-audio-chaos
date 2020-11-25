@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { NodeCreator, NodeCreators } from '../nodeCreators'
-import palette from '../assets/v1Palette'
+import palette from '../assets/v1.1Palette'
 import { INodeHistoric } from './canvas'
 import { pick } from 'ramda'
 
