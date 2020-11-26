@@ -1,7 +1,7 @@
-import { Dialog, DialogContent, Fab, useMediaQuery, useTheme } from '@material-ui/core'
+import { Dialog, DialogContent, Fab } from '@material-ui/core'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectOnboardingOpen, setOnboardingOpen, setOpen } from '../slices/app';
+import { selectOnboardingOpen, setOnboardingOpen } from '../slices/app';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import { mdiClose, mdiHelpCircleOutline, mdiArrowLeft, mdiArrowRight } from '@mdi/js/';
